@@ -18,7 +18,7 @@ class DailyTrackerApp extends StatelessWidget {
       minTextAdapt: true,
       designSize: const Size(390, 844),
       child: MaterialApp(
-        title: 'Daily Tracker',
+        title: 'Daily Tracker ',
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
