@@ -1,5 +1,6 @@
 // ignore_for_file: unused_local_variable
 
+import 'package:daily_expense_tracker_app/features/home/view/home_view.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -21,11 +22,7 @@ class AppRouter {
       case Routes.home:
         return _getPageRoute(
           routeName: settings.name,
-          viewToShow: const Scaffold(
-            body: Center(
-              child: Text('Home'),
-            ),
-          ),
+          viewToShow: const HomeView(),
         );
 
       case Routes.addExpense:
