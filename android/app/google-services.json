@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "800188863112",
+    "project_id": "daily-expense-tracker-123e1",
+    "storage_bucket": "daily-expense-tracker-123e1.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:800188863112:android:fe4ed12bb40ba62b5f053d",
+        "android_client_info": {
+          "package_name": "com.example.daily_expense_tracker_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDC7TRqG_rifjnlAh1UHPrcB3tmVt979WQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

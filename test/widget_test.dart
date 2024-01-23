@@ -6,13 +6,16 @@
 // tree, read text, and verify that the values of widget properties are correct.
 
 import 'package:daily_expense_tracker_app/app/daily_tracker_app.dart';
+import 'package:daily_expense_tracker_app/core/routing/routing.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
   testWidgets('Counter increments smoke test', (WidgetTester tester) async {
     // Build our app and trigger a frame.
-    await tester.pumpWidget(const DailyTrackerApp());
+    await tester.pumpWidget(DailyTrackerApp(
+      appRoute: AppRouter(),
+    ));
 
     // Verify that our counter starts at 0.
     expect(find.text('0'), findsOneWidget);
