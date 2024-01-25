@@ -1,0 +1,120 @@
+import '../../../core/extensions/extensions.dart';
+import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+
+import '../../../core/common/common.dart';
+import 'widget/custom_tabbar.dart';
+
+class StatView extends StatelessWidget {
+  const StatView({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return SafeArea(
+      child: Center(
+        child: Column(
+          children: [
+            _buidlHeader(),
+            const SizedBox(height: 20),
+            const Expanded(
+              child: CustomTabBar(
+                tabControllerCount: 2,
+                tabs: [
+                  Tab(text: 'Income'),
+                  Tab(text: 'Expense'),
+                ],
+                children: [
+                  IncomeTransaction(),
+                  IncomeTransaction(),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  _buidlHeader() {
+    return Row(
+      children: [
+        const Text(
+          'Transaction',
+          style: TextStyle(
+            fontSize: 18,
+            fontWeight: FontWeight.w600,
+          ),
+        ),
+        const Spacer(),
+        CustomIconBottom(
+          onPressed: () {},
+          icon: FontAwesomeIcons.filter,
+        )
+      ],
+    );
+  }
+}
+
+class IncomeTransaction extends StatelessWidget {
+  const IncomeTransaction({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(top: 10.0, right: 5.0),
+      child: Column(
+        children: [
+          Container(
+            height: context.screenHeight(0.35),
+            width: context.screenWidth(0.9),
+            decoration: BoxDecoration(
+              color: context.colorScheme.surface,
+              borderRadius: BorderRadius.circular(16),
+            ),
+            child: const Column(
+              children: [
+                SizedBox(height: 10),
+                Text('01 Jan 2021 - 31 April 2021'),
+                SizedBox(height: 8.0),
+                Text(
+                  '\$3500.00',
+                  style: TextStyle(
+                    fontSize: 26,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+              ],
+            ),
+          ),
+          const SizedBox(height: 10),
+          _buidlHeaderText(context),
+          const SizedBox(height: 5),
+          const TransactionList(),
+        ],
+      ),
+    );
+  }
+
+  _buidlHeaderText(BuildContext context) {
+    return Row(
+      children: [
+        const Text(
+          'Sat, 20 March 2021',
+          style: TextStyle(
+            fontSize: 14,
+            fontWeight: FontWeight.w500,
+          ),
+        ),
+        const Spacer(),
+        Text(
+          '-500.00',
+          style: TextStyle(
+            fontSize: 14,
+            color: context.colorScheme.outline,
+            fontWeight: FontWeight.w500,
+          ),
+        ),
+      ],
+    );
+  }
+}
