@@ -1,31 +1,30 @@
-// ignore_for_file: unused_local_variable
-
-import 'package:daily_expense_tracker_app/features/home/view/home_view.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+import '../../features/home/home_view.dart';
+
 @immutable
-class Routes {
-  const Routes._();
+class RoutesName {
+  const RoutesName._();
   static const String home = '/';
   static const String addExpense = '/add-expense';
-  static const String analytics = '/analytics';
   static const String settings = '/settings';
 }
 
 @immutable
 class AppRouter {
   PageRoute generateRoute(RouteSettings settings) {
+    // ignore: unused_local_variable
     final arguments = settings.arguments;
 
     switch (settings.name) {
-      case Routes.home:
+      case RoutesName.home:
         return _getPageRoute(
           routeName: settings.name,
           viewToShow: const HomeView(),
         );
 
-      case Routes.addExpense:
+      case RoutesName.addExpense:
         return _getPageRoute(
           routeName: settings.name,
           viewToShow: const Scaffold(
@@ -35,17 +34,7 @@ class AppRouter {
           ),
         );
 
-      case Routes.analytics:
-        return _getPageRoute(
-          routeName: settings.name,
-          viewToShow: const Scaffold(
-            body: Center(
-              child: Text('Analytics'),
-            ),
-          ),
-        );
-
-      case Routes.settings:
+      case RoutesName.settings:
         return _getPageRoute(
           routeName: settings.name,
           viewToShow: const Scaffold(
