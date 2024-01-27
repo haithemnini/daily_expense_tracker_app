@@ -1,10 +1,12 @@
 import 'dart:math';
 
-import 'package:flutter_speed_dial/flutter_speed_dial.dart';
-
-import '../../../core/extensions/extensions.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+
+import '../../../core/enums/enums.dart';
+import '../../../core/extensions/extensions.dart';
+import '../../../core/routing/routing.dart';
 
 class AppFloatingActionButton extends StatelessWidget {
   const AppFloatingActionButton({
@@ -45,10 +47,11 @@ class AppFloatingActionButton extends StatelessWidget {
             foregroundColor: context.colorScheme.onSurface,
             shape: const CircleBorder(),
             onTap: () {
-              debugPrint('Add Icome');
-              // Navigator.of(context).pushNamed(
-              //   AppRoutes.addIncomeScreen,
-              // );
+              // print('Add Expense');
+              context.pushNamed(
+                RoutesName.transaction,
+                arguments: TransactionType.addExpense,
+              );
             },
           ),
           SpeedDialChild(
@@ -57,10 +60,11 @@ class AppFloatingActionButton extends StatelessWidget {
             foregroundColor: context.colorScheme.onSurface,
             shape: const CircleBorder(),
             onTap: () {
-              debugPrint('Add Icome');
-              // Navigator.of(context).pushNamed(
-              //   AppRoutes.addExpenseScreen,
-              // );
+              // print('Add Icome');
+              context.pushNamed(
+                RoutesName.transaction,
+                arguments: TransactionType.addIncome,
+              );
             },
           ),
         ],

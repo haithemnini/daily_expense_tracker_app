@@ -4,8 +4,8 @@ import 'package:flutter/services.dart';
 import '../extensions/extensions.dart';
 
 /// A helper class for managing the system UI overlay settings in the app.
-class OverlaySystemUiConfig {
-  const OverlaySystemUiConfig._();
+class SystemUiOverlayStyleConfig {
+  const SystemUiOverlayStyleConfig._();
 
   /// Returns the [SystemUiOverlayStyle] for the app's app bar.
   ///
@@ -39,10 +39,10 @@ class OverlaySystemUiConfig {
   /// The [systemStatusBarContrastEnforced] is set to false.
   ///
   /// The system UI overlay style is applied using [SystemChrome.setSystemUIOverlayStyle].
-  /// The system UI mode is set to [SystemUiMode.manual] with [SystemUiOverlay.top] and [SystemUiOverlay.bottom] overlays enabled.
-  /// The system UI mode is also set to [SystemUiMode.edgeToEdge] with [SystemUiOverlay.bottom] overlay enabled.
+  /// The system UI mode is set to [SystemUiMode.manual] with [systemUiOverlay.top] and [systemUiOverlay.bottom] overlays enabled.
+  /// The system UI mode is also set to [SystemUiMode.edgeToEdge] with [systemUiOverlay.bottom] overlay enabled.
   /// Finally, the system UI mode is set to [SystemUiMode.edgeToEdge] without any specific overlays enabled.
-  static overlaySystemUi(BuildContext context) {
+  static systemUiOverlay(BuildContext context) {
     Brightness statusBarIconBrightness =
         context.isDarkTheme() ? Brightness.dark : Brightness.dark;
 

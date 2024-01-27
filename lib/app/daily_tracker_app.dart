@@ -15,7 +15,7 @@ class DailyTrackerApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    context.overlaySystemUiConfig();
+    context.systemUiOverlayStyleConfig();
     return ScreenUtilInit(
       splitScreenMode: true,
       minTextAdapt: true,

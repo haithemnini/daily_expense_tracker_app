@@ -20,10 +20,10 @@ class CustomIconBottom extends StatelessWidget {
       borderRadius: BorderRadius.circular(14),
       clipBehavior: Clip.antiAlias,
       child: InkWell(
-        onTap: () => {},
+        onTap: () => onPressed(),
         child: SizedBox(
-          height: 40,
-          width: 40,
+          height: 35,
+          width: 35,
           child: Center(
             child: FaIcon(
               icon,

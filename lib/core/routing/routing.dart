@@ -2,12 +2,14 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../../features/home/home_view.dart';
+import '../../features/transaction/transaction_view.dart';
+import '../enums/enums.dart';
 
 @immutable
 class RoutesName {
   const RoutesName._();
   static const String home = '/';
-  static const String addExpense = '/add-expense';
+  static const String transaction = '/transaction';
   static const String settings = '/settings';
 }
 
@@ -24,13 +26,11 @@ class AppRouter {
           viewToShow: const HomeView(),
         );
 
-      case RoutesName.addExpense:
+      case RoutesName.transaction:
         return _getPageRoute(
           routeName: settings.name,
-          viewToShow: const Scaffold(
-            body: Center(
-              child: Text('Add Expense'),
-            ),
+          viewToShow: TransactionView(
+            transaction: arguments as TransactionType,
           ),
         );
 
