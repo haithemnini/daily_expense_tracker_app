@@ -18,7 +18,9 @@ class HeaderTransaction extends StatelessWidget {
         ),
         const Spacer(),
         TextButton(
-          onPressed: () {},
+          onPressed: () {
+            // print('View All');
+          },
           child: const Text(
             'View All',
             style: TextStyle(

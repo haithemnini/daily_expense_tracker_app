@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../helpers/overlay_system_ui_helpers.dart';
@@ -9,7 +10,12 @@ extension DevicesContextExtension on BuildContext {
   ThemeData get _theme => Theme.of(this);
 
   // Sets the system UI overlay based on the current [BuildContext].
-  void overlaySystemUiConfig() => OverlaySystemUiConfig.overlaySystemUi(this);
+  void systemUiOverlayStyleConfig() =>
+      SystemUiOverlayStyleConfig.systemUiOverlay(this);
+
+  SystemUiOverlayStyle systemUiOverlayStyleAppBar() {
+    return SystemUiOverlayStyleConfig.systemUiOverlayAppBar(this);
+  }
 
   // Calculates the screen height based on the current [BuildContext] and a given value.
   double screenHeight(double value) => ScreenUtil().screenHeight * value;

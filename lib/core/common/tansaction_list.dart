@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
+import '../enums/enums.dart';
 import '../extensions/extensions.dart';
+import '../helpers/show_modal_sheet_helpers.dart';
+import '../routing/routing.dart';
+import 'item_button.dart';
 
 class TransactionList extends StatelessWidget {
   const TransactionList({super.key});
@@ -18,65 +23,90 @@ class TransactionList extends StatelessWidget {
   }
 
   _buildTransactionItem(BuildContext context) {
-    return Container(
-      margin: const EdgeInsets.symmetric(vertical: 5.0),
-      child: Material(
-        color: context.colorScheme.surface,
-        borderRadius: BorderRadius.circular(14),
-        clipBehavior: Clip.antiAlias,
-        child: InkWell(
-          onTap: () {},
-          child: Container(
-            padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 15),
-            child: Row(
-              children: [
-                Container(
-                  width: 45,
-                  height: 45,
-                  decoration: const BoxDecoration(
-                    color: Colors.redAccent,
-                    shape: BoxShape.circle,
-                  ),
-                  child: const Icon(
-                    Icons.shopping_bag_outlined,
-                    color: Colors.white,
-                  ),
-                ),
-                const SizedBox(width: 16),
-                const Text(
-                  'Shopping',
-                  style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
-                const Spacer(),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  children: [
-                    const Text(
-                      '-\$ 4800.00',
-                      style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.w400,
-                      ),
-                    ),
-                    const SizedBox(height: 4),
-                    Text(
-                      '12:00 PM',
-                      style: TextStyle(
-                        fontSize: 12,
-                        color: context.colorScheme.outline,
-                        fontWeight: FontWeight.w400,
-                      ),
-                    ),
-                  ],
-                ),
-              ],
-            ),
+    return ItemButton(
+      text: 'Shopping',
+      icon: FontAwesomeIcons.bagShopping,
+      iconColor: Colors.white,
+      backgroundItem: context.colorScheme.surface,
+      backgroundIcon: Colors.redAccent,
+      onLongPress: () => _showModalSheet(context),
+      trailing: _buildTrailing(context),
+    );
+  }
+
+  Widget _buildTrailing(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.end,
+      children: [
+        const Text(
+          '-\$ 4800.00',
+          style: TextStyle(
+            color: Colors.redAccent,
+            fontSize: 16,
+            fontWeight: FontWeight.w700,
           ),
         ),
+        const SizedBox(height: 4),
+        Text(
+          'Today',
+          style: TextStyle(
+            fontSize: 12,
+            color: context.colorScheme.outline,
+            fontWeight: FontWeight.w400,
+          ),
+        ),
+      ],
+    );
+  }
+
+  void _showModalSheet(BuildContext context) {
+    return showModalSheetHelpers(
+      context: context,
+      child: Padding(
+        padding: const EdgeInsets.only(bottom: 50.0),
+        child: Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 10.0),
+              child: ItemButton(
+                text: 'Edit',
+                icon: FontAwesomeIcons.penToSquare,
+                iconColor: Colors.white,
+                backgroundIcon: Colors.blueAccent,
+                backgroundItem: Colors.transparent,
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 10,
+                  vertical: 10,
+                ),
+                onPressed: () => _onPressed(context),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 10.0),
+              child: ItemButton(
+                text: 'Delete',
+                icon: FontAwesomeIcons.trashCan,
+                iconColor: Colors.white,
+                backgroundIcon: Colors.redAccent,
+                backgroundItem: Colors.transparent,
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 10,
+                  vertical: 10,
+                ),
+                onPressed: () => context.pop(),
+              ),
+            ),
+          ],
+        ),
       ),
+    );
+  }
+
+  void _onPressed(BuildContext context) {
+    context.pop();
+    context.pushNamed(
+      RoutesName.transaction,
+      arguments: TransactionType.editExpense,
     );
   }
 }
