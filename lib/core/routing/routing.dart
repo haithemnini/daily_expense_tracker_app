@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../../features/home/home_view.dart';
+import '../../features/settings/settings_view.dart';
 import '../../features/transaction/transaction_view.dart';
 import '../enums/enums.dart';
 
@@ -37,11 +38,7 @@ class AppRouter {
       case RoutesName.settings:
         return _getPageRoute(
           routeName: settings.name,
-          viewToShow: const Scaffold(
-            body: Center(
-              child: Text('Settings'),
-            ),
-          ),
+          viewToShow: const SettingsView(),
         );
 
       default:
