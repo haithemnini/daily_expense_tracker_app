@@ -26,7 +26,7 @@ class SettingsView extends StatelessWidget {
           children: [
             SettingsProfilePersonal(),
             SizedBox(height: 10),
-            DarkModeSwitch(),
+            // DarkModeSwitch(),
             SizedBox(height: 10),
             SettingsNotification(),
             SizedBox(height: 10),
