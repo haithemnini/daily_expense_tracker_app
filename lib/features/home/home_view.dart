@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../core/extension/extension.dart';
+import '../../core/helper/helper.dart';
 import 'main/main_view.dart';
 import 'stat/stat_view.dart';
 import 'widgets/widgets.dart';
@@ -20,16 +22,29 @@ class _HomeViewState extends State<HomeView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      bottomNavigationBar: AppBottomNavBar(
-        currentIndex: _currentIndex,
-        onTabTapped: (int index) => setState(() => _currentIndex = index),
-      ),
+      appBar: _buildAppBar(context),
       floatingActionButton: const AppFloatingActionButton(),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      bottomNavigationBar: AppBottomNavBar(
+        currentIndex: _currentIndex,
+        onTabTapped: (int index) => _changePage(index),
+      ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 25),
         child: _pages.elementAt(_currentIndex),
       ),
+    );
+  }
+
+  void _changePage(int index) => setState(() => _currentIndex = index);
+
+  AppBar _buildAppBar(BuildContext context) {
+    return AppBar(
+      elevation: 0,
+      toolbarHeight: 0,
+      scrolledUnderElevation: 0,
+      systemOverlayStyle: Helper.overlayStyleAppBar(context),
+      backgroundColor: context.colorScheme.background,
     );
   }
 }

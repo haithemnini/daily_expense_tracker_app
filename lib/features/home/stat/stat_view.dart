@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-import '../../../core/common/common.dart';
-import '../../../core/extensions/extensions.dart';
-import 'widget/custom_tabbar.dart';
+import '../../../core/extension/extension.dart';
+import '../../../core/shared/shared.dart';
+import '../../../core/styles/app_text_style.dart';
+import 'widget/widget.dart';
 
 class StatView extends StatelessWidget {
   const StatView({super.key});
@@ -14,7 +15,7 @@ class StatView extends StatelessWidget {
       child: Center(
         child: Column(
           children: [
-            _buidlHeader(),
+            _buidlAppHeader(),
             const SizedBox(height: 20),
             const Expanded(
               child: CustomTabBar(
@@ -35,13 +36,12 @@ class StatView extends StatelessWidget {
     );
   }
 
-  _buidlHeader() {
+  _buidlAppHeader() {
     return Row(
       children: [
-        const Text(
+        Text(
           'Transaction',
-          style: TextStyle(
-            fontSize: 18,
+          style: AppTextStyle.title.copyWith(
             fontWeight: FontWeight.w600,
           ),
         ),
@@ -78,10 +78,7 @@ class IncomeTransaction extends StatelessWidget {
                 SizedBox(height: 8.0),
                 Text(
                   '\$3500.00',
-                  style: TextStyle(
-                    fontSize: 26,
-                    fontWeight: FontWeight.w600,
-                  ),
+                  style: AppTextStyle.title3,
                 ),
               ],
             ),
@@ -98,20 +95,18 @@ class IncomeTransaction extends StatelessWidget {
   _buidlHeaderText(BuildContext context) {
     return Row(
       children: [
-        const Text(
-          'Sat, 20 March 2021',
-          style: TextStyle(
-            fontSize: 14,
-            fontWeight: FontWeight.w500,
+        Text(
+          'Sat, 20 March 2022',
+          style: AppTextStyle.caption.copyWith(
+            fontWeight: FontWeight.w600,
           ),
         ),
         const Spacer(),
         Text(
           '-500.00',
-          style: TextStyle(
-            fontSize: 14,
-            color: context.colorScheme.outline,
-            fontWeight: FontWeight.w500,
+          style: AppTextStyle.caption.copyWith(
+            fontWeight: FontWeight.w600,
+            color: context.colorScheme.error,
           ),
         ),
       ],

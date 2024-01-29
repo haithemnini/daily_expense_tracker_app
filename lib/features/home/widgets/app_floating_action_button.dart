@@ -1,12 +1,12 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-import '../../../core/enums/enums.dart';
-import '../../../core/extensions/extensions.dart';
-import '../../../core/routing/routing.dart';
+import '../../../core/enum/enum.dart';
+import '../../../core/extension/extension.dart';
+import '../../../core/router/app_route.dart';
+import '../../../core/router/router.dart';
+import '../../../core/styles/app_colors.dart';
 
 class AppFloatingActionButton extends StatelessWidget {
   const AppFloatingActionButton({
@@ -18,16 +18,9 @@ class AppFloatingActionButton extends StatelessWidget {
     return Container(
       height: 60,
       width: 60,
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
         shape: BoxShape.circle,
-        gradient: LinearGradient(
-          colors: [
-            context.colorScheme.tertiary,
-            context.colorScheme.secondary,
-            context.colorScheme.primary,
-          ],
-          transform: const GradientRotation(pi / 4),
-        ),
+        gradient: AppColors.primaryGradient,
       ),
       child: SpeedDial(
         elevation: 0,

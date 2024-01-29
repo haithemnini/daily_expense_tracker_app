@@ -6,7 +6,7 @@
 // tree, read text, and verify that the values of widget properties are correct.
 
 import 'package:daily_expense_tracker_app/app/daily_tracker_app.dart';
-import 'package:daily_expense_tracker_app/core/routing/routing.dart';
+import 'package:daily_expense_tracker_app/core/router/app_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 

@@ -1,9 +1,9 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-import '../../../../core/extensions/extensions.dart';
+import '../../../../core/extension/extension.dart';
+import '../../../../core/styles/app_colors.dart';
+import '../../../../core/styles/app_text_style.dart';
 
 class ExpenseCard extends StatelessWidget {
   const ExpenseCard({
@@ -17,44 +17,33 @@ class ExpenseCard extends StatelessWidget {
       height: context.screenHeight(0.25),
       clipBehavior: Clip.antiAlias,
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(32),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.2),
-            blurRadius: 10,
-            offset: const Offset(2, 2),
-          ),
-        ],
-        gradient: LinearGradient(
-          colors: [
-            context.colorScheme.primary,
-            context.colorScheme.secondary,
-            context.colorScheme.tertiary,
+          borderRadius: BorderRadius.circular(32),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(0.2),
+              blurRadius: 10,
+              offset: const Offset(2, 2),
+            ),
           ],
-          transform: const GradientRotation(pi / 4),
-        ),
-      ),
+          gradient: AppColors.primaryGradient),
       // color: Colors.blueAccent,
       child: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            const Text(
+            Text(
               'Total Expense',
-              style: TextStyle(
+              style: AppTextStyle.caption.copyWith(
                 color: Colors.white,
-                fontSize: 16,
                 fontWeight: FontWeight.w400,
               ),
             ),
             const SizedBox(height: 8),
-            const Text(
+            Text(
               '\$ 4800.00',
-              style: TextStyle(
+              style: AppTextStyle.title2.copyWith(
                 color: Colors.white,
-                fontSize: 32,
-                fontWeight: FontWeight.w600,
               ),
             ),
             const SizedBox(height: 20),
@@ -113,17 +102,15 @@ class ExpenseCard extends StatelessWidget {
             children: [
               Text(
                 title,
-                style: const TextStyle(
+                style: AppTextStyle.caption.copyWith(
                   color: Colors.white,
-                  fontSize: 12,
                   fontWeight: FontWeight.w400,
                 ),
               ),
               Text(
                 amount,
-                style: const TextStyle(
+                style: AppTextStyle.body.copyWith(
                   color: Colors.white,
-                  fontSize: 16,
                   fontWeight: FontWeight.w600,
                 ),
               ),

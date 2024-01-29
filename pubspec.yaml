@@ -23,6 +23,7 @@ dependencies:
   freezed: ^2.4.6
   freezed_annotation: ^2.4.1
   get_it: ^7.6.4
+  pattern_formatter: ^3.0.0
   shared_preferences: ^2.2.2
 
 dev_dependencies:

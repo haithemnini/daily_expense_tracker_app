@@ -2,7 +2,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 
-import '../../../../core/extensions/extensions.dart';
+import '../../../../core/extension/extension.dart';
 
 class CustomTabBar extends StatefulWidget {
   final int tabControllerCount;

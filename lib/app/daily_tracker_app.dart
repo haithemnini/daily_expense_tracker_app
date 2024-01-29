@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import '../core/extensions/extensions.dart';
-import '../core/routing/routing.dart';
-import '../core/theming/theming.dart';
+import '../core/router/app_route.dart';
+import '../core/styles/app_theme.dart';
 
 class DailyTrackerApp extends StatelessWidget {
   const DailyTrackerApp({
@@ -15,16 +14,16 @@ class DailyTrackerApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    context.systemUiOverlayStyleConfig();
+    // context.systemUiOverlayStyleConfig();
     return ScreenUtilInit(
       splitScreenMode: true,
       minTextAdapt: true,
       designSize: const Size(390, 844),
       child: MaterialApp(
-        title: 'Daily Tracker',
         debugShowCheckedModeBanner: false,
-        theme: Themeing.lightTheme,
-        darkTheme: Themeing.darkTheme,
+        title: 'Daily Tracker',
+        theme: appTheme,
+        darkTheme: appThemeDark,
         themeMode: ThemeMode.light,
         initialRoute: RoutesName.home,
         onGenerateRoute: _appRouter.generateRoute,

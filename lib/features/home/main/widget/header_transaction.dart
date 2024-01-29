@@ -1,3 +1,4 @@
+import '../../../../core/styles/app_text_style.dart';
 import 'package:flutter/material.dart';
 
 class HeaderTransaction extends StatelessWidget {
@@ -18,13 +19,10 @@ class HeaderTransaction extends StatelessWidget {
         ),
         const Spacer(),
         TextButton(
-          onPressed: () {
-            // print('View All');
-          },
-          child: const Text(
+          onPressed: () {},
+          child: Text(
             'View All',
-            style: TextStyle(
-              fontSize: 12,
+            style: AppTextStyle.caption.copyWith(
               fontWeight: FontWeight.w400,
             ),
           ),

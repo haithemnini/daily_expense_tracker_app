@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-import '../../../core/common/categorys_list.dart';
-import '../../../core/common/common.dart';
-import '../../../core/extensions/extensions.dart';
-import '../../../core/helpers/show_modal_sheet_helpers.dart';
-import 'widgets.dart';
+import '../../../core/extension/extension.dart';
+import '../../../core/shared/categorys_list.dart';
+import '../../../core/shared/shared.dart';
+import '../../../core/utils/alerts/alerts.dart';
 
 class TransactionForm extends StatelessWidget {
   const TransactionForm({super.key});
@@ -52,6 +51,7 @@ class TransactionForm extends StatelessWidget {
               onPressed: () => _showModalSheet(context),
             ),
             ItemButton(
+              text: 'Food',
               padding: padding,
               iconSize: iconSize,
               iconColor: iconColor,
@@ -61,7 +61,6 @@ class TransactionForm extends StatelessWidget {
               backgroundItem: backgroundItem,
               icon: FontAwesomeIcons.noteSticky,
               leading: _buildItemTextFeild(context, text: 'Note'),
-              // onPressed: () {},
             ),
             ItemButton(
               text: 'Today',
@@ -90,9 +89,10 @@ class TransactionForm extends StatelessWidget {
         color: context.colorScheme.surface,
       ),
       child: const Center(
-        child: CustomTextField(
-          hintText: '\$',
+        child: CustomTextFormField(
+          maxLines: 1,
           fontSize: 38,
+          hintText: '\$',
           textAlign: TextAlign.center,
           fontWeight: FontWeight.w800,
           keyboardType: TextInputType.number,
@@ -104,18 +104,22 @@ class TransactionForm extends StatelessWidget {
 
   _buildItemTextFeild(BuildContext context, {required String text}) {
     return Flexible(
-      child: CustomTextField(
+      child: CustomTextFormField(
         hintText: text,
-        fontSize: 16,
+        fontSize: 14,
         textAlign: TextAlign.start,
         fontWeight: FontWeight.w400,
         keyboardType: TextInputType.text,
+        contentPadding: const EdgeInsets.symmetric(
+          horizontal: 0,
+          vertical: 0,
+        ),
       ),
     );
   }
 
   void _showModalSheet(BuildContext context) {
-    showModalSheetHelpers(
+    Alerts.showSheet(
       context: context,
       heigh: context.screenHeight(0.45),
       child: Expanded(

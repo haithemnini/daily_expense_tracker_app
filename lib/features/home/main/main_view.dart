@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../../core/common/common.dart';
+import '../../../core/shared/shared.dart';
 import 'widget/widget.dart';
 
 class MainView extends StatelessWidget {
@@ -12,7 +12,7 @@ class MainView extends StatelessWidget {
       child: Center(
         child: Column(
           children: [
-            HeaderApp(),
+            HeaderAppBar(),
             SizedBox(height: 20),
             ExpenseCard(),
             HeaderTransaction(),

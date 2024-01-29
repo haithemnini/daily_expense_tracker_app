@@ -1,7 +1,8 @@
+import '../../../core/styles/app_text_style.dart';
 import 'package:flutter/material.dart';
 
-import '../../../core/common/common.dart';
-import '../../../core/extensions/extensions.dart';
+import '../../../core/extension/extension.dart';
+import '../../../core/shared/shared.dart';
 
 class ItemSettings extends StatelessWidget {
   const ItemSettings({
@@ -45,8 +46,7 @@ class ItemSettings extends StatelessWidget {
                 Expanded(
                   child: Text(
                     title,
-                    style: const TextStyle(
-                      fontSize: 14,
+                    style: AppTextStyle.body.copyWith(
                       fontWeight: FontWeight.w600,
                     ),
                   ),

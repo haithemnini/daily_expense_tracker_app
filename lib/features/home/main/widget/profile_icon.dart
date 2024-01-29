@@ -1,6 +1,8 @@
+import 'package:daily_expense_tracker_app/core/helper/helper.dart';
 import 'package:flutter/material.dart';
 
-import '../../../../core/extensions/devices_extension.dart';
+import '../../../../core/extension/extension.dart';
+import '../../../../core/styles/app_text_style.dart';
 
 class ProfileIcon extends StatelessWidget {
   const ProfileIcon({
@@ -19,7 +21,7 @@ class ProfileIcon extends StatelessWidget {
           children: [
             ClipOval(
               child: Image.asset(
-                'assets/images/profile.png',
+                Helper.getAssetImage('profile.png'),
                 height: 40,
                 width: 40,
                 fit: BoxFit.cover,
@@ -34,17 +36,15 @@ class ProfileIcon extends StatelessWidget {
           children: [
             Text(
               'Welcome !',
-              style: TextStyle(
+              style: AppTextStyle.caption.copyWith(
                 color: context.colorScheme.outline,
-                fontSize: 12,
                 fontWeight: FontWeight.w400,
               ),
             ),
             Text(
               'John Doe',
-              style: TextStyle(
+              style: AppTextStyle.subtitle.copyWith(
                 color: context.colorScheme.onBackground,
-                fontSize: 16,
                 fontWeight: FontWeight.w600,
               ),
             ),
