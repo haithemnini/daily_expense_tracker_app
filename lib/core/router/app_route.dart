@@ -3,17 +3,16 @@ import 'package:flutter/material.dart';
 
 import '../../features/home/home_view.dart';
 import '../../features/profile/profile_view.dart';
-import '../../features/settings/settings_view.dart';
 import '../../features/transaction/transaction_view.dart';
 import '../enum/enum.dart';
 
 @immutable
-class RoutesName {
-  const RoutesName._();
+class RouteName {
+  const RouteName._();
   static const String home = '/';
-  static const String transaction = '/transaction';
   static const String settings = '/settings';
   static const String profile = '/profile';
+  static const String transaction = '/transaction';
 }
 
 @immutable
@@ -22,24 +21,29 @@ class AppRouter {
     final arguments = settings.arguments;
 
     switch (settings.name) {
-      case RoutesName.home:
+      case RouteName.home:
         return _getPageRoute(
           routeName: settings.name,
           viewToShow: const HomeView(),
         );
-      case RoutesName.transaction:
+      case RouteName.transaction:
         return _getPageRoute(
           routeName: settings.name,
           viewToShow: TransactionView(
             transaction: arguments as TransactionType,
           ),
         );
-      case RoutesName.settings:
+      case RouteName.settings:
         return _getPageRoute(
           routeName: settings.name,
-          viewToShow: const SettingsView(),
+          viewToShow: const Scaffold(
+            body: Center(
+              child: Text('Add Expense'),
+            ),
+          ),
         );
-      case RoutesName.profile:
+
+      case RouteName.profile:
         return _getPageRoute(
           routeName: settings.name,
           viewToShow: const ProfileView(),
