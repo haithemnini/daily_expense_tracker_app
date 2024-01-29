@@ -6,9 +6,6 @@ extension DevicesContextExtension on BuildContext {
   // Returns the current [ThemeData] of the [BuildContext].
   ThemeData get _theme => Theme.of(this);
 
-  // Sets the system UI overlay based on the current [BuildContext].
-  // void overlaySystemUiConfig() => OverlaySystemUiConfig.overlaySystemUi(this);
-
   // Calculates the screen height based on the current [BuildContext] and a given value.
   double screenHeight(double value) => ScreenUtil().screenHeight * value;
 
@@ -26,7 +23,4 @@ extension DevicesContextExtension on BuildContext {
 
   // Returns the width of the current [BuildContext]'s device.
   double get deviceWidth => deviceSize.width;
-
-  // Returns the height of the current [BuildContext]'s device.
-  bool isDarkTheme() => _theme.brightness == Brightness.dark;
 }

@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import '../core/routing/routing.dart';
+import '../core/router/app_route.dart';
+import '../core/styles/app_theme.dart';
 
 class DailyTrackerApp extends StatelessWidget {
   const DailyTrackerApp({
@@ -18,13 +19,12 @@ class DailyTrackerApp extends StatelessWidget {
       minTextAdapt: true,
       designSize: const Size(390, 844),
       child: MaterialApp(
-        title: 'Daily Tracker ',
         debugShowCheckedModeBanner: false,
-        theme: ThemeData(
-          colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-          useMaterial3: true,
-        ),
-        initialRoute: '/',
+        title: 'Daily Tracker',
+        theme: appTheme,
+        darkTheme: appThemeDark,
+        themeMode: ThemeMode.light,
+        initialRoute: RoutesName.home,
         onGenerateRoute: _appRouter.generateRoute,
       ),
     );

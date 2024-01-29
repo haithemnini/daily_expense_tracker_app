@@ -1,11 +1,11 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:get_it/get_it.dart';
 
-import '../../firebase_options.dart';
+import 'firebase_options.dart';
 
 final getIt = GetIt.I;
 
-Future<void> initConfig() async {
+Future<void> initAppConfig() async {
   // Initialize [FirebaseApp].
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
 

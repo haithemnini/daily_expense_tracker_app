@@ -14,11 +14,9 @@ extension RoutesContextExtension on BuildContext {
       Navigator.pushReplacementNamed(this, routeName, arguments: arguments);
 
   // Pushes a named route onto the navigation stack and removes all previous routes.
-  void pushNamedAndRemoveUntil(String routeName, {Object? arguments}) =>
-      Navigator.pushNamedAndRemoveUntil(
-        this,
-        routeName,
-        (Route<dynamic> route) => false,
-        arguments: arguments,
-      );
+  void pushNamedAndRemoveUntil(String routeName, {Object? arguments}) {
+    Navigator.pushNamedAndRemoveUntil(
+        this, routeName, (Route<dynamic> route) => false,
+        arguments: arguments);
+  }
 }
