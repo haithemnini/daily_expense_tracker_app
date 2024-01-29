@@ -8,27 +8,36 @@ environment:
   sdk: '>=3.2.3 <4.0.0'
 
 dependencies:
-  bloc: ^8.1.2
-  build_runner: ^2.4.7
-  cupertino_icons: ^1.0.2
-  firebase_auth: ^4.16.0
-  firebase_core: ^2.24.2
   flutter:
     sdk: flutter
-  flutter_bloc: ^8.1.3
+  # BLoC state management library
+  bloc: ^8.1.2 
+  # Code generation for BLoC
+  build_runner: ^2.4.7 
+  # Icons for Cupertino (iOS-style) widgets
+  cupertino_icons: ^1.0.2 
+  # Integrates Firebase authentication into Flutter apps
+  firebase_auth: ^4.16.0
+  # Core Flutter Firebase plugin
+  firebase_core: ^2.24.2
+  # State management library for Flutter
+  flutter_bloc: ^8.1.3 
+  # Flutter screen adaptation utility
   flutter_screenutil: ^5.9.0
-  flutter_speed_dial: ^7.0.0
-  flutter_styled_toast: ^2.2.1
-  font_awesome_flutter: ^10.6.0
-  freezed: ^2.4.6
-  freezed_annotation: ^2.4.1
-  get_it: ^7.6.4
-  shared_preferences: ^2.2.2
+  # Toast notifications for Flutter
+  flutter_styled_toast: ^2.2.1 
+  # Code generation for immutable classes
+  freezed: ^2.4.6 
+  freezed_annotation: ^2.4.1 
+  # Service locator for dependency injection
+  get_it: ^7.6.4 
+  # Persistent storage for Flutter
+  shared_preferences: ^2.2.2 
 
 dev_dependencies:
-  flutter_lints: ^2.0.0
   flutter_test:
     sdk: flutter
+  flutter_lints: ^2.0.0
 
 flutter:
 
@@ -38,12 +47,9 @@ flutter:
     - assets/svgs/
     - assets/images/
 
-  fonts:
-    - family: Inter
-      fonts:
-        - asset: assets/fonts/Inter-Bold.ttf
-          weight: 700
-        - asset: assets/fonts/Inter-Light.ttf
-        - asset: assets/fonts/Inter-Medium.ttf
-        - asset: assets/fonts/Inter-Regular.ttf
-        - asset: assets/fonts/Inter-SemiBold.ttf
+  # fonts:
+  #   - family: Schyler
+  #     fonts:
+  #       - asset: fonts/Schyler-Regular.ttf
+  #       - asset: fonts/Schyler-Italic.ttf
+  #         style: italic
