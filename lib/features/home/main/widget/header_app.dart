@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import '../../../../core/common/common.dart';
+import '../../../../core/extensions/extensions.dart';
+import '../../../../core/routing/routing.dart';
 import 'widget.dart';
 
 class HeaderApp extends StatelessWidget {
@@ -14,8 +16,8 @@ class HeaderApp extends StatelessWidget {
       children: [
         const ProfileIcon(),
         CustomIconBottom(
-          onPressed: () {},
           icon: FontAwesomeIcons.gear,
+          onPressed: () => context.pushNamed(RoutesName.settings),
         ),
       ],
     );
