@@ -43,7 +43,7 @@ class AppFloatingActionButton extends StatelessWidget {
               // print('Add Expense');
               context.pushNamed(
                 RoutesName.transaction,
-                arguments: TransactionType.addExpense,
+                arguments: Transaction.addExpense,
               );
             },
           ),
@@ -56,7 +56,7 @@ class AppFloatingActionButton extends StatelessWidget {
               // print('Add Icome');
               context.pushNamed(
                 RoutesName.transaction,
-                arguments: TransactionType.addIncome,
+                arguments: Transaction.addIncome,
               );
             },
           ),

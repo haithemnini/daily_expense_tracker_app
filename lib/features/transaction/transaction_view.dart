@@ -12,7 +12,7 @@ class TransactionView extends StatelessWidget {
     required this.transaction,
   });
 
-  final TransactionType transaction;
+  final Transaction transaction;
 
   @override
   Widget build(BuildContext context) {
@@ -57,16 +57,16 @@ class TransactionView extends StatelessWidget {
     String transactionText;
 
     switch (transaction) {
-      case TransactionType.addExpense:
+      case Transaction.addExpense:
         transactionText = 'Add Expense';
         break;
-      case TransactionType.addIncome:
+      case Transaction.addIncome:
         transactionText = 'Add Income';
         break;
-      case TransactionType.editExpense:
+      case Transaction.editExpense:
         transactionText = 'Edit Expense';
         break;
-      case TransactionType.editIncome:
+      case Transaction.editIncome:
         transactionText = 'Edit Income';
         break;
     }

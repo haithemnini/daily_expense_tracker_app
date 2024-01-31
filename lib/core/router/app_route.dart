@@ -31,7 +31,7 @@ class AppRouter {
         return _getPageRoute(
           routeName: settings.name,
           viewToShow: TransactionView(
-            transaction: arguments as TransactionType,
+            transaction: arguments as Transaction,
           ),
         );
       case RoutesName.settings:

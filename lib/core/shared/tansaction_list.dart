@@ -107,7 +107,7 @@ class TransactionList extends StatelessWidget {
     context.pop();
     context.pushNamed(
       RoutesName.transaction,
-      arguments: TransactionType.editExpense,
+      arguments: Transaction.editExpense,
     );
   }
 }
