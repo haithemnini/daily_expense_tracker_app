@@ -1,6 +1,7 @@
-import '../extension/extension.dart';
 import 'package:flutter/material.dart';
 import 'package:pattern_formatter/pattern_formatter.dart';
+
+import '../extension/extension.dart';
 
 class CustomTextFormField extends StatelessWidget {
   const CustomTextFormField({

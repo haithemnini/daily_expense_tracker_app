@@ -3,10 +3,10 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import '../enum/enum.dart';
 import '../extension/extension.dart';
+import '../router/app_route.dart';
 import '../router/router.dart';
 import '../styles/app_text_style.dart';
 import '../utils/alerts/alerts.dart';
-import '../router/app_route.dart';
 import 'item_button.dart';
 
 class TransactionList extends StatelessWidget {
@@ -107,7 +107,7 @@ class TransactionList extends StatelessWidget {
     context.pop();
     context.pushNamed(
       RoutesName.transaction,
-      arguments: TransactionType.editExpense,
+      arguments: Transaction.editExpense,
     );
   }
 }
