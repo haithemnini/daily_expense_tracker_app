@@ -1,0 +1,23 @@
+name: db_firestore_client
+description: "a package for firebase database operations."
+version: 0.0.1
+homepage: null
+
+environment:
+  sdk: '>=3.2.3 <4.0.0'
+  flutter: ">=1.17.0"
+
+dependencies:
+  # firebase_auth: ^4.16.0
+  # firebase_core: ^2.24.2
+  # firebase_storage: ^11.6.0
+  cloud_firestore: ^4.14.0
+  flutter:
+    sdk: flutter
+
+dev_dependencies:
+  flutter_lints: ^2.0.0
+  flutter_test:
+    sdk: flutter
+
+flutter: null

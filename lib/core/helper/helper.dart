@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-import '../utils/config/overlay_style_config.dart';
+import '../config/overlay_style_config.dart';
 
 class Helper {
   /// Sets the system UI overlay style for navigation elements.
