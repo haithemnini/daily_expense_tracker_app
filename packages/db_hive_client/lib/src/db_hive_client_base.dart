@@ -1,7 +1,9 @@
+import 'package:flutter/material.dart';
+
 abstract class DbHiveClientBase {
   Future<bool> initDb({
     required String dbName,
-    required List<Type> adapterList,
+    required VoidCallback onRegisterAdapter,
   });
 
   Future<List<T>> getAll<T>({

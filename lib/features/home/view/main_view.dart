@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-import '../../../core/shared/shared.dart';
 import 'widgets/widgets.dart';
 
 class MainView extends StatelessWidget {
@@ -16,7 +15,7 @@ class MainView extends StatelessWidget {
             SizedBox(height: 20),
             ExpenseCard(),
             HeaderTransaction(),
-            TransactionList(),
+            AllTransaction(),
           ],
         ),
       ),

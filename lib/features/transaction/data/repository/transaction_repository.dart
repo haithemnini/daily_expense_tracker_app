@@ -2,11 +2,11 @@ import 'package:db_firestore_client/db_firestore_client.dart';
 import 'package:db_hive_client/db_hive_client.dart';
 
 import '../../../../core/models/transaction_model.dart';
-
 import 'transaction_base_repository.dart';
 
 class TransactionRepository implements TransactionBaseRepository {
   final DbFirestoreClientBase _dbFirestoreClient;
+  // ignore: unused_field
   final DbHiveClientBase _dbHiveClient;
 
   TransactionRepository({

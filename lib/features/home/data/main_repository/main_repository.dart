@@ -1,5 +1,5 @@
-import 'package:daily_expense_tracker_app/core/extension/extension.dart';
-import 'package:daily_expense_tracker_app/core/models/transaction_hive_model.dart';
+import '../../../../core/extension/extension.dart';
+import '../../../../core/models/transaction_hive_model.dart';
 import 'package:daily_expense_tracker_app/core/service/network_info.dart';
 import 'package:db_firestore_client/db_firestore_client.dart';
 import 'package:db_hive_client/db_hive_client.dart';
@@ -9,17 +9,17 @@ import '../../../../core/models/totals_transaction_model.dart';
 import '../../../../core/models/transaction_model.dart';
 import '../../../../core/utils/models/app_result.dart';
 import '../../../../core/utils/typedef/typedef.dart';
-import 'home_base_repository.dart';
+import 'main_base_repository.dart';
 
-class HomeRepository implements HomeBaseRepository {
+class MainRepository implements MainBaseRepository {
   final DbFirestoreClientBase _dbFirestoreClient;
   final DbHiveClientBase _dbHiveClient;
-  final NetworkInfo _networkInfo;
+  final NetworkInfoBase _networkInfo;
 
-  HomeRepository({
+  MainRepository({
     required DbFirestoreClientBase dbFirestoreClient,
     required DbHiveClientBase dbHiveClient,
-    required NetworkInfo networkInfo,
+    required NetworkInfoBase networkInfo,
   })  : _dbFirestoreClient = dbFirestoreClient,
         _dbHiveClient = dbHiveClient,
         _networkInfo = networkInfo;
@@ -96,8 +96,7 @@ class HomeRepository implements HomeBaseRepository {
         );
         return AppResult.success(result);
       } else {
-        final List<TransactionHiveModel> result =
-            await _dbHiveClient.getAll<TransactionHiveModel>(
+        final result = await _dbHiveClient.getAll<TransactionHiveModel>(
           boxName: 'transactions',
         );
 

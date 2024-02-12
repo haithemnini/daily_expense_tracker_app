@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:hive_flutter/adapters.dart';
 
 import '../db_hive_client.dart';
@@ -7,14 +8,12 @@ class DbHiveClient implements DbHiveClientBase {
   @override
   Future<bool> initDb({
     required String dbName,
-    required List<Type> adapterList,
+    required VoidCallback onRegisterAdapter,
   }) async {
     try {
       final appDocumentDir = await getApplicationDocumentsDirectory();
       Hive.init(appDocumentDir.path);
-      for (var adapter in adapterList) {
-        Hive.registerAdapter(adapter as TypeAdapter);
-      }
+      onRegisterAdapter();
       await Hive.openBox(dbName);
       return true;
     } catch (err) {
