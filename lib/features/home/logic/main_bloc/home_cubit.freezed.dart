@@ -3,7 +3,7 @@
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
-part of 'home_cubit.dart';
+part of 'main_cubit.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -15,7 +15,7 @@ final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 /// @nodoc
-mixin _$HomeState {
+mixin _$MainState {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
@@ -77,12 +77,12 @@ mixin _$HomeState {
 
 /// @nodoc
 abstract class $HomeStateCopyWith<$Res> {
-  factory $HomeStateCopyWith(HomeState value, $Res Function(HomeState) then) =
-      _$HomeStateCopyWithImpl<$Res, HomeState>;
+  factory $HomeStateCopyWith(MainState value, $Res Function(MainState) then) =
+      _$HomeStateCopyWithImpl<$Res, MainState>;
 }
 
 /// @nodoc
-class _$HomeStateCopyWithImpl<$Res, $Val extends HomeState>
+class _$HomeStateCopyWithImpl<$Res, $Val extends MainState>
     implements $HomeStateCopyWith<$Res> {
   _$HomeStateCopyWithImpl(this._value, this._then);
 
@@ -209,7 +209,7 @@ class _$InitialImpl implements _Initial {
   }
 }
 
-abstract class _Initial implements HomeState {
+abstract class _Initial implements MainState {
   const factory _Initial() = _$InitialImpl;
 }
 
@@ -330,7 +330,7 @@ class _$LoadingImpl implements Loading {
   }
 }
 
-abstract class Loading implements HomeState {
+abstract class Loading implements MainState {
   const factory Loading() = _$LoadingImpl;
 }
 
@@ -485,7 +485,7 @@ class _$LoadedImpl implements Loaded {
   }
 }
 
-abstract class Loaded implements HomeState {
+abstract class Loaded implements MainState {
   const factory Loaded(final List<TransactionModel> transactions) =
       _$LoadedImpl;
 
@@ -650,7 +650,7 @@ class _$LoadedTotalsImpl implements LoadedTotals {
   }
 }
 
-abstract class LoadedTotals implements HomeState {
+abstract class LoadedTotals implements MainState {
   const factory LoadedTotals(final TotalsTransactionModel totalsTransactions) =
       _$LoadedTotalsImpl;
 
@@ -803,7 +803,7 @@ class _$ErrorImpl implements Error {
   }
 }
 
-abstract class Error implements HomeState {
+abstract class Error implements MainState {
   const factory Error(final String message) = _$ErrorImpl;
 
   String get message;

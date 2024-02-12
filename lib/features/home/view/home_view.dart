@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../core/extension/extension.dart';
 import '../../../core/helper/helper.dart';
+import '../logic/main_bloc/main_cubit.dart';
 import 'main_view.dart';
 import 'stat_view.dart';
 import 'widgets/widgets.dart';
@@ -17,13 +19,16 @@ class _HomeViewState extends State<HomeView> {
   // The current index of the bottom navigation bar.
   int _currentIndex = 0;
   // The pages to be displayed.
-  final List<Widget> _pages = const [MainView(), StatView()];
+  final List<Widget> _pages = const [
+    MainView(),
+    StatView(),
+  ];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: _buildAppBar(context),
-      floatingActionButton: const AppFloatingActionButton(),
+      floatingActionButton: const AppFloatingButton(),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       bottomNavigationBar: AppBottomNavBar(
         currentIndex: _currentIndex,
@@ -36,7 +41,15 @@ class _HomeViewState extends State<HomeView> {
     );
   }
 
-  void _changePage(int index) => setState(() => _currentIndex = index);
+  void _changePage(int index) {
+    if (index == 0) {
+      context.read<MainCubit>().getTotalsTransactions().then((_) {
+        context.read<MainCubit>().getAllTransactions();
+      });
+    }
+
+    setState(() => _currentIndex = index);
+  }
 
   AppBar _buildAppBar(BuildContext context) {
     return AppBar(

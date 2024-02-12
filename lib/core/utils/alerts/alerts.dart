@@ -1,6 +1,5 @@
+import 'package:daily_expense_tracker_app/core/extension/extension.dart';
 import 'package:flutter/material.dart';
-
-import '../../extension/extension.dart';
 
 class Alerts {
   static void showSheet({
@@ -11,6 +10,11 @@ class Alerts {
     showModalBottomSheet(
       context: context,
       useSafeArea: true,
+      showDragHandle: true,
+      constraints: BoxConstraints(
+        maxHeight: heigh ?? context.deviceSize.height * 0.5,
+        maxWidth: context.deviceSize.width * 0.97,
+      ),
       isScrollControlled: true,
       clipBehavior: Clip.antiAlias,
       shape: const RoundedRectangleBorder(
@@ -19,40 +23,13 @@ class Alerts {
         ),
       ),
       builder: (BuildContext context) {
-        return SizedBox(
-          width: context.screenWidth(0.92),
-          height: heigh,
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              _buildHandle(context),
-              child,
-            ],
-          ),
+        return Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            child,
+          ],
         );
       },
-    );
-  }
-
-  static Widget _buildHandle(BuildContext context) {
-    final theme = Theme.of(context);
-
-    return FractionallySizedBox(
-      widthFactor: 0.08,
-      child: Container(
-        margin: const EdgeInsets.symmetric(
-          vertical: 12.0,
-        ),
-        child: Container(
-          height: 5.0,
-          decoration: BoxDecoration(
-            color: theme.dividerColor,
-            borderRadius: const BorderRadius.all(
-              Radius.circular(2.5),
-            ),
-          ),
-        ),
-      ),
     );
   }
 }

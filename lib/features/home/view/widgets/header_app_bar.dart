@@ -15,9 +15,6 @@ class HeaderAppBar extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         const ProfileIcon(),
-        BackButton(
-          onPressed: () {},
-        ),
         CustomIconBottom(
           icon: FontAwesomeIcons.gear,
           onPressed: () => context.pushNamed(RoutesName.settings),

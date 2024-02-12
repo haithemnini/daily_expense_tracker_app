@@ -1,6 +1,6 @@
 import '../../../../core/utils/typedef/typedef.dart';
 
-abstract class HomeBaseRepository {
+abstract class MainBaseRepository {
   TransactionsAllStreamResult getAllTransactionsStream();
   TotalsTransactionsStreamResult getTotalsTransactionsStream();
   TransactionAllResult getAllTransactions();

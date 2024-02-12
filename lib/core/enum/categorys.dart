@@ -207,6 +207,13 @@ enum Categorys {
     required this.icon,
     required this.backgroundIcon,
   });
+
+  static Categorys fromIndex(int categoryIndex) {
+    return Categorys.values.firstWhere(
+      (category) => category.index == categoryIndex,
+      orElse: () => Categorys.others,
+    );
+  }
 }
 
 const List<Categorys> categorys = Categorys.values;

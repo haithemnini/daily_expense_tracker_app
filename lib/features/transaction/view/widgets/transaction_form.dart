@@ -121,12 +121,8 @@ class TransactionForm extends StatelessWidget {
   void _showModalSheet(BuildContext context) {
     Alerts.showSheet(
       context: context,
-      heigh: context.screenHeight(0.45),
-      child: Expanded(
-        child: Container(
-          margin: const EdgeInsets.symmetric(vertical: 10.0),
-          child: const CategorysList(),
-        ),
+      child: const Expanded(
+        child: CategorysList(),
       ),
     );
   }
