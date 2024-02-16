@@ -1,4 +1,5 @@
 import 'package:daily_expense_tracker_app/core/helper/helper.dart';
+import 'package:daily_expense_tracker_app/features/transaction/logic/transaction_cubit/transaction_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -22,6 +23,7 @@ class DailyTrackerApp extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider(create: (_) => getIt<MainCubit>()),
+        BlocProvider(create: (_) => getIt<TransactionCubit>()),
       ],
       child: ScreenUtilInit(
         splitScreenMode: true,
@@ -32,7 +34,7 @@ class DailyTrackerApp extends StatelessWidget {
           title: 'Daily Tracker',
           theme: appTheme,
           darkTheme: appThemeDark,
-          themeMode: ThemeMode.light,
+          themeMode: ThemeMode.dark,
           initialRoute: RoutesName.home,
           onGenerateRoute: _appRouter.generateRoute,
         ),

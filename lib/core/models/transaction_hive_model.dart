@@ -3,41 +3,54 @@ import 'package:hive/hive.dart';
 part 'transaction_hive_model.g.dart';
 
 @HiveType(typeId: 0)
-class TransactionHiveModel extends HiveObject {
+class TransactionHive extends HiveObject {
   @HiveField(0)
-  String? userId;
+  String uuid;
 
   @HiveField(1)
-  String title;
+  String? userId;
 
   @HiveField(2)
-  String description;
-
-  @HiveField(3)
   double amount;
 
-  @HiveField(4)
+  @HiveField(3)
   DateTime date;
 
+  @HiveField(4)
+  int categorysIndex;
+
   @HiveField(5)
-  int categoryIndex;
+  TransactionCategoryHive transactionCategory;
 
-  @HiveField(6)
-  TransactionTypeHive transactionType;
-
-  TransactionHiveModel({
+  TransactionHive({
+    required this.uuid,
     required this.userId,
-    required this.title,
-    required this.description,
-    required this.amount,
     required this.date,
-    required this.categoryIndex,
-    required this.transactionType,
+    required this.amount,
+    required this.categorysIndex,
+    required this.transactionCategory,
   });
+
+  // factory TransactionHive.toHiveModel(
+  //   Transaction transaction, {
+  //   required String uuid,
+  // }) {
+  //   return TransactionHive(
+  //     uuid: uuid,
+  //     userId: transaction.userId,
+  //     amount: transaction.amount,
+  //     date: transaction.date,
+  //     categorysIndex: transaction.categorysIndex,
+  //     transactionCategory:
+  //         transaction.transactionCategory == TransactionCategory.expense
+  //             ? TransactionCategoryHive.expense
+  //             : TransactionCategoryHive.income,
+  //   );
+  // }
 }
 
 @HiveType(typeId: 1)
-enum TransactionTypeHive {
+enum TransactionCategoryHive {
   @HiveField(0)
   expense,
 
@@ -45,17 +58,18 @@ enum TransactionTypeHive {
   income,
 }
 
-class NewTransactionTypeHiveAdapter extends TypeAdapter<TransactionTypeHive> {
+class NewTransactionCategoryHiveAdapter
+    extends TypeAdapter<TransactionCategoryHive> {
   @override
   final int typeId = 2;
 
   @override
-  TransactionTypeHive read(BinaryReader reader) {
-    return TransactionTypeHive.values[reader.readByte()];
+  TransactionCategoryHive read(BinaryReader reader) {
+    return TransactionCategoryHive.values[reader.readByte()];
   }
 
   @override
-  void write(BinaryWriter writer, TransactionTypeHive obj) {
+  void write(BinaryWriter writer, TransactionCategoryHive obj) {
     writer.writeByte(obj.index);
   }
 }

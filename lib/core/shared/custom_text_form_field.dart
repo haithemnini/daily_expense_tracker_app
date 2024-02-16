@@ -12,12 +12,14 @@ class CustomTextFormField extends StatelessWidget {
     required this.textAlign,
     required this.fontWeight,
     required this.keyboardType,
+    required this.controller,
     this.contentPadding,
     this.border,
     this.prefixIcon,
     this.enabledBorder,
     this.focusedBorder,
     this.errorBorder,
+    this.prefixText,
   });
 
   final int? maxLines;
@@ -26,22 +28,26 @@ class CustomTextFormField extends StatelessWidget {
   final double fontSize;
   final TextAlign textAlign;
   final FontWeight fontWeight;
+  final TextEditingController controller;
   final TextInputType keyboardType;
   final EdgeInsetsGeometry? contentPadding;
   final InputBorder? border;
   final InputBorder? enabledBorder;
   final InputBorder? focusedBorder;
   final InputBorder? errorBorder;
+  final String? prefixText;
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
       maxLines: maxLines,
       textAlign: textAlign,
+      controller: controller,
       autovalidateMode: AutovalidateMode.onUserInteraction,
       onTapOutside: (_) => FocusManager.instance.primaryFocus?.unfocus(),
       decoration: InputDecoration(
         prefixIcon: prefixIcon,
+        prefixText: prefixText,
         isDense: true,
         hintText: hintText,
         hintStyle: TextStyle(

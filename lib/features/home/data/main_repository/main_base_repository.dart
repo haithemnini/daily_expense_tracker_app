@@ -1,10 +1,12 @@
-import '../../../../core/utils/typedef/typedef.dart';
+import '../../../../core/models/totals_transaction_model.dart';
+import '../../../../core/models/transaction_model.dart';
+import '../../../../core/utils/models/app_result.dart';
 
 abstract class MainBaseRepository {
-  TransactionsAllStreamResult getAllTransactionsStream();
-  TotalsTransactionsStreamResult getTotalsTransactionsStream();
-  TransactionAllResult getAllTransactions();
-  TotalsTransactionsResult getTotalsTransactions();
+  Stream<List<Transaction>> getAllStream();
+  Stream<TotalsTransaction> getTotalsStream();
+  Future<AppResult<List<Transaction>>> getAll();
+  Future<AppResult<TotalsTransaction>> getTotals();
   // Stream<TotalsTransactionModel> getStreamTotalsWithFirestore();
   // getStreamTotalsWithHive();
   // Future<void> addTransaction(TotalsTransactionModel totalsTransactionModel);
@@ -14,4 +16,6 @@ abstract class MainBaseRepository {
   // Future<void> deleteAllTransactions();
   // Future<void> updateTotalsTransaction(TotalsTransactionModel totalsTransactionModel);
   // Future<void> addTotalsTransaction(TotalsTransactionModel totalsTransactionModel);
+
+  void dispose();
 }

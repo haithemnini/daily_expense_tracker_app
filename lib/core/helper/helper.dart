@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:uuid/uuid.dart';
 
 import '../config/overlay_style_config.dart';
 
@@ -40,5 +41,9 @@ class Helper {
   //get asset svg path from assets folder
   static String getAssetSvg(String name) {
     return 'assets/svgs/$name';
+  }
+
+  static String generateUUID() {
+    return const Uuid().v4();
   }
 }

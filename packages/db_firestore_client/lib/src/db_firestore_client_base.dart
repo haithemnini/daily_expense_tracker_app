@@ -1,12 +1,12 @@
 import 'common/core_typedefs.dart';
 
 abstract class DbFirestoreClientBase {
-  Future<String> addDocument({
+  Future<void> addDocument({
     required String collectionPath,
     required Map<String, dynamic> data,
   });
 
-  Future<String> updateDocument({
+  Future<void> updateDocument({
     required String collectionPath,
     required Map<String, dynamic> data,
   });
@@ -53,13 +53,13 @@ abstract class DbFirestoreClientBase {
     required String collectionPath,
     required ObjectMapper<T> mapper,
     required String field,
-    required dynamic value,
+    required dynamic isEqualTo,
   });
 
   Future<List<T>> getQuery<T>({
     required String collectionPath,
     required ObjectMapper<T> mapper,
     required String field,
-    required dynamic value,
+    required dynamic isEqualTo,
   });
 }

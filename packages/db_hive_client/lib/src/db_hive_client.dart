@@ -6,7 +6,7 @@ import 'package:path_provider/path_provider.dart';
 
 class DbHiveClient implements DbHiveClientBase {
   @override
-  Future<bool> initDb({
+  Future<bool> initDb<T>({
     required String dbName,
     required VoidCallback onRegisterAdapter,
   }) async {
@@ -14,7 +14,7 @@ class DbHiveClient implements DbHiveClientBase {
       final appDocumentDir = await getApplicationDocumentsDirectory();
       Hive.init(appDocumentDir.path);
       onRegisterAdapter();
-      await Hive.openBox(dbName);
+      await Hive.openBox<T>(dbName);
       return true;
     } catch (err) {
       throw Exception('Failed to init db: $err');
@@ -60,12 +60,13 @@ class DbHiveClient implements DbHiveClientBase {
 
   @override
   Future<void> add<T>({
-    required T modelHive,
     required String boxName,
+    required String modelId,
+    required T modelHive,
   }) {
     try {
       final box = Hive.box<T>(boxName);
-      box.add(modelHive);
+      box.put(modelId, modelHive);
       return Future.value();
     } catch (err) {
       throw Exception('Failed to add: $err');

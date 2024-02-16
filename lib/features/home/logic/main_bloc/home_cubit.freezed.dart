@@ -20,8 +20,8 @@ mixin _$MainState {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function(List<TransactionModel> transactions) loaded,
-    required TResult Function(TotalsTransactionModel totalsTransactions)
+    required TResult Function(List<Transaction> transactions) loaded,
+    required TResult Function(TotalsTransaction totalsTransactions)
         loadedTotals,
     required TResult Function(String message) error,
   }) =>
@@ -30,8 +30,8 @@ mixin _$MainState {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function(List<TransactionModel> transactions)? loaded,
-    TResult? Function(TotalsTransactionModel totalsTransactions)? loadedTotals,
+    TResult? Function(List<Transaction> transactions)? loaded,
+    TResult? Function(TotalsTransaction totalsTransactions)? loadedTotals,
     TResult? Function(String message)? error,
   }) =>
       throw _privateConstructorUsedError;
@@ -39,8 +39,8 @@ mixin _$MainState {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function(List<TransactionModel> transactions)? loaded,
-    TResult Function(TotalsTransactionModel totalsTransactions)? loadedTotals,
+    TResult Function(List<Transaction> transactions)? loaded,
+    TResult Function(TotalsTransaction totalsTransactions)? loadedTotals,
     TResult Function(String message)? error,
     required TResult orElse(),
   }) =>
@@ -132,8 +132,8 @@ class _$InitialImpl implements _Initial {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function(List<TransactionModel> transactions) loaded,
-    required TResult Function(TotalsTransactionModel totalsTransactions)
+    required TResult Function(List<Transaction> transactions) loaded,
+    required TResult Function(TotalsTransaction totalsTransactions)
         loadedTotals,
     required TResult Function(String message) error,
   }) {
@@ -145,8 +145,8 @@ class _$InitialImpl implements _Initial {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function(List<TransactionModel> transactions)? loaded,
-    TResult? Function(TotalsTransactionModel totalsTransactions)? loadedTotals,
+    TResult? Function(List<Transaction> transactions)? loaded,
+    TResult? Function(TotalsTransaction totalsTransactions)? loadedTotals,
     TResult? Function(String message)? error,
   }) {
     return initial?.call();
@@ -157,8 +157,8 @@ class _$InitialImpl implements _Initial {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function(List<TransactionModel> transactions)? loaded,
-    TResult Function(TotalsTransactionModel totalsTransactions)? loadedTotals,
+    TResult Function(List<Transaction> transactions)? loaded,
+    TResult Function(TotalsTransaction totalsTransactions)? loadedTotals,
     TResult Function(String message)? error,
     required TResult orElse(),
   }) {
@@ -253,8 +253,8 @@ class _$LoadingImpl implements Loading {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function(List<TransactionModel> transactions) loaded,
-    required TResult Function(TotalsTransactionModel totalsTransactions)
+    required TResult Function(List<Transaction> transactions) loaded,
+    required TResult Function(TotalsTransaction totalsTransactions)
         loadedTotals,
     required TResult Function(String message) error,
   }) {
@@ -266,8 +266,8 @@ class _$LoadingImpl implements Loading {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function(List<TransactionModel> transactions)? loaded,
-    TResult? Function(TotalsTransactionModel totalsTransactions)? loadedTotals,
+    TResult? Function(List<Transaction> transactions)? loaded,
+    TResult? Function(TotalsTransaction totalsTransactions)? loadedTotals,
     TResult? Function(String message)? error,
   }) {
     return loading?.call();
@@ -278,8 +278,8 @@ class _$LoadingImpl implements Loading {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function(List<TransactionModel> transactions)? loaded,
-    TResult Function(TotalsTransactionModel totalsTransactions)? loadedTotals,
+    TResult Function(List<Transaction> transactions)? loaded,
+    TResult Function(TotalsTransaction totalsTransactions)? loadedTotals,
     TResult Function(String message)? error,
     required TResult orElse(),
   }) {
@@ -340,7 +340,7 @@ abstract class _$$LoadedImplCopyWith<$Res> {
           _$LoadedImpl value, $Res Function(_$LoadedImpl) then) =
       __$$LoadedImplCopyWithImpl<$Res>;
   @useResult
-  $Res call({List<TransactionModel> transactions});
+  $Res call({List<Transaction> transactions});
 }
 
 /// @nodoc
@@ -360,7 +360,7 @@ class __$$LoadedImplCopyWithImpl<$Res>
       null == transactions
           ? _value._transactions
           : transactions // ignore: cast_nullable_to_non_nullable
-              as List<TransactionModel>,
+              as List<Transaction>,
     ));
   }
 }
@@ -368,12 +368,12 @@ class __$$LoadedImplCopyWithImpl<$Res>
 /// @nodoc
 
 class _$LoadedImpl implements Loaded {
-  const _$LoadedImpl(final List<TransactionModel> transactions)
+  const _$LoadedImpl(final List<Transaction> transactions)
       : _transactions = transactions;
 
-  final List<TransactionModel> _transactions;
+  final List<Transaction> _transactions;
   @override
-  List<TransactionModel> get transactions {
+  List<Transaction> get transactions {
     if (_transactions is EqualUnmodifiableListView) return _transactions;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_transactions);
@@ -408,8 +408,8 @@ class _$LoadedImpl implements Loaded {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function(List<TransactionModel> transactions) loaded,
-    required TResult Function(TotalsTransactionModel totalsTransactions)
+    required TResult Function(List<Transaction> transactions) loaded,
+    required TResult Function(TotalsTransaction totalsTransactions)
         loadedTotals,
     required TResult Function(String message) error,
   }) {
@@ -421,8 +421,8 @@ class _$LoadedImpl implements Loaded {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function(List<TransactionModel> transactions)? loaded,
-    TResult? Function(TotalsTransactionModel totalsTransactions)? loadedTotals,
+    TResult? Function(List<Transaction> transactions)? loaded,
+    TResult? Function(TotalsTransaction totalsTransactions)? loadedTotals,
     TResult? Function(String message)? error,
   }) {
     return loaded?.call(transactions);
@@ -433,8 +433,8 @@ class _$LoadedImpl implements Loaded {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function(List<TransactionModel> transactions)? loaded,
-    TResult Function(TotalsTransactionModel totalsTransactions)? loadedTotals,
+    TResult Function(List<Transaction> transactions)? loaded,
+    TResult Function(TotalsTransaction totalsTransactions)? loadedTotals,
     TResult Function(String message)? error,
     required TResult orElse(),
   }) {
@@ -486,10 +486,9 @@ class _$LoadedImpl implements Loaded {
 }
 
 abstract class Loaded implements MainState {
-  const factory Loaded(final List<TransactionModel> transactions) =
-      _$LoadedImpl;
+  const factory Loaded(final List<Transaction> transactions) = _$LoadedImpl;
 
-  List<TransactionModel> get transactions;
+  List<Transaction> get transactions;
   @JsonKey(ignore: true)
   _$$LoadedImplCopyWith<_$LoadedImpl> get copyWith =>
       throw _privateConstructorUsedError;
@@ -501,9 +500,9 @@ abstract class _$$LoadedTotalsImplCopyWith<$Res> {
           _$LoadedTotalsImpl value, $Res Function(_$LoadedTotalsImpl) then) =
       __$$LoadedTotalsImplCopyWithImpl<$Res>;
   @useResult
-  $Res call({TotalsTransactionModel totalsTransactions});
+  $Res call({TotalsTransaction totalsTransactions});
 
-  $TotalsTransactionModelCopyWith<$Res> get totalsTransactions;
+  $TotalsTransactionCopyWith<$Res> get totalsTransactions;
 }
 
 /// @nodoc
@@ -523,15 +522,14 @@ class __$$LoadedTotalsImplCopyWithImpl<$Res>
       null == totalsTransactions
           ? _value.totalsTransactions
           : totalsTransactions // ignore: cast_nullable_to_non_nullable
-              as TotalsTransactionModel,
+              as TotalsTransaction,
     ));
   }
 
   @override
   @pragma('vm:prefer-inline')
-  $TotalsTransactionModelCopyWith<$Res> get totalsTransactions {
-    return $TotalsTransactionModelCopyWith<$Res>(_value.totalsTransactions,
-        (value) {
+  $TotalsTransactionCopyWith<$Res> get totalsTransactions {
+    return $TotalsTransactionCopyWith<$Res>(_value.totalsTransactions, (value) {
       return _then(_value.copyWith(totalsTransactions: value));
     });
   }
@@ -543,7 +541,7 @@ class _$LoadedTotalsImpl implements LoadedTotals {
   const _$LoadedTotalsImpl(this.totalsTransactions);
 
   @override
-  final TotalsTransactionModel totalsTransactions;
+  final TotalsTransaction totalsTransactions;
 
   @override
   String toString() {
@@ -573,8 +571,8 @@ class _$LoadedTotalsImpl implements LoadedTotals {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function(List<TransactionModel> transactions) loaded,
-    required TResult Function(TotalsTransactionModel totalsTransactions)
+    required TResult Function(List<Transaction> transactions) loaded,
+    required TResult Function(TotalsTransaction totalsTransactions)
         loadedTotals,
     required TResult Function(String message) error,
   }) {
@@ -586,8 +584,8 @@ class _$LoadedTotalsImpl implements LoadedTotals {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function(List<TransactionModel> transactions)? loaded,
-    TResult? Function(TotalsTransactionModel totalsTransactions)? loadedTotals,
+    TResult? Function(List<Transaction> transactions)? loaded,
+    TResult? Function(TotalsTransaction totalsTransactions)? loadedTotals,
     TResult? Function(String message)? error,
   }) {
     return loadedTotals?.call(totalsTransactions);
@@ -598,8 +596,8 @@ class _$LoadedTotalsImpl implements LoadedTotals {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function(List<TransactionModel> transactions)? loaded,
-    TResult Function(TotalsTransactionModel totalsTransactions)? loadedTotals,
+    TResult Function(List<Transaction> transactions)? loaded,
+    TResult Function(TotalsTransaction totalsTransactions)? loadedTotals,
     TResult Function(String message)? error,
     required TResult orElse(),
   }) {
@@ -651,10 +649,10 @@ class _$LoadedTotalsImpl implements LoadedTotals {
 }
 
 abstract class LoadedTotals implements MainState {
-  const factory LoadedTotals(final TotalsTransactionModel totalsTransactions) =
+  const factory LoadedTotals(final TotalsTransaction totalsTransactions) =
       _$LoadedTotalsImpl;
 
-  TotalsTransactionModel get totalsTransactions;
+  TotalsTransaction get totalsTransactions;
   @JsonKey(ignore: true)
   _$$LoadedTotalsImplCopyWith<_$LoadedTotalsImpl> get copyWith =>
       throw _privateConstructorUsedError;
@@ -726,8 +724,8 @@ class _$ErrorImpl implements Error {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function(List<TransactionModel> transactions) loaded,
-    required TResult Function(TotalsTransactionModel totalsTransactions)
+    required TResult Function(List<Transaction> transactions) loaded,
+    required TResult Function(TotalsTransaction totalsTransactions)
         loadedTotals,
     required TResult Function(String message) error,
   }) {
@@ -739,8 +737,8 @@ class _$ErrorImpl implements Error {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function(List<TransactionModel> transactions)? loaded,
-    TResult? Function(TotalsTransactionModel totalsTransactions)? loadedTotals,
+    TResult? Function(List<Transaction> transactions)? loaded,
+    TResult? Function(TotalsTransaction totalsTransactions)? loadedTotals,
     TResult? Function(String message)? error,
   }) {
     return error?.call(message);
@@ -751,8 +749,8 @@ class _$ErrorImpl implements Error {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function(List<TransactionModel> transactions)? loaded,
-    TResult Function(TotalsTransactionModel totalsTransactions)? loadedTotals,
+    TResult Function(List<Transaction> transactions)? loaded,
+    TResult Function(TotalsTransaction totalsTransactions)? loadedTotals,
     TResult Function(String message)? error,
     required TResult orElse(),
   }) {
