@@ -10,12 +10,13 @@ class UserService implements UserServiceBase {
   final FirebaseFirestore _firebaseFirestore;
 
   @override
-  Future<void> createUser(User user) {
+  Future<User> createUser(User user) {
     debugPrint('Creating user with id: ${user.uuid}');
     return _firebaseFirestore
         .collection('users')
         .doc(user.uuid)
-        .set(user.toDocument());
+        .set(user.toDocument())
+        .then((value) => user);
   }
 
   @override

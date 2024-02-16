@@ -39,4 +39,15 @@ extension UserExtensions on User {
       'photoUrl': photoUrl,
     };
   }
+
+  // String get initials {
+  //   final List<String> nameParts = fullName.split(' ');
+  //   if (nameParts.length > 1) {
+  //     return '${nameParts[0][0]}${nameParts[1][0]}';
+  //   } else {
+  //     return nameParts[0][0];
+  //   }
+  // }
+
+  // String get initials => fullName.split(' ').map((e) => e[0]).join();
 }

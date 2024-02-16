@@ -8,8 +8,8 @@ import '../../../../core/router/router.dart';
 import '../../../../core/styles/app_colors.dart';
 import '../../../../core/styles/app_text_style.dart';
 
-class SettingsProfilePersonal extends StatelessWidget {
-  const SettingsProfilePersonal({
+class AuthProfile extends StatelessWidget {
+  const AuthProfile({
     super.key,
   });
 
