@@ -57,6 +57,7 @@ class _ProfileFormState extends State<ProfileForm> {
         children: [
           CustomTextFormField(
             hintText: 'Full Name',
+            controller: TextEditingController(),
             fontSize: 16,
             maxLines: 1,
             textAlign: TextAlign.start,
@@ -71,6 +72,7 @@ class _ProfileFormState extends State<ProfileForm> {
           ),
           const SizedBox(height: 20),
           CustomTextFormField(
+            controller: TextEditingController(),
             hintText: 'Description',
             fontSize: 16,
             textAlign: TextAlign.start,

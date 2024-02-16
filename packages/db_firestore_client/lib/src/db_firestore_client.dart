@@ -11,26 +11,25 @@ class DbFirestoreClient implements DbFirestoreClientBase {
   final FirebaseFirestore _firestore;
 
   @override
-  Future<String> addDocument({
+  Future<void> addDocument({
     required String collectionPath,
     required Map<String, dynamic> data,
   }) async {
-    DocumentReference<Map<String, dynamic>> docRef =
-        await _firestore.collection(collectionPath).add(data);
+    CollectionReference<Map<String, dynamic>> collectionRef;
+    collectionRef = _firestore.collection(collectionPath);
 
-    return docRef.id;
+    await collectionRef.add(data);
   }
 
   @override
-  Future<String> updateDocument({
+  Future<void> updateDocument({
     required String collectionPath,
     required Map<String, dynamic> data,
   }) async {
     DocumentReference<Map<String, dynamic>> docRef;
     docRef = _firestore.doc(collectionPath);
-    await docRef.update(data);
 
-    return docRef.id;
+    await docRef.update(data);
   }
 
   @override
@@ -135,11 +134,11 @@ class DbFirestoreClient implements DbFirestoreClientBase {
     required String collectionPath,
     required ObjectMapper<T> mapper,
     required String field,
-    required dynamic value,
+    required dynamic isEqualTo,
   }) {
     return _firestore
         .collection(collectionPath)
-        .where(field, isEqualTo: value)
+        .where(field, isEqualTo: isEqualTo)
         .snapshots()
         .map(
           (snapshot) => snapshot.docs
@@ -153,11 +152,11 @@ class DbFirestoreClient implements DbFirestoreClientBase {
     required String collectionPath,
     required ObjectMapper<T> mapper,
     required String field,
-    required dynamic value,
+    required dynamic isEqualTo,
   }) async {
     return _firestore
         .collection(collectionPath)
-        .where(field, isEqualTo: value)
+        .where(field, isEqualTo: isEqualTo)
         .get()
         .then(
           (snapshot) => snapshot.docs

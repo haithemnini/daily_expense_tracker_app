@@ -1,3 +1,4 @@
+import 'package:daily_expense_tracker_app/core/models/totals_transaction_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -32,49 +33,53 @@ class ExpenseCard extends StatelessWidget {
       child: BlocBuilder<MainCubit, MainState>(
         buildWhen: (previous, current) => current is LoadedTotals,
         builder: (context, state) => state.maybeWhen(
-          loadedTotals: (totals) => Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Text(
-                  'Total Expense',
-                  style: AppTextStyle.caption.copyWith(
-                    color: Colors.white,
-                    fontWeight: FontWeight.w400,
-                  ),
-                ),
-                const SizedBox(height: 8),
-                Text(
-                  '\$ ${totals.totalBalance.toStringAsFixed(2)}',
-                  style: AppTextStyle.title2.copyWith(
-                    color: Colors.white,
-                  ),
-                ),
-                const SizedBox(height: 20),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    _buildExpenseItem(
-                      'Income',
-                      totals.totalIncome,
-                    ),
-                    _buildExpenseItem(
-                      'Expense',
-                      totals.totalExpense,
-                    ),
-                  ],
-                )
-              ],
-            ),
-          ),
+          loadedTotals: (totals) => _buildLoadedTotals(totals),
           orElse: () => const Center(
             child: CircularProgressIndicator(
               valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
             ),
           ),
         ),
+      ),
+    );
+  }
+
+  Widget _buildLoadedTotals(TotalsTransaction totals) {
+    return Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Text(
+            'Total Balance',
+            style: AppTextStyle.caption.copyWith(
+              color: Colors.white,
+              fontWeight: FontWeight.w600,
+            ),
+          ),
+          const SizedBox(height: 8),
+          Text(
+            totals.totalBalance.toFormattedCurrencyStringWithSymbol(),
+            style: AppTextStyle.title2.copyWith(
+              color: Colors.white,
+            ),
+          ),
+          const SizedBox(height: 20),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              _buildExpenseItem(
+                'Income',
+                totals.totalIncome,
+              ),
+              _buildExpenseItem(
+                'Expense',
+                totals.totalExpense,
+              ),
+            ],
+          )
+        ],
       ),
     );
   }
@@ -120,7 +125,7 @@ class ExpenseCard extends StatelessWidget {
                 ),
               ),
               Text(
-                '\$ $amount',
+                _getAmount(amount),
                 style: AppTextStyle.body.copyWith(
                   color: Colors.white,
                   fontWeight: FontWeight.w600,
@@ -131,5 +136,11 @@ class ExpenseCard extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  String _getAmount(double amount) {
+    return amount.toFormattedCurrencyStringWithSymbol().length > 10
+        ? '${amount.toFormattedCurrencyStringWithSymbol().substring(0, 10).trim()}...'
+        : amount.toFormattedCurrencyStringWithSymbol();
   }
 }
