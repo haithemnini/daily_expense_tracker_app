@@ -8,8 +8,18 @@ environment:
   sdk: '>=3.2.3 <4.0.0'
 
 dependencies:
+  db_firestore_client:
+    path: packages/db_firestore_client
+  db_hive_client:
+    path: packages/db_hive_client
+  auth_user :
+    path: packages/auth_user
+  user_service:
+    path: packages/user_service  
   bloc: ^8.1.2
   build_runner: ^2.4.7
+  cloud_firestore: ^4.14.0
+  connectivity_plus: ^5.0.2
   cupertino_icons: ^1.0.2
   firebase_auth: ^4.16.0
   firebase_core: ^2.24.2
@@ -23,12 +33,22 @@ dependencies:
   freezed: ^2.4.6
   freezed_annotation: ^2.4.1
   get_it: ^7.6.4
+  hive: ^2.2.3
+  hive_flutter: ^1.1.0
+  internet_connection_checker: ^1.0.0+1
+  intl: ^0.18.0
+  json_annotation: ^4.8.1
+  json_serializable: ^6.7.1
+  path_provider: ^2.1.2
+  pattern_formatter: ^3.0.0
   shared_preferences: ^2.2.2
+  uuid: ^4.3.3
 
 dev_dependencies:
   flutter_lints: ^2.0.0
   flutter_test:
     sdk: flutter
+  hive_generator: ^2.0.1
 
 flutter:
 
