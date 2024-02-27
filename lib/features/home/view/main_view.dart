@@ -1,3 +1,5 @@
+import 'package:daily_expense_tracker_app/core/utils/alerts/alerts.dart';
+import 'package:daily_expense_tracker_app/features/transaction/logic/transaction_cubit/transaction_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -15,13 +17,30 @@ class _MainViewState extends State<MainView> {
   @override
   void initState() {
     super.initState();
-    context.read<MainCubit>().getTotals().then((_) {
-      context.read<MainCubit>().getAll();
+
+    // add listener userStream
+    context.read<MainCubit>().userStream.listen((_) {
+      context.read<MainCubit>().getAll().then((_) {
+        context.read<MainCubit>().getTotals();
+      });
     });
   }
 
   @override
   Widget build(BuildContext context) {
+    return BlocListener<TransactionCubit, TransactionState>(
+      listener: (context, state) {
+        state.maybeWhen(
+          success: (message) => _success(context, message),
+          error: (message) => Alerts.showToastMsg(context, message),
+          orElse: () {},
+        );
+      },
+      child: _buildBody(),
+    );
+  }
+
+  _buildBody() {
     return const SafeArea(
       child: Center(
         child: Column(
@@ -36,5 +55,12 @@ class _MainViewState extends State<MainView> {
         ),
       ),
     );
+  }
+
+  _success(BuildContext context, String message) {
+    context.read<MainCubit>().getAll().then((_) {
+      context.read<MainCubit>().getTotals();
+    });
+    Alerts.showToastMsg(context, message);
   }
 }

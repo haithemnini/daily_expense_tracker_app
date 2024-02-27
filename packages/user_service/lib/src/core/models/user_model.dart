@@ -1,6 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
+import 'package:firebase_auth/firebase_auth.dart' as auth;
+
 part 'user_model.freezed.dart';
 
 @freezed
@@ -18,6 +20,24 @@ class User with _$User {
       email: '',
       fullName: '',
       photoUrl: '',
+    );
+  }
+
+  factory User.guest() {
+    return const User(
+      uuid: '',
+      email: '',
+      fullName: 'Guest',
+      photoUrl: '',
+    );
+  }
+
+  factory User.toUser(auth.User user) {
+    return User(
+      uuid: user.uid,
+      email: user.email!,
+      fullName: user.displayName!,
+      photoUrl: user.photoURL,
     );
   }
 

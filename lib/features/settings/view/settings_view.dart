@@ -44,14 +44,7 @@ class SettingsView extends StatelessWidget {
               trailing: const FaIcon(FontAwesomeIcons.chevronRight, size: 16),
               onTap: () => {},
             ),
-            const SizedBox(height: 10),
-            ItemSettings(
-              title: 'Logout',
-              iconData: FontAwesomeIcons.rightFromBracket,
-              backgroundIcon: Colors.red,
-              trailing: const FaIcon(FontAwesomeIcons.chevronRight, size: 16),
-              onTap: () => {},
-            ),
+
             const SizedBox(height: 10),
             const Spacer(),
 

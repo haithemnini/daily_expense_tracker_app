@@ -4,7 +4,7 @@ import 'package:flutter/foundation.dart';
 import '../user_service.dart';
 
 class UserService implements UserServiceBase {
-  UserService(FirebaseFirestore? firebaseFirestore)
+  UserService({FirebaseFirestore? firebaseFirestore})
       : _firebaseFirestore = firebaseFirestore ?? FirebaseFirestore.instance;
 
   final FirebaseFirestore _firebaseFirestore;

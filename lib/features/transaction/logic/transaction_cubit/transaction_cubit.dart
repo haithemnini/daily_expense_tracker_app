@@ -1,6 +1,6 @@
 import 'package:bloc/bloc.dart';
-import 'package:daily_expense_tracker_app/core/enum/enum.dart';
-import 'package:daily_expense_tracker_app/core/extension/extension.dart';
+import '../../../../core/enum/enum.dart';
+import '../../../../core/extension/extension.dart';
 import 'package:flutter/material.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
@@ -65,11 +65,35 @@ class TransactionCubit extends Cubit<TransactionState> {
     Future.delayed(const Duration(milliseconds: 300)).then((_) {
       try {
         if (_isEditing) {
-          _transactionRepository.updateTransaction(transactionUpdated);
-          emit(const TransactionState.success('Transaction updated success'));
+          _transactionRepository.updateTransaction(transactionUpdated).then(
+                (value) => {
+                  value.when(
+                    success: (_) {
+                      emit(const TransactionState.success(
+                        'Transaction updated success',
+                      ));
+                    },
+                    failure: (message) {
+                      emit(TransactionState.error(message));
+                    },
+                  ),
+                },
+              );
         } else {
-          _transactionRepository.addTransaction(transactionUpdated);
-          emit(const TransactionState.success('Transaction added success'));
+          _transactionRepository.addTransaction(transactionUpdated).then(
+                (value) => {
+                  value.when(
+                    success: (_) {
+                      emit(const TransactionState.success(
+                        'Transaction added success',
+                      ));
+                    },
+                    failure: (message) {
+                      emit(TransactionState.error(message));
+                    },
+                  ),
+                },
+              );
         }
       } catch (error) {
         debugPrint('error: $error');
@@ -78,13 +102,25 @@ class TransactionCubit extends Cubit<TransactionState> {
     });
   }
 
-  void deleteTransaction(String transactionId) {
+  void deleteTransaction(String transactionId) async {
     emit(const TransactionState.loading());
 
     Future.delayed(const Duration(milliseconds: 300)).then((_) {
       try {
-        _transactionRepository.deleteTransaction(transactionId);
-        emit(const TransactionState.success('Transaction deleted success'));
+        _transactionRepository.deleteTransaction(transactionId).then(
+              (value) => {
+                value.when(
+                  success: (_) {
+                    emit(const TransactionState.success(
+                      'Transaction deleted success',
+                    ));
+                  },
+                  failure: (message) {
+                    emit(TransactionState.error(message));
+                  },
+                ),
+              },
+            );
       } catch (error) {
         debugPrint('error: $error');
         emit(TransactionState.error(error.toString()));

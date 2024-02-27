@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 abstract class DbHiveClientBase {
   Future<bool> initDb<T>({
-    required String dbName,
+    required String boxName,
     required VoidCallback onRegisterAdapter,
   });
 

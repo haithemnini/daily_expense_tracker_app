@@ -1,5 +1,5 @@
-import 'package:daily_expense_tracker_app/core/extension/extension.dart';
-import 'package:daily_expense_tracker_app/core/router/router.dart';
+import '../../../../core/extension/extension.dart';
+import '../../../../core/router/router.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';

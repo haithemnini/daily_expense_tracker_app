@@ -1,4 +1,6 @@
+import '../../../settings/logic/cubit/auth_profile_cubit.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../core/extension/extension.dart';
 import '../../../../core/helper/helper.dart';
@@ -11,46 +13,66 @@ class ProfileIcon extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        Column(
+    return BlocBuilder<AuthProfileCubit, AuthProfileState>(
+      buildWhen: (previous, current) => current.maybeMap(
+        authChanged: (state) => true,
+        orElse: () => false,
+      ),
+      builder: (context, state) {
+        final user = state.maybeMap(
+          authChanged: (state) => state.user,
+          orElse: () => null,
+        );
+
+        return Row(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            ClipOval(
-              child: Image.asset(
-                Helper.getAssetImage('profile.png'),
-                height: 40,
-                width: 40,
-                fit: BoxFit.cover,
-              ),
+            Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                ClipOval(
+                  child: user?.photoUrl != null
+                      ? Image.network(
+                          user!.photoUrl!,
+                          height: 40,
+                          width: 40,
+                          fit: BoxFit.cover,
+                        )
+                      : Image.asset(
+                          Helper.getAssetImage('guest.png'),
+                          height: 40,
+                          width: 40,
+                          fit: BoxFit.cover,
+                        ),
+                ),
+              ],
+            ),
+            const SizedBox(width: 8),
+            Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  'Welcome !',
+                  style: AppTextStyle.caption.copyWith(
+                    color: context.colorScheme.outline,
+                    fontWeight: FontWeight.w400,
+                  ),
+                ),
+                Text(
+                  user?.fullName ?? 'Guest',
+                  style: AppTextStyle.subtitle.copyWith(
+                    color: context.colorScheme.onBackground,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+              ],
             ),
           ],
-        ),
-        const SizedBox(width: 8),
-        Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              'Welcome !',
-              style: AppTextStyle.caption.copyWith(
-                color: context.colorScheme.outline,
-                fontWeight: FontWeight.w400,
-              ),
-            ),
-            Text(
-              'John Doe',
-              style: AppTextStyle.subtitle.copyWith(
-                color: context.colorScheme.onBackground,
-                fontWeight: FontWeight.w600,
-              ),
-            ),
-          ],
-        ),
-      ],
+        );
+      },
     );
   }
 }

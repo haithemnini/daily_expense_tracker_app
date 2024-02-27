@@ -1,9 +1,9 @@
-import 'package:daily_expense_tracker_app/core/models/totals_transaction_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import '../../../../core/extension/extension.dart';
+import '../../../../core/models/totals_transaction_model.dart';
 import '../../../../core/styles/app_colors.dart';
 import '../../../../core/styles/app_text_style.dart';
 import '../../logic/main_bloc/main_cubit.dart';

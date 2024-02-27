@@ -7,14 +7,14 @@ import 'package:path_provider/path_provider.dart';
 class DbHiveClient implements DbHiveClientBase {
   @override
   Future<bool> initDb<T>({
-    required String dbName,
+    required String boxName,
     required VoidCallback onRegisterAdapter,
   }) async {
     try {
       final appDocumentDir = await getApplicationDocumentsDirectory();
       Hive.init(appDocumentDir.path);
       onRegisterAdapter();
-      await Hive.openBox<T>(dbName);
+      await Hive.openBox<T>(boxName);
       return true;
     } catch (err) {
       throw Exception('Failed to init db: $err');
@@ -24,10 +24,11 @@ class DbHiveClient implements DbHiveClientBase {
   @override
   Future<List<T>> getAll<T>({
     required String boxName,
-  }) {
+  }) async {
     try {
       final box = Hive.box<T>(boxName);
-      return Future.value(box.values.toList());
+      final result = box.values.toList();
+      return result;
     } catch (err) {
       throw Exception('Failed to get all: $err');
     }
@@ -107,7 +108,9 @@ class DbHiveClient implements DbHiveClientBase {
     required String boxName,
   }) {
     try {
-      Hive.deleteBoxFromDisk(boxName);
+      final box = Hive.box<T>(boxName);
+      box.clear();
+
       return Future.value();
     } catch (err) {
       throw Exception('Failed to clear all: $err');

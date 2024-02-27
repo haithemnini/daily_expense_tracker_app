@@ -1,4 +1,4 @@
-import 'package:daily_expense_tracker_app/core/models/transaction_hive_model.dart';
+import 'transaction_hive_model.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 import '../enum/enum.dart';

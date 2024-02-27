@@ -1,53 +1,38 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
-import 'package:firebase_auth/firebase_auth.dart' as auth;
 import 'package:flutter/foundation.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:user_service/user_service.dart';
 
 import '../../data/auth_profile_repository/auth_profile_base_repository.dart';
 
-part 'auth_profile_state.dart';
 part 'auth_profile_cubit.freezed.dart';
+part 'auth_profile_state.dart';
 
 class AuthProfileCubit extends Cubit<AuthProfileState> {
   final AuthProfileBaseRepository _authProfileRepository;
-  final UserService _userService;
+  final UserServiceBase _userService;
 
   AuthProfileCubit({
     required AuthProfileBaseRepository authProfileRepository,
-    required UserService userService,
+    required UserServiceBase userService,
   })  : _authProfileRepository = authProfileRepository,
         _userService = userService,
         super(const AuthProfileState.authChanged(
           authStatus: AuthStatus.unknown,
-        )) {
-    _userSubscription = _authProfileRepository.userStream.listen((user) {
-      debugPrint('AuthProfileCubit: user: $user');
-      if (user != null) {
-        _userService.getUser(user.uid).listen((user) {
-          emit(AuthProfileState.authChanged(
-            authStatus: AuthStatus.authenticated,
-            user: user,
-          ));
-        });
-      } else {
-        emit(const AuthProfileState.authChanged(
-          authStatus: AuthStatus.unauthenticated,
         ));
-      }
-    });
-  }
 
-  late final StreamSubscription _userSubscription;
-
-  void initAuth() {
+  void initAuthProfile() {
     if (_authProfileRepository.currentUser != null) {
-      emit(AuthProfileState.authChanged(
-        authStatus: AuthStatus.authenticated,
-        user: _authProfileRepository.currentUser!.toUser(),
-      ));
+      _userService.getUser(_authProfileRepository.currentUser!.uid).listen(
+            (user) => emit(
+              AuthProfileState.authChanged(
+                authStatus: AuthStatus.authenticated,
+                user: user,
+              ),
+            ),
+          );
     } else {
       emit(const AuthProfileState.authChanged(
         authStatus: AuthStatus.unauthenticated,
@@ -55,11 +40,20 @@ class AuthProfileCubit extends Cubit<AuthProfileState> {
     }
   }
 
-  Future<void> signUpWithGoogle() async {
+  Future<void> signInWithGoogle() async {
     emit(const AuthProfileState.loading());
-    final result = await _authProfileRepository.signUpWithGoogle();
+    final result = await _authProfileRepository.signInWithGoogle();
     result.when(
-      success: (user) => emit(AuthProfileState.loaded(user)),
+      success: (user) => {
+        _userService.getUser(user.uuid!).listen(
+              (user) => emit(
+                AuthProfileState.authChanged(
+                  authStatus: AuthStatus.authenticated,
+                  user: user,
+                ),
+              ),
+            ),
+      },
       failure: (message) => emit(AuthProfileState.error(message)),
     );
   }
@@ -68,25 +62,10 @@ class AuthProfileCubit extends Cubit<AuthProfileState> {
     emit(const AuthProfileState.loading());
     final result = await _authProfileRepository.signOut();
     result.when(
-      success: (_) => emit(const AuthProfileState.initial()),
+      success: (_) => emit(const AuthProfileState.authChanged(
+        authStatus: AuthStatus.unauthenticated,
+      )),
       failure: (message) => emit(AuthProfileState.error(message)),
-    );
-  }
-
-  @override
-  Future<void> close() {
-    _userSubscription.cancel();
-    return super.close();
-  }
-}
-
-extension on auth.User {
-  User toUser() {
-    return User(
-      uuid: uid,
-      email: email!,
-      fullName: displayName!,
-      photoUrl: photoURL,
     );
   }
 }
