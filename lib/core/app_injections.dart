@@ -1,15 +1,102 @@
+import 'package:auth_user/auth_user.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:db_firestore_client/db_firestore_client.dart';
+import 'package:db_hive_client/db_hive_client.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:get_it/get_it.dart';
+import 'package:hive/hive.dart';
+import 'package:internet_connection_checker/internet_connection_checker.dart';
+import 'package:user_service/user_service.dart';
 
+import '../features/home/data/main_repository/main_base_repository.dart';
+import '../features/home/data/main_repository/main_repository.dart';
+import '../features/home/logic/main_bloc/main_cubit.dart';
+import '../features/settings/data/auth_profile_repository/auth_profile_base_repository.dart';
+import '../features/settings/data/auth_profile_repository/auth_profile_repository.dart';
+import '../features/settings/logic/cubit/auth_profile_cubit.dart';
+import '../features/transaction/data/repository/transaction_base_repository.dart';
+import '../features/transaction/data/repository/transaction_repository.dart';
+import '../features/transaction/logic/transaction_cubit/transaction_cubit.dart';
 import 'firebase_options.dart';
+import 'models/transaction_hive_model.dart';
+import 'service/network_info.dart';
 
 final getIt = GetIt.I;
 
 Future<void> initAppConfig() async {
   // Initialize [FirebaseApp].
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+  FirebaseFirestore.instance.settings = const Settings(
+    persistenceEnabled: true,
+  );
 
-  //sharedPreferences
-  // final sharedPreferences = await SharedPreferences.getInstance();
-  // getIt.registerLazySingleton(() => sharedPreferences);
+  //dbFirestoreClient
+  final dbFirestoreClient = DbFirestoreClient();
+  getIt.registerLazySingleton<DbFirestoreClientBase>(() => dbFirestoreClient);
+
+  //AuthUser
+  final authUser = AuthUser();
+  getIt.registerLazySingleton<AuthUserBase>(() => authUser);
+
+  //UserService
+  final userService = UserService();
+  getIt.registerLazySingleton<UserServiceBase>(() => userService);
+
+  //dbHiveClient
+  final dbHiveClient = DbHiveClient();
+  getIt.registerLazySingleton<DbHiveClientBase>(() => dbHiveClient);
+
+  //InternetConnectionChecker
+  final internetConnectionChecker = InternetConnectionChecker();
+  getIt.registerLazySingleton(() => internetConnectionChecker);
+
+  //networkInfo
+  final networkInfo = NetworkInfo(getIt());
+  getIt.registerLazySingleton<NetworkInfoBase>(() => networkInfo);
+
+  // MainBaseRepository (MainRepository)
+  final MainBaseRepository homeBaseRepository = MainRepository(
+    dbFirestoreClient: getIt(),
+    dbHiveClient: getIt(),
+    authUser: getIt(),
+  );
+  //MainBloc && MainRepository
+  getIt.registerLazySingleton(() => homeBaseRepository);
+  getIt.registerFactory(() => MainCubit(mainRepository: getIt()));
+
+  // TransactionBaseRepository (TransactionRepository)
+  final TransactionBaseRepository transactionRepository = TransactionRepository(
+    dbFirestoreClient: getIt(),
+    dbHiveClient: getIt(),
+    authUser: getIt(),
+  );
+
+  //TransactionBloc && TransactionRepository
+  getIt.registerLazySingleton(() => transactionRepository);
+  getIt.registerFactory(() => TransactionCubit(transactionRepository: getIt()));
+
+  //AuthProfileBaseRepository (AuthProfileRepository)
+  final AuthProfileBaseRepository authProfileRepository = AuthProfileRepository(
+    userService: getIt(),
+    authUser: getIt(),
+  );
+
+  getIt.registerLazySingleton(() => authProfileRepository);
+
+  //AuthProfileCubit
+  getIt.registerFactory(
+    () => AuthProfileCubit(
+      authProfileRepository: getIt(),
+      userService: getIt(),
+    ),
+  );
+
+  //Hive
+  await getIt<DbHiveClientBase>().initDb<TransactionHive>(
+    boxName: 'transactions',
+    onRegisterAdapter: () {
+      Hive.registerAdapter(TransactionHiveAdapter());
+      Hive.registerAdapter(TransactionCategoryHiveAdapter());
+    },
+  );
 }

@@ -6,6 +6,17 @@ import 'bloc_observer.dart';
 import 'core/app_injections.dart';
 import 'core/router/app_route.dart';
 
+// final DbFirestoreClientBase dbFirestoreClient = DbFirestoreClient();
+// final DbHiveClientBase dbHiveClient = DbHiveClient();
+
+// final NetworkInfo networkInfo = NetworkInfoImpl(InternetConnectionChecker());
+
+// final HomeBaseRepository homeBaseRepository = HomeRepository(
+//   dbClient: dbFirestoreClient,
+//   dbHiveClient: dbHiveClient,
+//   networkInfo: networkInfo,
+// );
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Future.wait([initAppConfig()]);

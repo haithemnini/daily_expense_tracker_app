@@ -1,11 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:user_service/user_service.dart';
 
-import '../../features/home/home_view.dart';
-import '../../features/profile/profile_view.dart';
-import '../../features/transaction/transaction_view.dart';
-import '../../features/settings/settings_view.dart';
-import '../enum/enum.dart';
+import '../../features/home/view/home_view.dart';
+import '../../features/profile/view/profile_view.dart';
+import '../../features/settings/view/settings_view.dart';
+import '../../features/transaction/view/transaction_view.dart';
 
 @immutable
 class RoutesName {
@@ -19,6 +19,7 @@ class RoutesName {
 @immutable
 class AppRouter {
   PageRoute generateRoute(RouteSettings settings) {
+    // ignore: unused_local_variable
     final arguments = settings.arguments;
 
     switch (settings.name) {
@@ -30,9 +31,7 @@ class AppRouter {
       case RoutesName.transaction:
         return _getPageRoute(
           routeName: settings.name,
-          viewToShow: TransactionView(
-            transaction: arguments as TransactionType,
-          ),
+          viewToShow: const TransactionView(),
         );
       case RoutesName.settings:
         return _getPageRoute(
@@ -43,7 +42,9 @@ class AppRouter {
       case RoutesName.profile:
         return _getPageRoute(
           routeName: settings.name,
-          viewToShow: const ProfileView(),
+          viewToShow: ProfileView(
+            user: arguments as User,
+          ),
         );
       default:
         return _getPageRoute(

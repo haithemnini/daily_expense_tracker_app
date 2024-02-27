@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 
 import '../../extension/extension.dart';
 
@@ -11,6 +12,11 @@ class Alerts {
     showModalBottomSheet(
       context: context,
       useSafeArea: true,
+      showDragHandle: true,
+      constraints: BoxConstraints(
+        maxHeight: heigh ?? context.deviceSize.height * 0.5,
+        maxWidth: context.deviceSize.width * 0.97,
+      ),
       isScrollControlled: true,
       clipBehavior: Clip.antiAlias,
       shape: const RoundedRectangleBorder(
@@ -19,40 +25,123 @@ class Alerts {
         ),
       ),
       builder: (BuildContext context) {
-        return SizedBox(
-          width: context.screenWidth(0.92),
-          height: heigh,
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              _buildHandle(context),
-              child,
-            ],
-          ),
+        return Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            child,
+          ],
         );
       },
     );
   }
 
-  static Widget _buildHandle(BuildContext context) {
-    final theme = Theme.of(context);
+  static Future<DateTime?> showPickeTransactionDate({
+    required BuildContext context,
+    required DateTime initialDate,
+    required DateTime firstDate,
+    required DateTime lastDate,
+    required Function(DateTime) onDateSelected,
+  }) {
+    return showDatePicker(
+      context: context,
+      initialDate: initialDate,
+      firstDate: firstDate,
+      lastDate: lastDate,
+    ).then((DateTime? dateTime) {
+      if (dateTime != null) {
+        onDateSelected(dateTime);
+      }
+      return dateTime;
+    });
+  }
 
-    return FractionallySizedBox(
-      widthFactor: 0.08,
-      child: Container(
-        margin: const EdgeInsets.symmetric(
-          vertical: 12.0,
-        ),
-        child: Container(
-          height: 5.0,
-          decoration: BoxDecoration(
-            color: theme.dividerColor,
-            borderRadius: const BorderRadius.all(
-              Radius.circular(2.5),
+  static Future<void> showLoaderDialog(
+    BuildContext context,
+  ) =>
+      showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (context) => PopScope(
+          canPop: false,
+          child: Align(
+            child: ConstrainedBox(
+              constraints: const BoxConstraints(maxWidth: 150, maxHeight: 120),
+              child: AlertDialog(
+                elevation: 0,
+                contentPadding: EdgeInsets.zero,
+                content: Center(
+                  child: CircularProgressIndicator(
+                    valueColor: AlwaysStoppedAnimation<Color>(
+                      context.colorScheme.primary,
+                    ),
+                  ),
+                ),
+              ),
             ),
           ),
         ),
+      );
+
+  static void hideLoaderDialog(BuildContext context) {
+    Navigator.of(context).pop();
+  }
+
+  static void showSnackBar(BuildContext context, String message) {
+    ScaffoldMessenger.of(context).removeCurrentSnackBar();
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(message),
       ),
+    );
+  }
+
+  static void showToastMsg(BuildContext context, String message) {
+    showToast(
+      message,
+      context: context,
+      animation: StyledToastAnimation.fade,
+      position: const StyledToastPosition(
+        align: Alignment.bottomCenter,
+        offset: 100.0,
+      ),
+      reverseAnimation: StyledToastAnimation.fade,
+      borderRadius: const BorderRadius.all(Radius.circular(32.0)),
+      textStyle: const TextStyle(color: Colors.white, fontSize: 12),
+    );
+  }
+
+  static void showAlertDialog({
+    required BuildContext context,
+    required String title,
+    required String message,
+    required Function() onOk,
+    Function()? onCancel,
+  }) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text(title),
+          content: Text(message),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () {
+                onOk();
+                Navigator.of(context).pop();
+              },
+              child: const Text('OK'),
+            ),
+            if (onCancel != null)
+              TextButton(
+                onPressed: () {
+                  onCancel();
+                  Navigator.of(context).pop();
+                },
+                child: const Text('Cancel'),
+              ),
+          ],
+        );
+      },
     );
   }
 }

@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:uuid/uuid.dart';
 
-import '../utils/config/overlay_style_config.dart';
+import '../config/overlay_style_config.dart';
 
 class Helper {
   /// Sets the system UI overlay style for navigation elements.
@@ -40,5 +41,9 @@ class Helper {
   //get asset svg path from assets folder
   static String getAssetSvg(String name) {
     return 'assets/svgs/$name';
+  }
+
+  static String generateUUID() {
+    return const Uuid().v4();
   }
 }
