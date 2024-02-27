@@ -21,7 +21,7 @@ class AuthUser implements AuthUserBase {
 
   /// The [user] method is used to get user.
   @override
-  Stream<auth.User?> get user => _firebaseAuth.authStateChanges();
+  Stream<auth.User?> get userStream => _firebaseAuth.authStateChanges();
 
   /// The [currentUser] method is used to get the current user.
   /// It returns the current user.
@@ -31,10 +31,10 @@ class AuthUser implements AuthUserBase {
   @override
   auth.User? get currentUser => _firebaseAuth.currentUser;
 
-  /// The [signUpWithGoogle] method is used to sign up with google.
+  /// The [signInWithGoogle] method is used to sign up with google.
   /// It returns the user.
   @override
-  Future<auth.User?> signUpWithGoogle() async {
+  Future<auth.User?> signInWithGoogle() async {
     try {
       final googleUser = await _googleSignIn.signIn();
       final googleAuth = await googleUser!.authentication;
@@ -52,10 +52,10 @@ class AuthUser implements AuthUserBase {
       return userCredential.user;
     } on auth.FirebaseAuthException catch (e) {
       debugPrint('FirebaseAuthException: ${e.code}');
-      throw SignUpOrSignInWithGoogleFailure.fromCode(e.code);
+      throw SignInWithGoogleFailure.fromCode(e.code);
     } catch (e) {
       debugPrint('FirebaseAuthException: $e');
-      throw const SignUpOrSignInWithGoogleFailure();
+      throw const SignInWithGoogleFailure();
     }
   }
 

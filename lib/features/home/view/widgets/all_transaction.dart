@@ -1,7 +1,7 @@
-import 'package:daily_expense_tracker_app/core/extension/extension.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../../core/extension/extension.dart';
 import '../../../../core/shared/shared.dart';
 import '../../logic/main_bloc/main_cubit.dart';
 

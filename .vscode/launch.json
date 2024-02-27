@@ -1,0 +1,105 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "daily_expense_tracker_app",
+            "request": "launch",
+            "type": "dart"
+        },
+        {
+            "name": "daily_expense_tracker_app (profile mode)",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "profile"
+        },
+        {
+            "name": "daily_expense_tracker_app (release mode)",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "release"
+        },
+        {
+            "name": "auth_user",
+            "cwd": "packages\\auth_user",
+            "request": "launch",
+            "type": "dart"
+        },
+        {
+            "name": "auth_user (profile mode)",
+            "cwd": "packages\\auth_user",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "profile"
+        },
+        {
+            "name": "auth_user (release mode)",
+            "cwd": "packages\\auth_user",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "release"
+        },
+        {
+            "name": "db_firestore_client",
+            "cwd": "packages\\db_firestore_client",
+            "request": "launch",
+            "type": "dart"
+        },
+        {
+            "name": "db_firestore_client (profile mode)",
+            "cwd": "packages\\db_firestore_client",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "profile"
+        },
+        {
+            "name": "db_firestore_client (release mode)",
+            "cwd": "packages\\db_firestore_client",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "release"
+        },
+        {
+            "name": "db_hive_client",
+            "cwd": "packages\\db_hive_client",
+            "request": "launch",
+            "type": "dart"
+        },
+        {
+            "name": "db_hive_client (profile mode)",
+            "cwd": "packages\\db_hive_client",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "profile"
+        },
+        {
+            "name": "db_hive_client (release mode)",
+            "cwd": "packages\\db_hive_client",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "release"
+        },
+        {
+            "name": "user_service",
+            "cwd": "packages\\user_service",
+            "request": "launch",
+            "type": "dart"
+        },
+        {
+            "name": "user_service (profile mode)",
+            "cwd": "packages\\user_service",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "profile"
+        },
+        {
+            "name": "user_service (release mode)",
+            "cwd": "packages\\user_service",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "release"
+        }
+    ]
+}

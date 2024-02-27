@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:auth_user/auth_user.dart';
-import 'package:daily_expense_tracker_app/core/helper/helper.dart';
+import '../../../../core/helper/helper.dart';
 import 'package:db_firestore_client/db_firestore_client.dart';
 import 'package:db_hive_client/db_hive_client.dart';
 
@@ -85,11 +85,13 @@ class TransactionRepository implements TransactionBaseRepository {
           boxName: 'transactions',
           modelId: transactionId,
         );
-      } else {
-        await _dbFirestoreClient.deleteDocument(
-          collectionPath: '{transactions/$transactionId}',
-        );
+        return const AppResult.success(null);
       }
+
+      await _dbFirestoreClient.deleteDocument(
+        collectionPath: 'transactions/$transactionId',
+      );
+
       return const AppResult.success(null);
     } catch (err) {
       return AppResult.failure(err.toString());

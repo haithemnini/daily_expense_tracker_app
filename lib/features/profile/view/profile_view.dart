@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:user_service/user_service.dart';
 
 import '../../../core/extension/extension.dart';
 import '../../../core/helper/helper.dart';
@@ -10,7 +11,9 @@ import '../../../core/styles/app_text_style.dart';
 import 'widgets/widgets.dart';
 
 class ProfileView extends StatelessWidget {
-  const ProfileView({super.key});
+  const ProfileView({super.key, required this.user});
+
+  final User user;
 
   @override
   Widget build(BuildContext context) {

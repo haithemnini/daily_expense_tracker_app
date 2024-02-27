@@ -1,4 +1,4 @@
-import 'package:daily_expense_tracker_app/core/models/transaction_model.dart';
+import 'transaction_model.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 import '../enum/transaction.dart';
@@ -13,7 +13,7 @@ class TotalsTransaction with _$TotalsTransaction {
     required double totalBalance,
   }) = _TotalsTransactionModel;
 
-  factory TotalsTransaction.calculation(List<Transaction> transactions) {
+  factory TotalsTransaction.calcu(List<Transaction> transactions) {
     return TotalsTransaction(
         // totalExpense = totalExpense
         totalExpense: transactions

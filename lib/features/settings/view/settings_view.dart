@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import '../../../core/shared/shared.dart';
 import 'widgets/widgets.dart';
@@ -18,26 +19,37 @@ class SettingsView extends StatelessWidget {
   }
 
   Widget _buildBody(BuildContext context) {
-    return const SafeArea(
+    return SafeArea(
       child: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            SettingsProfilePersonal(),
-            SizedBox(height: 10),
-            // DarkModeSwitch(),
-            SizedBox(height: 10),
-            SettingsNotification(),
-            SizedBox(height: 10),
-            SettingsAbout(),
-            SizedBox(height: 10),
-            SettingsLogout(),
-            SizedBox(height: 10),
-            Spacer(),
+            const AuthProfile(),
+            const SizedBox(height: 10),
+            const DarkModeSwitch(),
+            const SizedBox(height: 10),
+            ItemSettings(
+              title: 'Notification',
+              iconData: FontAwesomeIcons.bell,
+              backgroundIcon: Colors.orange,
+              trailing: const FaIcon(FontAwesomeIcons.chevronRight, size: 16),
+              onTap: () => {},
+            ),
+            const SizedBox(height: 10),
+            ItemSettings(
+              title: 'About',
+              iconData: FontAwesomeIcons.circleInfo,
+              backgroundIcon: Colors.blue,
+              trailing: const FaIcon(FontAwesomeIcons.chevronRight, size: 16),
+              onTap: () => {},
+            ),
+
+            const SizedBox(height: 10),
+            const Spacer(),
 
             //App Version
-            Text('App Version: 1.0.0'),
+            const Text('App Version: 1.0.0'),
           ],
         ),
       ),

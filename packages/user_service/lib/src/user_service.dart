@@ -4,18 +4,19 @@ import 'package:flutter/foundation.dart';
 import '../user_service.dart';
 
 class UserService implements UserServiceBase {
-  UserService(FirebaseFirestore? firebaseFirestore)
+  UserService({FirebaseFirestore? firebaseFirestore})
       : _firebaseFirestore = firebaseFirestore ?? FirebaseFirestore.instance;
 
   final FirebaseFirestore _firebaseFirestore;
 
   @override
-  Future<void> createUser(User user) {
+  Future<User> createUser(User user) {
     debugPrint('Creating user with id: ${user.uuid}');
     return _firebaseFirestore
         .collection('users')
         .doc(user.uuid)
-        .set(user.toDocument());
+        .set(user.toDocument())
+        .then((value) => user);
   }
 
   @override

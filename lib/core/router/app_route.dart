@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:user_service/user_service.dart';
 
 import '../../features/home/view/home_view.dart';
 import '../../features/profile/view/profile_view.dart';
@@ -41,7 +42,9 @@ class AppRouter {
       case RoutesName.profile:
         return _getPageRoute(
           routeName: settings.name,
-          viewToShow: const ProfileView(),
+          viewToShow: ProfileView(
+            user: arguments as User,
+          ),
         );
       default:
         return _getPageRoute(

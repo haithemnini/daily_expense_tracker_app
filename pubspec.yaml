@@ -8,19 +8,18 @@ environment:
   sdk: '>=3.2.3 <4.0.0'
 
 dependencies:
+  auth_user:
+    path: packages/auth_user
+  bloc: ^8.1.2
+  build_runner: ^2.4.7
+  cached_network_image: ^3.3.1
+  cloud_firestore: ^4.14.0
+  connectivity_plus: ^5.0.2
+  cupertino_icons: ^1.0.2
   db_firestore_client:
     path: packages/db_firestore_client
   db_hive_client:
     path: packages/db_hive_client
-  auth_user :
-    path: packages/auth_user
-  user_service:
-    path: packages/user_service  
-  bloc: ^8.1.2
-  build_runner: ^2.4.7
-  cloud_firestore: ^4.14.0
-  connectivity_plus: ^5.0.2
-  cupertino_icons: ^1.0.2
   firebase_auth: ^4.16.0
   firebase_core: ^2.24.2
   flutter:
@@ -42,6 +41,8 @@ dependencies:
   path_provider: ^2.1.2
   pattern_formatter: ^3.0.0
   shared_preferences: ^2.2.2
+  user_service:
+    path: packages/user_service
   uuid: ^4.3.3
 
 dev_dependencies:

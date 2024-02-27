@@ -136,6 +136,7 @@ class TransactionList extends StatelessWidget {
       title: 'Delete Transaction',
       message: 'Are you sure you want to delete this transaction?',
       onOk: () {
+        debugPrint('transaction.uuid: ${transaction.uuid}');
         context.read<TransactionCubit>().deleteTransaction(transaction.uuid!);
       },
       onCancel: () => {},
