@@ -11,26 +11,25 @@ class DbFirestoreClient implements DbFirestoreClientBase {
   final FirebaseFirestore _firestore;
 
   @override
-  Future<String> addDocument({
+  Future<void> addDocument({
     required String collectionPath,
     required Map<String, dynamic> data,
   }) async {
-    DocumentReference<Map<String, dynamic>> docRef =
-        await _firestore.collection(collectionPath).add(data);
+    CollectionReference<Map<String, dynamic>> collectionRef;
+    collectionRef = _firestore.collection(collectionPath);
 
-    return docRef.id;
+    await collectionRef.add(data);
   }
 
   @override
-  Future<String> updateDocument({
+  Future<void> updateDocument({
     required String collectionPath,
     required Map<String, dynamic> data,
   }) async {
     DocumentReference<Map<String, dynamic>> docRef;
     docRef = _firestore.doc(collectionPath);
-    await docRef.update(data);
 
-    return docRef.id;
+    await docRef.update(data);
   }
 
   @override
@@ -131,38 +130,94 @@ class DbFirestoreClient implements DbFirestoreClientBase {
   }
 
   @override
-  Stream<List<T>> streamQuery<T>({
-    required String collectionPath,
-    required ObjectMapper<T> mapper,
-    required String field,
-    required dynamic value,
-  }) {
-    return _firestore
-        .collection(collectionPath)
-        .where(field, isEqualTo: value)
-        .snapshots()
-        .map(
-          (snapshot) => snapshot.docs
-              .map((doc) => mapper(doc.data(), doc.id))
-              .toList(growable: false),
-        );
-  }
-
-  @override
   Future<List<T>> getQuery<T>({
     required String collectionPath,
     required ObjectMapper<T> mapper,
     required String field,
-    required dynamic value,
+    required dynamic isEqualTo,
   }) async {
     return _firestore
         .collection(collectionPath)
-        .where(field, isEqualTo: value)
+        .where(field, isEqualTo: isEqualTo)
         .get()
-        .then(
-          (snapshot) => snapshot.docs
-              .map((doc) => mapper(doc.data(), doc.id))
-              .toList(growable: false),
-        );
+        .then((snapshot) => snapshot.docs
+            .map((doc) => mapper(doc.data(), doc.id))
+            .toList(growable: false));
+  }
+
+  @override
+  Stream<List<T>> streamQuery<T>({
+    required String collectionPath,
+    required ObjectMapper<T> mapper,
+    required String field,
+    required dynamic isEqualTo,
+  }) {
+    return _firestore
+        .collection(collectionPath)
+        .where(field, isEqualTo: isEqualTo)
+        .snapshots()
+        .map((snapshot) => snapshot.docs
+            .map((doc) => mapper(doc.data(), doc.id))
+            .toList(growable: false));
+  }
+
+  @override
+  Stream<List<T>> streamCollectionOrderBy<T>({
+    required String collectionPath,
+    required ObjectMapper<T> objectMapper,
+    required String orderByField,
+    bool descending = false,
+  }) {
+    CollectionReference<Map<String, dynamic>> collectionRef;
+    collectionRef = _firestore.collection(collectionPath);
+
+    final snapshots =
+        collectionRef.orderBy(orderByField, descending: descending).snapshots();
+
+    final result = snapshots.map((snapshot) {
+      return snapshot.docs
+          .map((doc) => objectMapper(doc.data(), doc.id))
+          .toList(growable: false);
+    });
+
+    return result;
+  }
+
+  @override
+  Future<List<T>> getQueryOrderBy<T>({
+    required String collectionPath,
+    required ObjectMapper<T> mapper,
+    required String field,
+    required dynamic isEqualTo,
+    required String orderByField,
+    bool descending = false,
+  }) async {
+    return _firestore
+        .collection(collectionPath)
+        .where(field, isEqualTo: isEqualTo)
+        .orderBy(orderByField, descending: descending)
+        .get()
+        .then((snapshot) => snapshot.docs
+            .map((doc) => mapper(doc.data(), doc.id))
+            .toList(growable: false));
+  }
+
+  @override
+  Stream<List<T>> streamQueryOrderBy<T>({
+    required String collectionPath,
+    required ObjectMapper<T> mapper,
+    required String field,
+    required dynamic isEqualTo,
+    required String orderByField,
+    bool descending = false,
+  }) {
+    return _firestore
+        .collection(collectionPath)
+        .where(field, isEqualTo: isEqualTo)
+        .orderBy(orderByField, descending: descending)
+        .snapshots()
+        .map((snapshot) => snapshot.docs
+            .map((doc) => mapper(doc.data(), doc.id))
+            .toList(growable: false));
   }
 }

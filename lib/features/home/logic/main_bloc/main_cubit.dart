@@ -1,64 +1,40 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
-import '../../../../core/models/transaction_model.dart';
+import 'package:firebase_auth/firebase_auth.dart' as auth;
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 import '../../../../core/models/totals_transaction_model.dart';
+import '../../../../core/models/transaction_model.dart';
 import '../../data/main_repository/main_base_repository.dart';
 
-part 'main_state.dart';
 part 'home_cubit.freezed.dart';
+part 'main_state.dart';
 
 class MainCubit extends Cubit<MainState> {
   final MainBaseRepository _mainRepository;
 
-  late final StreamSubscription<List<TransactionModel>>
-      _transactionsStreamSubscription;
+  MainCubit({
+    required MainBaseRepository mainRepository,
+  })  : _mainRepository = mainRepository,
+        super(const MainState.initial());
 
-  late final StreamSubscription<TotalsTransactionModel>
-      _totalsTransactionsStreamSubscription;
+  // The [user] stream is used to get the user.
+  Stream<auth.User?> get userStream => _mainRepository.userStream;
 
-  MainCubit({required MainBaseRepository mainRepository})
-      : _mainRepository = mainRepository,
-        super(const MainState.initial()) {
-    /// Listen to the totals transactions stream
-    _totalsTransactionsStreamSubscription = _mainRepository
-        .getTotalsTransactionsStream()
-        .listen((totalsTransactions) {
-      emit(MainState.loadedTotals(totalsTransactions));
-    });
-
-    // / Listen to the transactions stream
-    _transactionsStreamSubscription =
-        _mainRepository.getAllTransactionsStream().listen((transactions) {
-      emit(MainState.loaded(transactions));
-    });
-  }
-
-  Future<void> getAllTransactions() async {
-    final result = await _mainRepository.getAllTransactions();
+  Future<void> getAll() async {
+    final result = await _mainRepository.getAll();
     result.when(
-      success: (transactions) => emit(MainState.loaded(transactions)),
+      success: (all) => emit(MainState.loaded(all)),
       failure: (message) => emit(MainState.error(message)),
     );
   }
 
-  Future<void> getTotalsTransactions() async {
-    emit(const MainState.loading());
-    final result = await _mainRepository.getTotalsTransactions();
+  Future<void> getTotals() async {
+    final result = await _mainRepository.getTotals();
     result.when(
-      success: (totalsTransactions) => emit(
-        MainState.loadedTotals(totalsTransactions),
-      ),
+      success: (allTotals) => emit(MainState.loadedTotals(allTotals)),
       failure: (message) => emit(MainState.error(message)),
     );
-  }
-
-  @override
-  Future<void> close() {
-    _transactionsStreamSubscription.cancel();
-    _totalsTransactionsStreamSubscription.cancel();
-    return super.close();
   }
 }

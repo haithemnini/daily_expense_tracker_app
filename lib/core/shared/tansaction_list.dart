@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:intl/intl.dart';
 
+import '../../features/transaction/logic/transaction_cubit/transaction_cubit.dart';
 import '../enum/enum.dart';
 import '../extension/extension.dart';
 import '../models/transaction_model.dart';
@@ -14,25 +15,36 @@ import 'item_button.dart';
 class TransactionList extends StatelessWidget {
   const TransactionList({super.key, required this.allTransactions});
 
-  final List<TransactionModel> allTransactions;
+  final List<Transaction> allTransactions;
 
   @override
   Widget build(BuildContext context) {
     return Expanded(
-      child: ListView.builder(
-        itemCount: allTransactions.length,
-        itemBuilder: (_, index) {
-          final transaction = allTransactions[index];
-          final category = Categorys.fromIndex(transaction.categoryIndex);
-          return _buildTransactionItem(context, transaction, category);
-        },
-      ),
+      child: allTransactions.isEmpty
+          ? Center(
+              child: Text(
+                'No transactions yet',
+                style: AppTextStyle.subtitle.copyWith(
+                  color: context.colorScheme.onSurface,
+                ),
+              ),
+            )
+          : ListView.builder(
+              itemCount: allTransactions.length,
+              itemBuilder: (_, index) {
+                final transaction = allTransactions[index];
+                final category = Categorys.fromIndex(
+                  transaction.categorysIndex,
+                );
+                return _buildTransactionItem(context, transaction, category);
+              },
+            ),
     );
   }
 
   ItemButton _buildTransactionItem(
     BuildContext context,
-    TransactionModel transaction,
+    Transaction transaction,
     Categorys category,
   ) {
     return ItemButton(
@@ -41,21 +53,22 @@ class TransactionList extends StatelessWidget {
       iconColor: Colors.white,
       backgroundItem: context.colorScheme.surface,
       backgroundIcon: category.backgroundIcon,
-      onLongPress: () => _showModalSheet(context),
+      onLongPress: () => _showModalSheet(context, transaction),
       trailing: Column(
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [
           Text(
-            '\$ ${transaction.amount.toStringAsFixed(2)}',
+            transaction.amount.toFormattedCurrencyStringWithSymbol(),
             style: AppTextStyle.subtitle.copyWith(
-              color: transaction.transactionType == TransactionType.expense
-                  ? Colors.redAccent
-                  : Colors.greenAccent,
+              color:
+                  transaction.transactionCategory == TransactionCategory.expense
+                      ? Colors.redAccent
+                      : Colors.greenAccent,
             ),
           ),
           const SizedBox(height: 4),
           Text(
-            transaction.date.formatDate(),
+            transaction.date.formatDynamicDate,
             style: AppTextStyle.caption.copyWith(
               color: context.colorScheme.outline,
               fontWeight: FontWeight.w400,
@@ -66,7 +79,7 @@ class TransactionList extends StatelessWidget {
     );
   }
 
-  void _showModalSheet(BuildContext context) {
+  void _showModalSheet(BuildContext context, Transaction transaction) {
     return Alerts.showSheet(
       context: context,
       child: Padding(
@@ -85,7 +98,7 @@ class TransactionList extends StatelessWidget {
                   horizontal: 10,
                   vertical: 10,
                 ),
-                onPressed: () => _onPressed(context),
+                onPressed: () => _onPressedEdit(context, transaction),
               ),
             ),
             Padding(
@@ -100,7 +113,7 @@ class TransactionList extends StatelessWidget {
                   horizontal: 10,
                   vertical: 10,
                 ),
-                onPressed: () => _onPressedDelete(context),
+                onPressed: () => _onPressedDelete(context, transaction),
               ),
             ),
           ],
@@ -109,34 +122,24 @@ class TransactionList extends StatelessWidget {
     );
   }
 
-  void _onPressed(BuildContext context) {
+  void _onPressedEdit(BuildContext context, Transaction transaction) {
     context.pop();
-    context.pushNamed(
-      RoutesName.transaction,
-      arguments: Transaction.editExpense,
+    context.read<TransactionCubit>().isEditing = true;
+    context.read<TransactionCubit>().transaction = transaction;
+    context.pushNamed(RoutesName.transaction);
+  }
+
+  void _onPressedDelete(BuildContext context, Transaction transaction) {
+    context.pop();
+    Alerts.showAlertDialog(
+      context: context,
+      title: 'Delete Transaction',
+      message: 'Are you sure you want to delete this transaction?',
+      onOk: () {
+        debugPrint('transaction.uuid: ${transaction.uuid}');
+        context.read<TransactionCubit>().deleteTransaction(transaction.uuid!);
+      },
+      onCancel: () => {},
     );
-  }
-
-  void _onPressedDelete(BuildContext context) {
-    context.pop();
-  }
-}
-
-extension DateTimeExtension on DateTime {
-  String formatDate() {
-    final now = DateTime.now();
-    final difference = now.difference(this);
-
-    if (difference.inDays == 0) {
-      return 'Today';
-    } else if (difference.inDays == 1) {
-      return 'Yesterday';
-    } else if (difference.inDays < 7) {
-      // أيام الأسبوع
-      return DateFormat('EEEE').format(this);
-    } else {
-      // تاريخ غير محدد، يمكن استخدام تاريخ المنجهية
-      return DateFormat('dd/MM/yyyy').format(this);
-    }
   }
 }

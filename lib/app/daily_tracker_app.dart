@@ -1,12 +1,15 @@
-import 'package:daily_expense_tracker_app/core/helper/helper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../core/app_injections.dart';
+import '../core/helper/helper.dart';
 import '../core/router/app_route.dart';
 import '../core/styles/app_theme.dart';
 import '../features/home/logic/main_bloc/main_cubit.dart';
+import '../features/profile/logic/profile_bloc/profile_cubit.dart';
+import '../features/settings/logic/cubit/auth_profile_cubit.dart';
+import '../features/transaction/logic/transaction_cubit/transaction_cubit.dart';
 
 class DailyTrackerApp extends StatelessWidget {
   const DailyTrackerApp({
@@ -22,6 +25,11 @@ class DailyTrackerApp extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider(create: (_) => getIt<MainCubit>()),
+        BlocProvider(create: (_) => getIt<TransactionCubit>()),
+        BlocProvider(create: (_) => getIt<ProfileCubit>()),
+        BlocProvider(
+          create: (_) => getIt<AuthProfileCubit>()..initAuthProfile(),
+        )
       ],
       child: ScreenUtilInit(
         splitScreenMode: true,
@@ -32,7 +40,7 @@ class DailyTrackerApp extends StatelessWidget {
           title: 'Daily Tracker',
           theme: appTheme,
           darkTheme: appThemeDark,
-          themeMode: ThemeMode.light,
+          themeMode: ThemeMode.dark,
           initialRoute: RoutesName.home,
           onGenerateRoute: _appRouter.generateRoute,
         ),

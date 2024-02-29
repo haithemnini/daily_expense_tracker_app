@@ -15,30 +15,29 @@ final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 /// @nodoc
-mixin _$TotalsTransactionModel {
+mixin _$TotalsTransaction {
   double get totalIncome => throw _privateConstructorUsedError;
   double get totalExpense => throw _privateConstructorUsedError;
   double get totalBalance => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
-  $TotalsTransactionModelCopyWith<TotalsTransactionModel> get copyWith =>
+  $TotalsTransactionCopyWith<TotalsTransaction> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $TotalsTransactionModelCopyWith<$Res> {
-  factory $TotalsTransactionModelCopyWith(TotalsTransactionModel value,
-          $Res Function(TotalsTransactionModel) then) =
-      _$TotalsTransactionModelCopyWithImpl<$Res, TotalsTransactionModel>;
+abstract class $TotalsTransactionCopyWith<$Res> {
+  factory $TotalsTransactionCopyWith(
+          TotalsTransaction value, $Res Function(TotalsTransaction) then) =
+      _$TotalsTransactionCopyWithImpl<$Res, TotalsTransaction>;
   @useResult
   $Res call({double totalIncome, double totalExpense, double totalBalance});
 }
 
 /// @nodoc
-class _$TotalsTransactionModelCopyWithImpl<$Res,
-        $Val extends TotalsTransactionModel>
-    implements $TotalsTransactionModelCopyWith<$Res> {
-  _$TotalsTransactionModelCopyWithImpl(this._value, this._then);
+class _$TotalsTransactionCopyWithImpl<$Res, $Val extends TotalsTransaction>
+    implements $TotalsTransactionCopyWith<$Res> {
+  _$TotalsTransactionCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
@@ -71,7 +70,7 @@ class _$TotalsTransactionModelCopyWithImpl<$Res,
 
 /// @nodoc
 abstract class _$$TotalsTransactionModelImplCopyWith<$Res>
-    implements $TotalsTransactionModelCopyWith<$Res> {
+    implements $TotalsTransactionCopyWith<$Res> {
   factory _$$TotalsTransactionModelImplCopyWith(
           _$TotalsTransactionModelImpl value,
           $Res Function(_$TotalsTransactionModelImpl) then) =
@@ -83,8 +82,7 @@ abstract class _$$TotalsTransactionModelImplCopyWith<$Res>
 
 /// @nodoc
 class __$$TotalsTransactionModelImplCopyWithImpl<$Res>
-    extends _$TotalsTransactionModelCopyWithImpl<$Res,
-        _$TotalsTransactionModelImpl>
+    extends _$TotalsTransactionCopyWithImpl<$Res, _$TotalsTransactionModelImpl>
     implements _$$TotalsTransactionModelImplCopyWith<$Res> {
   __$$TotalsTransactionModelImplCopyWithImpl(
       _$TotalsTransactionModelImpl _value,
@@ -132,7 +130,7 @@ class _$TotalsTransactionModelImpl implements _TotalsTransactionModel {
 
   @override
   String toString() {
-    return 'TotalsTransactionModel(totalIncome: $totalIncome, totalExpense: $totalExpense, totalBalance: $totalBalance)';
+    return 'TotalsTransaction(totalIncome: $totalIncome, totalExpense: $totalExpense, totalBalance: $totalBalance)';
   }
 
   @override
@@ -160,7 +158,7 @@ class _$TotalsTransactionModelImpl implements _TotalsTransactionModel {
           _$TotalsTransactionModelImpl>(this, _$identity);
 }
 
-abstract class _TotalsTransactionModel implements TotalsTransactionModel {
+abstract class _TotalsTransactionModel implements TotalsTransaction {
   const factory _TotalsTransactionModel(
       {required final double totalIncome,
       required final double totalExpense,

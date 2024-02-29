@@ -30,7 +30,7 @@ class AppBottomNavBar extends StatelessWidget {
       child: BottomAppBar(
         height: 60,
         elevation: 0,
-        notchMargin: 5,
+        notchMargin: 4,
         shape: const CircularNotchedRectangle(),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,

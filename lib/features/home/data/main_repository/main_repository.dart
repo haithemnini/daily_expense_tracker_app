@@ -1,198 +1,116 @@
-import '../../../../core/extension/extension.dart';
-import '../../../../core/models/transaction_hive_model.dart';
-import 'package:daily_expense_tracker_app/core/service/network_info.dart';
+import 'dart:async';
+
+import 'package:auth_user/auth_user.dart';
 import 'package:db_firestore_client/db_firestore_client.dart';
 import 'package:db_hive_client/db_hive_client.dart';
+import 'package:firebase_auth/firebase_auth.dart' as auth;
 
-import '../../../../core/enum/enum.dart';
 import '../../../../core/models/totals_transaction_model.dart';
+import '../../../../core/models/transaction_hive_model.dart';
 import '../../../../core/models/transaction_model.dart';
 import '../../../../core/utils/models/app_result.dart';
-import '../../../../core/utils/typedef/typedef.dart';
 import 'main_base_repository.dart';
 
 class MainRepository implements MainBaseRepository {
   final DbFirestoreClientBase _dbFirestoreClient;
   final DbHiveClientBase _dbHiveClient;
-  final NetworkInfoBase _networkInfo;
+  final AuthUserBase _authUser;
 
   MainRepository({
     required DbFirestoreClientBase dbFirestoreClient,
     required DbHiveClientBase dbHiveClient,
-    required NetworkInfoBase networkInfo,
+    required AuthUserBase authUser,
   })  : _dbFirestoreClient = dbFirestoreClient,
         _dbHiveClient = dbHiveClient,
-        _networkInfo = networkInfo;
+        _authUser = authUser;
+
+  String get _currentUser => _authUser.currentUser!.uid;
+  bool get _isUserLoggedIn => _authUser.currentUser != null;
 
   @override
-  TransactionsAllStreamResult getAllTransactionsStream() async* {
-    try {
-      if (await _networkInfo.isConnected) {
-        final result = _dbFirestoreClient.streamCollection<TransactionModel>(
-          collectionPath: 'transactions',
-          objectMapper: (data, documentId) => TransactionModel.fromJson(data!),
-        );
-        yield* result;
-      } else {
-        final result = _dbHiveClient.watchAll<TransactionHiveModel>(
-          boxName: 'transactions',
-        );
+  Stream<auth.User?> get userStream => _authUser.userStream;
 
-        final resultTransactions = result.map((resultHive) => resultHive
-            .map((resultHive) => TransactionModel(
-                  userId: resultHive.userId,
-                  title: resultHive.title,
-                  description: resultHive.description,
-                  amount: resultHive.amount,
-                  date: resultHive.date,
-                  categoryIndex: resultHive.categoryIndex,
-                  transactionType: resultHive.transactionType.transactionType,
-                ))
-            .toList());
+  @override
+  Future<AppResult<List<Transaction>>> getAll() async {
+    if (!_isUserLoggedIn) {
+      final transactions = _getHiveTransactions();
+      final result = await transactions;
 
-        yield* resultTransactions;
-      }
-    } catch (err) {
-      yield [];
+      // Convert the [TransactionHive] to [Transaction] and return the result
+      final totalsTransaction = result.map(Transaction.fromHiveModel).toList();
+      return AppResult.success(totalsTransaction);
     }
+    final transactions = await _getDataAndClearHive();
+
+    // Update the firestore and get the data
+    final result = await _updateFirestoreAndGetData(transactions);
+    return AppResult.success(result);
   }
 
   @override
-  TotalsTransactionsStreamResult getTotalsTransactionsStream() {
-    final TransactionsAllStreamResult result = getAllTransactionsStream();
+  Future<AppResult<TotalsTransaction>> getTotals() async {
+    if (!_isUserLoggedIn) {
+      final transactions = _getHiveTransactions();
+      final result = await transactions;
 
-    final Stream<TotalsTransactionModel> resultTotals = result.map(
-        (transactions) => TotalsTransactionModel(
+      // Convert the [TransactionHive] to [Transaction] and calculate the totals
+      final totalsTransaction = TotalsTransaction.calcu(
+        result.map(Transaction.fromHiveModel).toList(),
+      );
+      return AppResult.success(totalsTransaction);
+    }
+    final transactions = await _getDataAndClearHive();
+    final result = await _updateFirestoreAndGetData(transactions);
 
-            /// totalExpense = totalExpense
-            totalExpense: transactions
-                .where((transaction) =>
-                    transaction.transactionType == TransactionType.expense)
-                .map((transaction) => transaction.amount)
-                .fold(0.0, (prev, amount) => prev + amount),
-
-            /// totalIncome = totalIncome - totalExpense
-            totalIncome: transactions
-                .where((transaction) =>
-                    transaction.transactionType == TransactionType.income)
-                .map((transaction) => transaction.amount)
-                .fold(0.0, (prev, amount) => prev + amount),
-
-            /// totalBalance = totalIncome - totalExpense
-            totalBalance: transactions
-                .map((transaction) => transaction.amount)
-                .fold(0.0, (prev, amount) => prev + amount)));
-
-    return resultTotals;
+    // Calculate the totals and return the result
+    final totalsTransaction = TotalsTransaction.calcu(result);
+    return AppResult.success(totalsTransaction);
   }
 
-  @override
-  TransactionAllResult getAllTransactions() async {
-    try {
-      if (await _networkInfo.isConnected) {
-        final result = await _dbFirestoreClient.getCollection<TransactionModel>(
-          collectionPath: 'transactions',
-          objectMapper: (data, documentId) => TransactionModel.fromJson(data!),
-        );
-        return AppResult.success(result);
-      } else {
-        final result = await _dbHiveClient.getAll<TransactionHiveModel>(
-          boxName: 'transactions',
-        );
+  Future<List<TransactionHive>> _getHiveTransactions() async {
+    final transactions = await _dbHiveClient.getAll<TransactionHive>(
+      boxName: 'transactions',
+    );
 
-        final resultTransactions = result
-            .map((resultHive) => TransactionModel(
-                  userId: resultHive.userId,
-                  title: resultHive.title,
-                  description: resultHive.description,
-                  amount: resultHive.amount,
-                  date: resultHive.date,
-                  categoryIndex: resultHive.categoryIndex,
-                  transactionType: resultHive.transactionType.transactionType,
-                ))
-            .toList();
+    // Sort the transactions by amount
+    final transactionsOrderByAmount = transactions
+      ..sort((a, b) => b.amount.compareTo(a.amount));
 
-        return AppResult.success(resultTransactions);
-      }
-    } catch (err) {
-      return AppResult.failure(err.toString());
-    }
+    return transactionsOrderByAmount;
   }
 
-  @override
-  TotalsTransactionsResult getTotalsTransactions() async {
-    try {
-      if (await _networkInfo.isConnected) {
-        final result = await _dbFirestoreClient.getCollection<TransactionModel>(
+  Future<List<TransactionHive>> _getDataAndClearHive() async {
+    final transactions = _getHiveTransactions();
+    await _dbHiveClient.clearAll<TransactionHive>(boxName: 'transactions');
+    return transactions;
+  }
+
+  Future<List<Transaction>> _updateFirestoreAndGetData(
+    List<TransactionHive> transactions,
+  ) async {
+    final updatedTransactions = transactions.map((hive) {
+      return Transaction.fromHiveModel(hive).copyWith(userId: _currentUser);
+    }).toList();
+
+    await Future.wait(
+      updatedTransactions.map(
+        (transaction) => _dbFirestoreClient.setDocument(
           collectionPath: 'transactions',
-          objectMapper: (data, documentId) => TransactionModel.fromJson(data!),
-        );
+          documentId: transaction.uuid!,
+          merge: false,
+          data: transaction.toJson(),
+        ),
+      ),
+    );
 
-        final resultTotals = TotalsTransactionModel(
-          /// totalExpense = totalExpense
-          totalExpense: result
-              .where((transaction) =>
-                  transaction.transactionType == TransactionType.expense)
-              .map((transaction) => transaction.amount)
-              .fold(0.0, (prev, amount) => prev + amount),
-
-          /// totalIncome = totalIncome - totalExpense
-          totalIncome: result
-              .where((transaction) =>
-                  transaction.transactionType == TransactionType.income)
-              .map((transaction) => transaction.amount)
-              .fold(0.0, (prev, amount) => prev + amount),
-
-          /// totalBalance = totalIncome - totalExpense
-          totalBalance: result
-              .map((transaction) => transaction.amount)
-              .fold(0.0, (prev, amount) => prev + amount),
-        );
-
-        return AppResult.success(resultTotals);
-      } else {
-        final List<TransactionHiveModel> result =
-            await _dbHiveClient.getAll<TransactionHiveModel>(
-          boxName: 'transactions',
-        );
-
-        final resultTransactions = result
-            .map((resultHive) => TransactionModel(
-                  userId: resultHive.userId,
-                  title: resultHive.title,
-                  description: resultHive.description,
-                  amount: resultHive.amount,
-                  date: resultHive.date,
-                  categoryIndex: resultHive.categoryIndex,
-                  transactionType: resultHive.transactionType.transactionType,
-                ))
-            .toList();
-
-        final resultTotals = TotalsTransactionModel(
-          /// totalExpense = totalExpense
-          totalExpense: resultTransactions
-              .where((transaction) =>
-                  transaction.transactionType == TransactionType.expense)
-              .map((transaction) => transaction.amount)
-              .fold(0.0, (prev, amount) => prev + amount),
-
-          /// totalIncome = totalIncome - totalExpense
-          totalIncome: resultTransactions
-              .where((transaction) =>
-                  transaction.transactionType == TransactionType.income)
-              .map((transaction) => transaction.amount)
-              .fold(0.0, (prev, amount) => prev + amount),
-
-          /// totalBalance = totalIncome - totalExpense
-          totalBalance: resultTransactions
-              .map((transaction) => transaction.amount)
-              .fold(0.0, (prev, amount) => prev + amount),
-        );
-
-        return AppResult.success(resultTotals);
-      }
-    } catch (err) {
-      return AppResult.failure(err.toString());
-    }
+    final result = await _dbFirestoreClient.getQueryOrderBy<Transaction>(
+      collectionPath: 'transactions',
+      field: 'userId',
+      isEqualTo: _currentUser,
+      descending: true,
+      orderByField: 'amount',
+      mapper: (data, documentId) => Transaction.fromJson(data!),
+    );
+    return result;
   }
 }

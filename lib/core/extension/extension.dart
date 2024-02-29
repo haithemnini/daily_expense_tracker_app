@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:intl/intl.dart';
 
 import '../enum/enum.dart';
 import '../models/transaction_hive_model.dart';
@@ -28,24 +29,59 @@ extension DevicesContextExtension on BuildContext {
   double get deviceWidth => deviceSize.width;
 }
 
-extension TransactionTypeExtension on TransactionType {
-  TransactionTypeHive get transactionTypeHive {
+extension TransactionCategoryExtension on TransactionCategory {
+  TransactionCategory get transactionCategoryHive {
     switch (this) {
-      case TransactionType.income:
-        return TransactionTypeHive.income;
-      case TransactionType.expense:
-        return TransactionTypeHive.expense;
+      case TransactionCategory.income:
+        return TransactionCategory.income;
+      case TransactionCategory.expense:
+        return TransactionCategory.expense;
     }
   }
 }
 
-extension TransactionTypeHiveExtension on TransactionTypeHive {
-  TransactionType get transactionType {
+extension TransactionTypeHiveExtension on TransactionCategoryHive {
+  TransactionCategory get transactionCategory {
     switch (this) {
-      case TransactionTypeHive.income:
-        return TransactionType.income;
-      case TransactionTypeHive.expense:
-        return TransactionType.expense;
+      case TransactionCategoryHive.income:
+        return TransactionCategory.income;
+      case TransactionCategoryHive.expense:
+        return TransactionCategory.expense;
     }
+  }
+}
+
+extension DateFormattingExtension on DateTime {
+  String get formattedDate => DateFormat.yMMMd().format(this);
+  String get formatDynamicDate {
+    final now = DateTime.now();
+    final today = DateTime(now.year, now.month, now.day);
+    final yesterday = DateTime(now.year, now.month, now.day - 1);
+    final formatted = DateFormat.yMMMd().format(this);
+    if (isAtSameMomentAs(today)) {
+      return 'Today';
+    } else if (isAtSameMomentAs(yesterday)) {
+      return 'Yesterday';
+    } else {
+      return formatted;
+    }
+  }
+}
+
+extension DoubleFormatting on double {
+  String toFormattedCurrencyStringWithSymbol() {
+    final formatter = NumberFormat.currency(symbol: '\$ ', decimalDigits: 2);
+    return formatter.format(this);
+  }
+
+  String toFormattedCurrencyString() {
+    final formatter = NumberFormat.currency(symbol: '', decimalDigits: 2);
+    return formatter.format(this);
+  }
+}
+
+extension StringFormatting on String {
+  double toUnFormattedString() {
+    return double.parse(replaceAll(',', ''));
   }
 }

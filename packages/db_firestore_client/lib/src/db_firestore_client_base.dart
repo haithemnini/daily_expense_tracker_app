@@ -1,12 +1,12 @@
 import 'common/core_typedefs.dart';
 
 abstract class DbFirestoreClientBase {
-  Future<String> addDocument({
+  Future<void> addDocument({
     required String collectionPath,
     required Map<String, dynamic> data,
   });
 
-  Future<String> updateDocument({
+  Future<void> updateDocument({
     required String collectionPath,
     required Map<String, dynamic> data,
   });
@@ -28,11 +28,6 @@ abstract class DbFirestoreClientBase {
     required ObjectMapper<T> objectMapper,
   });
 
-  // Future<T?> getTotalsTransactionStream<T>({
-  //   required String collectionPath,
-  //   required ObjectMapper<T> objectMapper,
-  // });
-
   Stream<T?> streamDocument<T>({
     required String collectionPath,
     required String documentId,
@@ -49,17 +44,42 @@ abstract class DbFirestoreClientBase {
     required ObjectMapper<T> objectMapper,
   });
 
-  Stream<List<T>> streamQuery<T>({
-    required String collectionPath,
-    required ObjectMapper<T> mapper,
-    required String field,
-    required dynamic value,
-  });
-
   Future<List<T>> getQuery<T>({
     required String collectionPath,
     required ObjectMapper<T> mapper,
     required String field,
-    required dynamic value,
+    required dynamic isEqualTo,
+  });
+
+  Stream<List<T>> streamQuery<T>({
+    required String collectionPath,
+    required ObjectMapper<T> mapper,
+    required String field,
+    required dynamic isEqualTo,
+  });
+
+  Stream<List<T>> streamCollectionOrderBy<T>({
+    required String collectionPath,
+    required ObjectMapper<T> objectMapper,
+    required String orderByField,
+    bool descending = false,
+  });
+
+  Future<List<T>> getQueryOrderBy<T>({
+    required String collectionPath,
+    required ObjectMapper<T> mapper,
+    required String field,
+    required dynamic isEqualTo,
+    required String orderByField,
+    bool descending = false,
+  });
+
+  Stream<List<T>> streamQueryOrderBy<T>({
+    required String collectionPath,
+    required ObjectMapper<T> mapper,
+    required String field,
+    required dynamic isEqualTo,
+    required String orderByField,
+    bool descending = false,
   });
 }

@@ -1,24 +1,58 @@
+import '../../../core/utils/alerts/alerts.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:user_service/user_service.dart';
 
 import '../../../core/extension/extension.dart';
 import '../../../core/helper/helper.dart';
 import '../../../core/router/router.dart';
 import '../../../core/shared/custom_material_button.dart';
-import '../../../core/styles/app_colors.dart';
 import '../../../core/styles/app_text_style.dart';
+import '../logic/profile_bloc/profile_cubit.dart';
 import 'widgets/widgets.dart';
 
-class ProfileView extends StatelessWidget {
-  const ProfileView({super.key});
+class ProfileView extends StatefulWidget {
+  const ProfileView({super.key, required this.user});
+
+  final User user;
+
+  @override
+  State<ProfileView> createState() => _ProfileViewState();
+}
+
+class _ProfileViewState extends State<ProfileView> {
+  @override
+  void initState() {
+    context.read<ProfileCubit>().init(widget.user);
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: _buildAppBar(context),
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 25),
-        child: _buildBody(context),
+      body: BlocListener<ProfileCubit, ProfileState>(
+        listener: (context, state) {
+          state.maybeMap(
+            loading: (_) => Alerts.showLoaderDialog(context),
+            success: (state) {
+              context.pop();
+              context.pop();
+              Alerts.showToastMsg(context, state.message);
+            },
+            error: (state) {
+              context.pop();
+              context.pop();
+              Alerts.showToastMsg(context, state.message);
+            },
+            orElse: () {},
+          );
+        },
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 25),
+          child: _buildBody(context),
+        ),
       ),
     );
   }
@@ -53,13 +87,13 @@ class ProfileView extends StatelessWidget {
             child: Center(
               child: Column(
                 children: [
-                  _buildProfileImage(context),
-                  _buildProfileDetails(context),
                   const ProfileForm(),
                   const Spacer(),
                   CustomMaterialButton(
-                    onPressed: () => {},
                     text: 'Save',
+                    onPressed: () {
+                      context.read<ProfileCubit>().updateProfile();
+                    },
                   ),
                   const SizedBox(height: 20),
                 ],
@@ -68,74 +102,6 @@ class ProfileView extends StatelessWidget {
           ),
         ],
       ),
-    );
-  }
-
-  Widget _buildProfileImage(BuildContext context) {
-    return Container(
-      width: 150,
-      height: 150,
-      decoration: const BoxDecoration(
-        shape: BoxShape.circle,
-        color: Colors.white,
-        gradient: AppColors.primaryGradient,
-      ),
-      child: Container(
-        margin: const EdgeInsets.all(3),
-        decoration: const BoxDecoration(
-          shape: BoxShape.circle,
-          color: Colors.white,
-          image: DecorationImage(
-            image: AssetImage('assets/images/profile.png'),
-            fit: BoxFit.cover,
-          ),
-        ),
-        child: Align(
-          alignment: Alignment.bottomRight,
-          child: Container(
-            width: 35,
-            height: 35,
-            decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              color: Colors.white,
-              border: Border.all(
-                width: 3,
-                color: context.colorScheme.background,
-              ),
-              gradient: AppColors.primaryGradient,
-            ),
-            child: GestureDetector(
-              onTap: () => {},
-              child: Icon(
-                FontAwesomeIcons.cameraRetro,
-                size: 15,
-                color: context.colorScheme.background,
-              ),
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-
-  Widget _buildProfileDetails(BuildContext context) {
-    return Column(
-      children: [
-        const SizedBox(height: 20),
-        Text(
-          'John Doe',
-          style: AppTextStyle.title.copyWith(
-            fontWeight: FontWeight.w600,
-          ),
-        ),
-        const SizedBox(height: 5),
-        Text(
-          textAlign: TextAlign.center,
-          'Lorem ipsum dolor sit amet, consectetur\nadipiscing elit.',
-          style: AppTextStyle.caption,
-        ),
-        const SizedBox(height: 20),
-      ],
     );
   }
 }

@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import '../../../../core/extension/extension.dart';
+import '../../../../core/router/app_route.dart';
+import '../../../../core/router/router.dart';
 import '../../../../core/styles/app_colors.dart';
+import '../../../transaction/logic/transaction_cubit/transaction_cubit.dart';
 
 class AppFloatingButton extends StatelessWidget {
   const AppFloatingButton({
@@ -20,7 +24,10 @@ class AppFloatingButton extends StatelessWidget {
       ),
       child: IconButton(
         icon: Icon(FontAwesomeIcons.plus, color: context.colorScheme.surface),
-        onPressed: () {},
+        onPressed: () {
+          context.read<TransactionCubit>().isEditing = false;
+          context.pushNamed(RoutesName.transaction);
+        },
       ),
     );
   }

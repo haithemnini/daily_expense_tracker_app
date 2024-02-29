@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../core/extension/extension.dart';
 import '../../../core/helper/helper.dart';
-import '../logic/main_bloc/main_cubit.dart';
 import 'main_view.dart';
 import 'stat_view.dart';
 import 'widgets/widgets.dart';
@@ -27,28 +25,23 @@ class _HomeViewState extends State<HomeView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      extendBody: true,
       appBar: _buildAppBar(context),
       floatingActionButton: const AppFloatingButton(),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       bottomNavigationBar: AppBottomNavBar(
         currentIndex: _currentIndex,
-        onTabTapped: (int index) => _changePage(index),
+        onTabTapped: (index) => setState(() => _currentIndex = index),
       ),
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 25),
-        child: _pages.elementAt(_currentIndex),
-      ),
+      body: _buidBody(),
     );
   }
 
-  void _changePage(int index) {
-    if (index == 0) {
-      context.read<MainCubit>().getTotalsTransactions().then((_) {
-        context.read<MainCubit>().getAllTransactions();
-      });
-    }
-
-    setState(() => _currentIndex = index);
+  Widget _buidBody() {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 25),
+      child: _pages.elementAt(_currentIndex),
+    );
   }
 
   AppBar _buildAppBar(BuildContext context) {
