@@ -9,5 +9,6 @@ abstract class MainBaseRepository {
   /// The [user] stream is used to get the user.
   Stream<auth.User?> get userStream;
   Future<AppResult<List<Transaction>>> getAll();
+
   Future<AppResult<TotalsTransaction>> getTotals();
 }

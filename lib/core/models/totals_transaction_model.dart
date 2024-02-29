@@ -1,7 +1,7 @@
-import 'transaction_model.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 import '../enum/transaction.dart';
+import 'transaction_model.dart';
 
 part 'totals_transaction_model.freezed.dart';
 

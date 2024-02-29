@@ -1,5 +1,5 @@
-import 'package:daily_expense_tracker_app/core/utils/alerts/alerts.dart';
-import 'package:daily_expense_tracker_app/features/transaction/logic/transaction_cubit/transaction_cubit.dart';
+import '../../../core/utils/alerts/alerts.dart';
+import '../../transaction/logic/transaction_cubit/transaction_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

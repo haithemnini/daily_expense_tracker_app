@@ -25,21 +25,24 @@ class _HomeViewState extends State<HomeView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      extendBody: true,
       appBar: _buildAppBar(context),
       floatingActionButton: const AppFloatingButton(),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       bottomNavigationBar: AppBottomNavBar(
         currentIndex: _currentIndex,
-        onTabTapped: (int index) => _changePage(index),
+        onTabTapped: (index) => setState(() => _currentIndex = index),
       ),
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 25),
-        child: _pages.elementAt(_currentIndex),
-      ),
+      body: _buidBody(),
     );
   }
 
-  void _changePage(int index) => setState(() => _currentIndex = index);
+  Widget _buidBody() {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 25),
+      child: _pages.elementAt(_currentIndex),
+    );
+  }
 
   AppBar _buildAppBar(BuildContext context) {
     return AppBar(

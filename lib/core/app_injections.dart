@@ -3,6 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:db_firestore_client/db_firestore_client.dart';
 import 'package:db_hive_client/db_hive_client.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:get_it/get_it.dart';
 import 'package:hive/hive.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
@@ -11,6 +12,9 @@ import 'package:user_service/user_service.dart';
 import '../features/home/data/main_repository/main_base_repository.dart';
 import '../features/home/data/main_repository/main_repository.dart';
 import '../features/home/logic/main_bloc/main_cubit.dart';
+import '../features/profile/data/profile_repository/profile_base_repository.dart';
+import '../features/profile/data/profile_repository/profile_repository.dart';
+import '../features/profile/logic/profile_bloc/profile_cubit.dart';
 import '../features/settings/data/auth_profile_repository/auth_profile_base_repository.dart';
 import '../features/settings/data/auth_profile_repository/auth_profile_repository.dart';
 import '../features/settings/logic/cubit/auth_profile_cubit.dart';
@@ -26,9 +30,12 @@ final getIt = GetIt.I;
 Future<void> initAppConfig() async {
   // Initialize [FirebaseApp].
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+
   FirebaseFirestore.instance.settings = const Settings(
     persistenceEnabled: true,
   );
+
+  FirebaseDatabase.instance.setPersistenceEnabled(true);
 
   //dbFirestoreClient
   final dbFirestoreClient = DbFirestoreClient();
@@ -52,7 +59,7 @@ Future<void> initAppConfig() async {
 
   //networkInfo
   final networkInfo = NetworkInfo(getIt());
-  getIt.registerLazySingleton<NetworkInfoBase>(() => networkInfo);
+  getIt.registerLazySingleton<NetworkBaseInfo>(() => networkInfo);
 
   // MainBaseRepository (MainRepository)
   final MainBaseRepository homeBaseRepository = MainRepository(
@@ -82,6 +89,19 @@ Future<void> initAppConfig() async {
   );
 
   getIt.registerLazySingleton(() => authProfileRepository);
+
+  //ProfileBaseRepository (profileRepository)
+  final ProfileBaseRepository profileBaseRepository = ProfileRepository(
+    userService: getIt(),
+  );
+  //ProfileBloc && ProfileRepository
+  getIt.registerLazySingleton(() => profileBaseRepository);
+  getIt.registerFactory(
+    () => ProfileCubit(
+      profileRepository: getIt(),
+      networkInfo: getIt(),
+    ),
+  );
 
   //AuthProfileCubit
   getIt.registerFactory(

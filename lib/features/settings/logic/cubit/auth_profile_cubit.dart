@@ -48,8 +48,8 @@ class AuthProfileCubit extends Cubit<AuthProfileState> {
         _userService.getUser(user.uuid!).listen(
               (user) => emit(
                 AuthProfileState.authChanged(
-                  authStatus: AuthStatus.authenticated,
                   user: user,
+                  authStatus: AuthStatus.authenticated,
                 ),
               ),
             ),

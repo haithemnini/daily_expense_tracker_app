@@ -1,3 +1,5 @@
+import 'package:cached_network_image/cached_network_image.dart';
+
 import '../../../settings/logic/cubit/auth_profile_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -34,8 +36,8 @@ class ProfileIcon extends StatelessWidget {
               children: [
                 ClipOval(
                   child: user?.photoUrl != null
-                      ? Image.network(
-                          user!.photoUrl!,
+                      ? CachedNetworkImage(
+                          imageUrl: user!.photoUrl!,
                           height: 40,
                           width: 40,
                           fit: BoxFit.cover,

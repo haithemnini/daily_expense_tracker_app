@@ -43,9 +43,9 @@ class AuthUser implements AuthUserBase {
         accessToken: googleAuth.accessToken,
         idToken: googleAuth.idToken,
       );
-      final userCredential = await _firebaseAuth.signInWithCredential(
-        credential,
-      );
+
+      final userCredential =
+          await _firebaseAuth.signInWithCredential(credential);
 
       debugPrint('userCredential: ${userCredential.user}');
 

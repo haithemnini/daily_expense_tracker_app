@@ -20,6 +20,7 @@ class CustomTextFormField extends StatelessWidget {
     this.focusedBorder,
     this.errorBorder,
     this.prefixText,
+    this.validator,
   });
 
   final int? maxLines;
@@ -36,6 +37,7 @@ class CustomTextFormField extends StatelessWidget {
   final InputBorder? focusedBorder;
   final InputBorder? errorBorder;
   final String? prefixText;
+  final Function(String?)? validator;
 
   @override
   Widget build(BuildContext context) {
@@ -71,6 +73,7 @@ class CustomTextFormField extends StatelessWidget {
         if (keyboardType == TextInputType.number)
           ThousandsFormatter(allowFraction: true)
       ],
+      validator: (value) => validator?.call(value),
     );
   }
 }

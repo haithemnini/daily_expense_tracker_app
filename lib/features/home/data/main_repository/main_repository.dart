@@ -1,13 +1,15 @@
 import 'dart:async';
+
 import 'package:auth_user/auth_user.dart';
-import 'package:db_hive_client/db_hive_client.dart';
 import 'package:db_firestore_client/db_firestore_client.dart';
+import 'package:db_hive_client/db_hive_client.dart';
+import 'package:firebase_auth/firebase_auth.dart' as auth;
+
 import '../../../../core/models/totals_transaction_model.dart';
 import '../../../../core/models/transaction_hive_model.dart';
 import '../../../../core/models/transaction_model.dart';
 import '../../../../core/utils/models/app_result.dart';
 import 'main_base_repository.dart';
-import 'package:firebase_auth/firebase_auth.dart' as auth;
 
 class MainRepository implements MainBaseRepository {
   final DbFirestoreClientBase _dbFirestoreClient;
