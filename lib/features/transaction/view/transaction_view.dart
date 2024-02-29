@@ -5,7 +5,6 @@ import '../../../core/router/router.dart';
 import '../../../core/shared/custom_material_button.dart';
 import '../../../core/shared/shared.dart';
 import '../../../core/utils/alerts/alerts.dart';
-
 import '../logic/transaction_cubit/transaction_cubit.dart';
 import 'widgets/widgets.dart';
 

@@ -2,15 +2,14 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:firebase_auth/firebase_auth.dart' as auth;
-import 'package:flutter/foundation.dart';
-import '../../../../core/models/transaction_model.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 import '../../../../core/models/totals_transaction_model.dart';
+import '../../../../core/models/transaction_model.dart';
 import '../../data/main_repository/main_base_repository.dart';
 
-part 'main_state.dart';
 part 'home_cubit.freezed.dart';
+part 'main_state.dart';
 
 class MainCubit extends Cubit<MainState> {
   final MainBaseRepository _mainRepository;

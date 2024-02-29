@@ -1,13 +1,12 @@
 import 'dart:async';
 
 import 'package:auth_user/auth_user.dart';
-import '../../../../core/helper/helper.dart';
 import 'package:db_firestore_client/db_firestore_client.dart';
 import 'package:db_hive_client/db_hive_client.dart';
 
+import '../../../../core/helper/helper.dart';
 import '../../../../core/models/transaction_hive_model.dart';
 import '../../../../core/models/transaction_model.dart';
-
 import '../../../../core/utils/models/app_result.dart';
 import 'transaction_base_repository.dart';
 
@@ -40,7 +39,7 @@ class TransactionRepository implements TransactionBaseRepository {
           modelHive: transaction.copyWith(uuid: generUUID).toHiveModel(),
         );
       } else {
-        await _dbFirestoreClient.setDocument(
+        _dbFirestoreClient.setDocument(
           collectionPath: 'transactions',
           merge: false,
           documentId: generUUID,
@@ -48,6 +47,7 @@ class TransactionRepository implements TransactionBaseRepository {
               .copyWith(uuid: generUUID, userId: _authUser.currentUser?.uid)
               .toJson(),
         );
+        // .then((value) => debugPrint('Transaction added successfully'));
       }
 
       return const AppResult.success(null);
