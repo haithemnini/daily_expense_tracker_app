@@ -1,6 +1,7 @@
-import '../../../../core/utils/models/app_result.dart';
 import 'package:firebase_auth/firebase_auth.dart' as auth;
 import 'package:user_service/user_service.dart';
+
+import '../../../../core/utils/models/app_result.dart';
 
 abstract class AuthProfileBaseRepository {
   /// The [currentUser] method is used to get the current user.

@@ -1,17 +1,17 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import '../../../../core/helper/helper.dart';
-import '../../../../core/utils/alerts/alerts.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:user_service/user_service.dart';
 
 import '../../../../core/extension/extension.dart';
+import '../../../../core/helper/helper.dart';
 import '../../../../core/router/app_route.dart';
 import '../../../../core/router/router.dart';
 import '../../../../core/styles/app_colors.dart';
 import '../../../../core/styles/app_text_style.dart';
-import '../../logic/cubit/auth_profile_cubit.dart';
+import '../../../../core/utils/alerts/alerts.dart';
+import '../../../blocs/auth_profile_bloc/auth_profile_cubit.dart';
 
 class AuthProfile extends StatefulWidget {
   const AuthProfile({

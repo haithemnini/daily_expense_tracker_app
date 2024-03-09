@@ -72,6 +72,7 @@ abstract class DbFirestoreClientBase {
     required dynamic isEqualTo,
     required String orderByField,
     bool descending = false,
+    int? limit,
   });
 
   Stream<List<T>> streamQueryOrderBy<T>({

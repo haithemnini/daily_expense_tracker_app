@@ -1,7 +1,8 @@
-import 'transaction_hive_model.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 import '../enum/enum.dart';
+import 'transaction_hive_model.dart';
 
 part 'transaction_model.freezed.dart';
 part 'transaction_model.g.dart';
@@ -12,9 +13,9 @@ class Transaction with _$Transaction {
     required String? uuid,
     required String? userId,
     required double amount,
-    required DateTime date,
+    @TimestampConverter() required DateTime date,
     required int categorysIndex,
-    required TransactionCategory transactionCategory,
+    required Category category,
   }) = _Transaction;
 
   factory Transaction.fromJson(Map<String, dynamic> json) =>
@@ -25,24 +26,9 @@ class Transaction with _$Transaction {
       uuid: '',
       userId: '',
       amount: 0.0,
-      date: DateTime(
-        DateTime.now().year,
-        DateTime.now().month,
-        DateTime.now().day,
-      ),
-      categorysIndex: 0,
-      transactionCategory: TransactionCategory.expense,
-    );
-  }
-
-  factory Transaction.initial() {
-    return Transaction(
-      uuid: '',
-      userId: '',
-      amount: 0.0,
       date: DateTime.now(),
       categorysIndex: 0,
-      transactionCategory: TransactionCategory.expense,
+      category: Category.expense,
     );
   }
 
@@ -53,10 +39,41 @@ class Transaction with _$Transaction {
       amount: transactionHive.amount,
       date: transactionHive.date,
       categorysIndex: transactionHive.categorysIndex,
-      transactionCategory:
-          transactionHive.transactionCategory == TransactionCategoryHive.expense
-              ? TransactionCategory.expense
-              : TransactionCategory.income,
+      category: transactionHive.category == CategoryHive.expense
+          ? Category.expense
+          : Category.income,
+    );
+  }
+}
+
+class TimestampConverter implements JsonConverter<DateTime, Timestamp> {
+  const TimestampConverter();
+
+  @override
+  DateTime fromJson(Timestamp value) => value.toDate();
+
+  @override
+  Timestamp toJson(DateTime value) => Timestamp.fromDate(value);
+}
+
+extension TransactionTotalsExtension on List<Transaction> {
+  Transaction toCalcTotals() {
+    return Transaction(
+      uuid: '',
+      userId: '',
+      amount: fold(
+        0,
+        (previousValue, element) {
+          if (element.category == Category.expense) {
+            return previousValue - element.amount;
+          } else {
+            return previousValue + element.amount;
+          }
+        },
+      ),
+      date: DateTime.now(),
+      categorysIndex: 0,
+      category: Category.expense,
     );
   }
 }
@@ -69,9 +86,9 @@ extension TransactionExtension on Transaction {
       amount: amount,
       date: date,
       categorysIndex: categorysIndex,
-      transactionCategory: transactionCategory == TransactionCategory.expense
-          ? TransactionCategoryHive.expense
-          : TransactionCategoryHive.income,
+      category: category == Category.expense
+          ? CategoryHive.expense
+          : CategoryHive.income,
     );
   }
 }

@@ -6,9 +6,11 @@ import '../core/app_injections.dart';
 import '../core/helper/helper.dart';
 import '../core/router/app_route.dart';
 import '../core/styles/app_theme.dart';
-import '../features/home/logic/main_bloc/main_cubit.dart';
-import '../features/settings/logic/cubit/auth_profile_cubit.dart';
-import '../features/transaction/logic/transaction_cubit/transaction_cubit.dart';
+import '../features/blocs/auth_profile_bloc/auth_profile_cubit.dart';
+import '../features/blocs/main_bloc/main_cubit.dart';
+import '../features/blocs/profile_bloc/profile_cubit.dart';
+import '../features/blocs/state_bloc/state_cubit.dart';
+import '../features/blocs/transaction_bloc/transaction_cubit.dart';
 
 class DailyTrackerApp extends StatelessWidget {
   const DailyTrackerApp({
@@ -25,6 +27,8 @@ class DailyTrackerApp extends StatelessWidget {
       providers: [
         BlocProvider(create: (_) => getIt<MainCubit>()),
         BlocProvider(create: (_) => getIt<TransactionCubit>()),
+        BlocProvider(create: (_) => getIt<ProfileCubit>()),
+        BlocProvider(create: (_) => getIt<StateCubit>()),
         BlocProvider(
           create: (_) => getIt<AuthProfileCubit>()..initAuthProfile(),
         )

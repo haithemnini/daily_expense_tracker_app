@@ -1,14 +1,14 @@
 import 'package:bloc/bloc.dart';
-import '../../../../core/enum/enum.dart';
-import '../../../../core/extension/extension.dart';
 import 'package:flutter/material.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
+import '../../../../core/enum/enum.dart';
+import '../../../../core/extension/extension.dart';
 import '../../../../core/models/transaction_model.dart';
-import '../../data/repository/transaction_base_repository.dart';
+import '../../transaction/data/repository/transaction_base_repository.dart';
 
-part 'transaction_state.dart';
 part 'transaction_cubit.freezed.dart';
+part 'transaction_state.dart';
 
 class TransactionCubit extends Cubit<TransactionState> {
   final TransactionBaseRepository _transactionRepository;
@@ -28,7 +28,7 @@ class TransactionCubit extends Cubit<TransactionState> {
 
   void init() {
     if (_isEditing) {
-      _amountController.text = _transaction.amount.toFormattedCurrencyString();
+      _amountController.text = _transaction.amount.toCurrencyString();
     } else {
       _amountController.clear();
       _transaction = Transaction.empty();
@@ -41,10 +41,8 @@ class TransactionCubit extends Cubit<TransactionState> {
     emit(_buildState());
   }
 
-  void onTransactionCategoryChanged(TransactionCategory transactionCategory) {
-    _transaction = _transaction.copyWith(
-      transactionCategory: transactionCategory,
-    );
+  void onTransactionCategoryChanged(Category category) {
+    _transaction = _transaction.copyWith(category: category);
     emit(_buildState());
   }
 
@@ -54,6 +52,8 @@ class TransactionCubit extends Cubit<TransactionState> {
   }
 
   void addOrUpdateTransaction() {
+    debugPrint(_transaction.toString());
+
     emit(const TransactionState.loading());
 
     final amount = _amountController.text.isNotEmpty
@@ -65,35 +65,11 @@ class TransactionCubit extends Cubit<TransactionState> {
     Future.delayed(const Duration(milliseconds: 300)).then((_) {
       try {
         if (_isEditing) {
-          _transactionRepository.updateTransaction(transactionUpdated).then(
-                (value) => {
-                  value.when(
-                    success: (_) {
-                      emit(const TransactionState.success(
-                        'Transaction updated success',
-                      ));
-                    },
-                    failure: (message) {
-                      emit(TransactionState.error(message));
-                    },
-                  ),
-                },
-              );
+          _transactionRepository.updateTransaction(transactionUpdated);
+          emit(const TransactionState.success('Transaction updated success'));
         } else {
-          _transactionRepository.addTransaction(transactionUpdated).then(
-                (value) => {
-                  value.when(
-                    success: (_) {
-                      emit(const TransactionState.success(
-                        'Transaction added success',
-                      ));
-                    },
-                    failure: (message) {
-                      emit(TransactionState.error(message));
-                    },
-                  ),
-                },
-              );
+          _transactionRepository.addTransaction(transactionUpdated);
+          emit(const TransactionState.success('Transaction added success'));
         }
       } catch (error) {
         debugPrint('error: $error');
@@ -107,20 +83,8 @@ class TransactionCubit extends Cubit<TransactionState> {
 
     Future.delayed(const Duration(milliseconds: 300)).then((_) {
       try {
-        _transactionRepository.deleteTransaction(transactionId).then(
-              (value) => {
-                value.when(
-                  success: (_) {
-                    emit(const TransactionState.success(
-                      'Transaction deleted success',
-                    ));
-                  },
-                  failure: (message) {
-                    emit(TransactionState.error(message));
-                  },
-                ),
-              },
-            );
+        _transactionRepository.deleteTransaction(transactionId);
+        emit(const TransactionState.success('Transaction deleted success'));
       } catch (error) {
         debugPrint('error: $error');
         emit(TransactionState.error(error.toString()));
@@ -131,7 +95,7 @@ class TransactionCubit extends Cubit<TransactionState> {
   TransactionState _buildState() {
     return TransactionState.loadTransaction(
       categorys: Categorys.fromIndex(_transaction.categorysIndex),
-      transactionCategory: _transaction.transactionCategory,
+      transactionCategory: _transaction.category,
       transactionDate: _transaction.date,
     );
   }

@@ -47,11 +47,11 @@ class Alerts {
       initialDate: initialDate,
       firstDate: firstDate,
       lastDate: lastDate,
-    ).then((DateTime? dateTime) {
-      if (dateTime != null) {
-        onDateSelected(dateTime);
+    ).then((DateTime? newDate) {
+      if (newDate != null) {
+        onDateSelected(newDate);
       }
-      return dateTime;
+      return newDate;
     });
   }
 

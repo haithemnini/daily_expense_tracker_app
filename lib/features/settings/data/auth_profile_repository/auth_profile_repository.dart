@@ -25,21 +25,27 @@ class AuthProfileRepository implements AuthProfileBaseRepository {
   @override
   Future<AppResult<User>> signInWithGoogle() async {
     try {
-      /// The [signUpWithGoogle] method is used to sign up with google.
+      // Sign in with Google
       final user = await _authUser.signInWithGoogle();
 
-      /// The [createUser] method is used to create user.
-      /// The [user] is the user model.
-      final createdUser = await _userService.createUser(
-        User(
-          uuid: user!.uid,
-          email: user.email!,
-          fullName: user.displayName!,
-          photoUrl: user.photoURL,
-        ),
-      );
+      // Check if the user already exists in the database
+      final existingUser = await _userService.getUser(user!.uid).first;
 
-      return AppResult.success(createdUser);
+      if (existingUser == null) {
+        // The user does not exist in the database, create a new user
+        final createdUser = await _userService.createUser(
+          User(
+            uuid: user.uid,
+            email: user.email!,
+            fullName: user.displayName!,
+            photoUrl: user.photoURL,
+          ),
+        );
+        return AppResult.success(createdUser);
+      } else {
+        // The user already exists in the database
+        return AppResult.success(existingUser);
+      }
     } on SignInWithGoogleFailure catch (err) {
       debugPrint('AuthProfileRepository: signUpWithGoogle: $err');
       return AppResult.failure(err.message);

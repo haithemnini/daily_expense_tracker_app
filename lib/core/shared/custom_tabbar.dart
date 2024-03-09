@@ -2,7 +2,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 
-import '../../../../core/extension/extension.dart';
+import '../extension/extension.dart';
 
 class CustomTabBar extends StatefulWidget {
   final int tabControllerCount;
@@ -72,6 +72,7 @@ class CustomTabBarState extends State<CustomTabBar>
         ),
         Expanded(
           child: TabBarView(
+            physics: const NeverScrollableScrollPhysics(),
             controller: _tabController,
             children: widget.children,
           ),

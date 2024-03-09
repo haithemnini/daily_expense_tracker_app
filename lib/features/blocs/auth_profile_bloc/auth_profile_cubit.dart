@@ -5,7 +5,7 @@ import 'package:flutter/foundation.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:user_service/user_service.dart';
 
-import '../../data/auth_profile_repository/auth_profile_base_repository.dart';
+import '../../settings/data/auth_profile_repository/auth_profile_base_repository.dart';
 
 part 'auth_profile_cubit.freezed.dart';
 part 'auth_profile_state.dart';
@@ -48,8 +48,8 @@ class AuthProfileCubit extends Cubit<AuthProfileState> {
         _userService.getUser(user.uuid!).listen(
               (user) => emit(
                 AuthProfileState.authChanged(
-                  authStatus: AuthStatus.authenticated,
                   user: user,
+                  authStatus: AuthStatus.authenticated,
                 ),
               ),
             ),

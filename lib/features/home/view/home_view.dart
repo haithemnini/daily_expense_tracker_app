@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import '../../../core/extension/extension.dart';
 import '../../../core/helper/helper.dart';
 import 'main_view.dart';
-import 'stat_view.dart';
+import 'state_view.dart';
 import 'widgets/widgets.dart';
 
 class HomeView extends StatefulWidget {
@@ -19,29 +19,25 @@ class _HomeViewState extends State<HomeView> {
   // The pages to be displayed.
   final List<Widget> _pages = const [
     MainView(),
-    StatView(),
+    StateView(),
   ];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      extendBody: true,
       appBar: _buildAppBar(context),
       floatingActionButton: const AppFloatingButton(),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       bottomNavigationBar: AppBottomNavBar(
         currentIndex: _currentIndex,
-        onTabTapped: (int index) => _changePage(index),
+        onTabTapped: (index) => setState(() => _currentIndex = index),
       ),
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 25),
-        child: _pages.elementAt(_currentIndex),
-      ),
+      body: _pages.elementAt(_currentIndex),
     );
   }
 
-  void _changePage(int index) => setState(() => _currentIndex = index);
-
-  AppBar _buildAppBar(BuildContext context) {
+  _buildAppBar(BuildContext context) {
     return AppBar(
       elevation: 0,
       toolbarHeight: 0,

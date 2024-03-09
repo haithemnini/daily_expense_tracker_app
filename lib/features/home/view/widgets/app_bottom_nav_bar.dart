@@ -17,20 +17,20 @@ class AppBottomNavBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       clipBehavior: Clip.antiAlias,
-      decoration: const BoxDecoration(
-        borderRadius: BorderRadius.vertical(top: Radius.circular(32)),
+      decoration: BoxDecoration(
+        borderRadius: const BorderRadius.vertical(top: Radius.circular(32)),
         boxShadow: [
           BoxShadow(
-            color: Colors.black12,
-            blurRadius: 10,
-            offset: Offset(0, -1),
+            color: Colors.black12.withOpacity(0.01),
+            blurRadius: 5,
+            offset: const Offset(0, -1),
           ),
         ],
       ),
       child: BottomAppBar(
         height: 60,
         elevation: 0,
-        notchMargin: 5,
+        notchMargin: 10,
         shape: const CircularNotchedRectangle(),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,

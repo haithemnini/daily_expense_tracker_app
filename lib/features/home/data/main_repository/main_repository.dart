@@ -1,13 +1,14 @@
 import 'dart:async';
+
 import 'package:auth_user/auth_user.dart';
-import 'package:db_hive_client/db_hive_client.dart';
 import 'package:db_firestore_client/db_firestore_client.dart';
+import 'package:db_hive_client/db_hive_client.dart';
+
 import '../../../../core/models/totals_transaction_model.dart';
 import '../../../../core/models/transaction_hive_model.dart';
 import '../../../../core/models/transaction_model.dart';
 import '../../../../core/utils/models/app_result.dart';
 import 'main_base_repository.dart';
-import 'package:firebase_auth/firebase_auth.dart' as auth;
 
 class MainRepository implements MainBaseRepository {
   final DbFirestoreClientBase _dbFirestoreClient;
@@ -26,22 +27,25 @@ class MainRepository implements MainBaseRepository {
   bool get _isUserLoggedIn => _authUser.currentUser != null;
 
   @override
-  Stream<auth.User?> get userStream => _authUser.userStream;
-
-  @override
-  Future<AppResult<List<Transaction>>> getAll() async {
+  Future<AppResult<List<Transaction>>> getAll({
+    required int? limit,
+  }) async {
     if (!_isUserLoggedIn) {
-      final transactions = _getHiveTransactions();
-      final result = await transactions;
+      final hiveTransactions = _getHiveTransactions();
+      final result = await hiveTransactions;
 
       // Convert the [TransactionHive] to [Transaction] and return the result
-      final totalsTransaction = result.map(Transaction.fromHiveModel).toList();
-      return AppResult.success(totalsTransaction);
+      final transactions = result
+          .map(Transaction.fromHiveModel)
+          .take(limit ?? result.length)
+          .toList();
+
+      return AppResult.success(transactions);
     }
     final transactions = await _getDataAndClearHive();
 
     // Update the firestore and get the data
-    final result = await _updateFirestoreAndGetData(transactions);
+    final result = await _updateFirestoreAndGetData(transactions, limit);
     return AppResult.success(result);
   }
 
@@ -58,7 +62,7 @@ class MainRepository implements MainBaseRepository {
       return AppResult.success(totalsTransaction);
     }
     final transactions = await _getDataAndClearHive();
-    final result = await _updateFirestoreAndGetData(transactions);
+    final result = await _updateFirestoreAndGetData(transactions, null);
 
     // Calculate the totals and return the result
     final totalsTransaction = TotalsTransaction.calcu(result);
@@ -70,6 +74,9 @@ class MainRepository implements MainBaseRepository {
       boxName: 'transactions',
     );
 
+    // debugPrint('transactions: ${transactions.length}');
+    // debugPrint('transactions: $transactions');
+
     // Sort the transactions by amount
     final transactionsOrderByAmount = transactions
       ..sort((a, b) => b.amount.compareTo(a.amount));
@@ -79,12 +86,14 @@ class MainRepository implements MainBaseRepository {
 
   Future<List<TransactionHive>> _getDataAndClearHive() async {
     final transactions = _getHiveTransactions();
+
     await _dbHiveClient.clearAll<TransactionHive>(boxName: 'transactions');
     return transactions;
   }
 
   Future<List<Transaction>> _updateFirestoreAndGetData(
     List<TransactionHive> transactions,
+    int? limit,
   ) async {
     final updatedTransactions = transactions.map((hive) {
       return Transaction.fromHiveModel(hive).copyWith(userId: _currentUser);
@@ -107,6 +116,7 @@ class MainRepository implements MainBaseRepository {
       isEqualTo: _currentUser,
       descending: true,
       orderByField: 'amount',
+      limit: limit,
       mapper: (data, documentId) => Transaction.fromJson(data!),
     );
     return result;

@@ -4,8 +4,8 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import '../extension/extension.dart';
 import '../styles/app_text_style.dart';
 
-class ItemButton extends StatelessWidget {
-  const ItemButton({
+class CustomItemButton extends StatelessWidget {
+  const CustomItemButton({
     super.key,
     this.text,
     this.padding,

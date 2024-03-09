@@ -53,7 +53,10 @@ class DbFirestoreClient implements DbFirestoreClientBase {
     DocumentReference<Map<String, dynamic>> docRef;
     docRef = _firestore.collection(collectionPath).doc(documentId);
 
-    await docRef.set(data, SetOptions(merge: merge));
+    await docRef.set(
+      data,
+      SetOptions(merge: merge),
+    );
   }
 
   @override
@@ -191,6 +194,7 @@ class DbFirestoreClient implements DbFirestoreClientBase {
     required dynamic isEqualTo,
     required String orderByField,
     bool descending = false,
+    int? limit,
   }) async {
     return _firestore
         .collection(collectionPath)
@@ -199,7 +203,8 @@ class DbFirestoreClient implements DbFirestoreClientBase {
         .get()
         .then((snapshot) => snapshot.docs
             .map((doc) => mapper(doc.data(), doc.id))
-            .toList(growable: false));
+            .toList(growable: false))
+        .then((value) => limit != null ? value.take(limit).toList() : value);
   }
 
   @override
