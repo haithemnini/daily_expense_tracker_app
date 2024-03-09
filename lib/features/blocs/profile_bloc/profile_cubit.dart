@@ -1,12 +1,12 @@
 import 'dart:io';
 
 import 'package:bloc/bloc.dart';
-import '../../../../core/service/network_info.dart';
 import 'package:flutter/material.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:user_service/user_service.dart';
 
-import '../../data/profile_repository/profile_base_repository.dart';
+import '../../../../core/service/network_info.dart';
+import '../../profile/data/profile_repository/profile_base_repository.dart';
 
 part 'profile_cubit.freezed.dart';
 part 'profile_state.dart';

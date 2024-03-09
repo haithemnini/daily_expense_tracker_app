@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import '../../../core/extension/extension.dart';
 import '../../../core/helper/helper.dart';
 import 'main_view.dart';
-import 'stat_view.dart';
+import 'state_view.dart';
 import 'widgets/widgets.dart';
 
 class HomeView extends StatefulWidget {
@@ -19,7 +19,7 @@ class _HomeViewState extends State<HomeView> {
   // The pages to be displayed.
   final List<Widget> _pages = const [
     MainView(),
-    StatView(),
+    StateView(),
   ];
 
   @override
@@ -33,18 +33,11 @@ class _HomeViewState extends State<HomeView> {
         currentIndex: _currentIndex,
         onTabTapped: (index) => setState(() => _currentIndex = index),
       ),
-      body: _buidBody(),
+      body: _pages.elementAt(_currentIndex),
     );
   }
 
-  Widget _buidBody() {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 25),
-      child: _pages.elementAt(_currentIndex),
-    );
-  }
-
-  AppBar _buildAppBar(BuildContext context) {
+  _buildAppBar(BuildContext context) {
     return AppBar(
       elevation: 0,
       toolbarHeight: 0,

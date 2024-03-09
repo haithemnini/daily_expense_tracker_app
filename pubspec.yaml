@@ -22,6 +22,8 @@ dependencies:
     path: packages/db_hive_client
   firebase_auth: ^4.16.0
   firebase_core: ^2.24.2
+  firebase_database: ^10.4.7
+  fl_chart: ^0.66.2
   flutter:
     sdk: flutter
   flutter_bloc: ^8.1.3
@@ -45,7 +47,6 @@ dependencies:
   user_service:
     path: packages/user_service
   uuid: ^4.3.3
-  firebase_database: ^10.4.7 
 
 dev_dependencies:
   flutter_lints: ^2.0.0

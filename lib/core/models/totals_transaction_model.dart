@@ -17,15 +17,13 @@ class TotalsTransaction with _$TotalsTransaction {
     return TotalsTransaction(
         // totalExpense = totalExpense
         totalExpense: transactions
-            .where((transaction) =>
-                transaction.transactionCategory == TransactionCategory.expense)
+            .where((transaction) => transaction.category == Category.expense)
             .map((transaction) => transaction.amount)
             .fold(0.0, (prev, amount) => prev + amount),
 
         // totalIncome = totalIncome - totalExpense
         totalIncome: transactions
-            .where((transaction) =>
-                transaction.transactionCategory == TransactionCategory.income)
+            .where((transaction) => transaction.category == Category.income)
             .map((transaction) => transaction.amount)
             .fold(0.0, (prev, amount) => prev + amount),
 

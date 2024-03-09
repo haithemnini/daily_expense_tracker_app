@@ -11,7 +11,7 @@ import '../../../../core/router/router.dart';
 import '../../../../core/styles/app_colors.dart';
 import '../../../../core/styles/app_text_style.dart';
 import '../../../../core/utils/alerts/alerts.dart';
-import '../../logic/cubit/auth_profile_cubit.dart';
+import '../../../blocs/auth_profile_bloc/auth_profile_cubit.dart';
 
 class AuthProfile extends StatefulWidget {
   const AuthProfile({

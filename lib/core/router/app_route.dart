@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:user_service/user_service.dart';
 
+import '../../features/home/view/all_view_transaction.dart';
 import '../../features/home/view/home_view.dart';
 import '../../features/profile/view/profile_view.dart';
 import '../../features/settings/view/settings_view.dart';
@@ -14,6 +15,7 @@ class RoutesName {
   static const String settings = '/settings';
   static const String profile = '/profile';
   static const String transaction = '/transaction';
+  static const String allViewTransaction = '/allViewTransaction';
 }
 
 @immutable
@@ -46,6 +48,13 @@ class AppRouter {
             user: arguments as User,
           ),
         );
+
+      case RoutesName.allViewTransaction:
+        return _getPageRoute(
+          routeName: settings.name,
+          viewToShow: const AllViewTransaction(),
+        );
+
       default:
         return _getPageRoute(
           routeName: settings.name,

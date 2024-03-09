@@ -1,14 +1,14 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
-import 'package:firebase_auth/firebase_auth.dart' as auth;
 import 'package:freezed_annotation/freezed_annotation.dart';
 
+import '../../../../core/enum/enum.dart';
 import '../../../../core/models/totals_transaction_model.dart';
 import '../../../../core/models/transaction_model.dart';
-import '../../data/main_repository/main_base_repository.dart';
+import '../../home/data/main_repository/main_base_repository.dart';
 
-part 'home_cubit.freezed.dart';
+part 'main_cubit.freezed.dart';
 part 'main_state.dart';
 
 class MainCubit extends Cubit<MainState> {
@@ -19,13 +19,18 @@ class MainCubit extends Cubit<MainState> {
   })  : _mainRepository = mainRepository,
         super(const MainState.initial());
 
-  // The [user] stream is used to get the user.
-  Stream<auth.User?> get userStream => _mainRepository.userStream;
+  Future<void> getAll(TypeShow typeShow) async {
+    emit(const MainState.loading());
 
-  Future<void> getAll() async {
-    final result = await _mainRepository.getAll();
+    final result = await _mainRepository.getAll(
+      limit: typeShow == TypeShow.limit ? 10 : null,
+    );
     result.when(
-      success: (all) => emit(MainState.loaded(all)),
+      success: (all) => emit(
+        typeShow == TypeShow.limit
+            ? MainState.loadedLimit(all)
+            : MainState.loadedAll(all),
+      ),
       failure: (message) => emit(MainState.error(message)),
     );
   }

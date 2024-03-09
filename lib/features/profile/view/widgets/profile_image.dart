@@ -9,7 +9,7 @@ import 'package:user_service/user_service.dart';
 
 import '../../../../core/extension/extension.dart';
 import '../../../../core/styles/app_colors.dart';
-import '../../logic/profile_bloc/profile_cubit.dart';
+import '../../../blocs/profile_bloc/profile_cubit.dart';
 
 class ProfileImage extends StatefulWidget {
   const ProfileImage({super.key, required this.user});

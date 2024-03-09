@@ -6,23 +6,23 @@ enum TransactionAction {
   edit,
 }
 
-enum TransactionCategory {
+enum Category {
   expense(
     name: 'Expense',
     backgroundIcon: Colors.redAccent,
-    icon: FontAwesomeIcons.moneyBill,
+    icon: FontAwesomeIcons.minus,
   ),
   income(
     name: 'Income',
-    backgroundIcon: Colors.green,
-    icon: FontAwesomeIcons.handHoldingDollar,
+    backgroundIcon: Colors.greenAccent,
+    icon: FontAwesomeIcons.plus,
   );
 
   final String name;
   final IconData icon;
   final Color backgroundIcon;
 
-  const TransactionCategory({
+  const Category({
     required this.name,
     required this.icon,
     required this.backgroundIcon,

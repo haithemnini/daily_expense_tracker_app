@@ -5,7 +5,7 @@ import '../../../core/router/router.dart';
 import '../../../core/shared/custom_material_button.dart';
 import '../../../core/shared/shared.dart';
 import '../../../core/utils/alerts/alerts.dart';
-import '../logic/transaction_cubit/transaction_cubit.dart';
+import '../../blocs/transaction_bloc/transaction_cubit.dart';
 import 'widgets/widgets.dart';
 
 class TransactionView extends StatelessWidget {
@@ -13,26 +13,10 @@ class TransactionView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocListener<TransactionCubit, TransactionState>(
-      listener: (context, state) {
-        state.maybeWhen(
-          loading: () => Alerts.showLoaderDialog(context),
-          success: (message) => _success(context, message),
-          error: (message) => Alerts.showToastMsg(context, message),
-          orElse: () {},
-        );
-      },
-      child: Scaffold(
-        appBar: const CustomAppBar(),
-        body: _buildBody(context),
-      ),
+    return Scaffold(
+      appBar: const CustomAppBar(),
+      body: _buildBody(context),
     );
-  }
-
-  _success(BuildContext context, String message) {
-    Alerts.hideLoaderDialog(context);
-    Alerts.showToastMsg(context, message);
-    context.pop();
   }
 
   Widget _buildBody(BuildContext context) {
@@ -48,15 +32,28 @@ class TransactionView extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
+                  BlocListener<TransactionCubit, TransactionState>(
+                    listener: (context, state) {
+                      state.maybeWhen(
+                        loading: () => Alerts.showLoaderDialog(context),
+                        success: (message) => _success(context, message),
+                        error: (message) {
+                          Alerts.showToastMsg(context, message);
+                        },
+                        orElse: () => {},
+                      );
+                    },
+                    child: const SizedBox.shrink(),
+                  ),
                   const Spacer(),
                   const SizedBox(height: 30),
                   const TransactionForm(),
                   const Spacer(),
                   CustomMaterialButton(
                     text: 'SAVE',
-                    onPressed: () {
-                      context.read<TransactionCubit>().addOrUpdateTransaction();
-                    },
+                    onPressed: () => context
+                        .read<TransactionCubit>()
+                        .addOrUpdateTransaction(),
                   ),
                 ],
               ),
@@ -65,5 +62,11 @@ class TransactionView extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  _success(BuildContext context, String message) {
+    Alerts.hideLoaderDialog(context);
+    Alerts.showToastMsg(context, message);
+    context.pop();
   }
 }
