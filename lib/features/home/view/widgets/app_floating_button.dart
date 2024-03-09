@@ -6,7 +6,7 @@ import '../../../../core/extension/extension.dart';
 import '../../../../core/router/app_route.dart';
 import '../../../../core/router/router.dart';
 import '../../../../core/styles/app_colors.dart';
-import '../../../transaction/logic/transaction_cubit/transaction_cubit.dart';
+import '../../../blocs/transaction_bloc/transaction_cubit.dart';
 
 class AppFloatingButton extends StatelessWidget {
   const AppFloatingButton({

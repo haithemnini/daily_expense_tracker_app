@@ -2,14 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
+import '../../../../core/enum/enum.dart';
 import '../../../../core/router/app_route.dart';
 import '../../../../core/router/router.dart';
 import '../../../../core/shared/shared.dart';
-import '../../logic/main_bloc/main_cubit.dart';
+import '../../../blocs/main_bloc/main_cubit.dart';
 import 'widgets.dart';
 
-class HeaderAppBar extends StatelessWidget {
-  const HeaderAppBar({super.key});
+class HeaderAppBarProfile extends StatelessWidget {
+  const HeaderAppBarProfile({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +23,7 @@ class HeaderAppBar extends StatelessWidget {
             CustomIconBottom(
               icon: FontAwesomeIcons.rotateLeft,
               onPressed: () {
-                context.read<MainCubit>().getAll().then((_) {
+                context.read<MainCubit>().getAll(TypeShow.limit).then((_) {
                   context.read<MainCubit>().getTotals();
                 });
               },

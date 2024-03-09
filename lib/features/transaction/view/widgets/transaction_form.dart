@@ -8,7 +8,7 @@ import '../../../../core/extension/extension.dart';
 import '../../../../core/router/router.dart';
 import '../../../../core/shared/shared.dart';
 import '../../../../core/utils/alerts/alerts.dart';
-import '../../logic/transaction_cubit/transaction_cubit.dart';
+import '../../../blocs/transaction_bloc/transaction_cubit.dart';
 
 class TransactionForm extends StatefulWidget {
   const TransactionForm({super.key});
@@ -26,15 +26,10 @@ class _TransactionFormState extends State<TransactionForm> {
 
   @override
   Widget build(BuildContext context) {
-    // The size of the icons used in the transaction form.
     const iconSize = 16.0;
-    // The height of each icon item in the transaction form.
     const iconItemHeight = 35.0;
-    // The width of each icon item in the transaction form.
     const iconItemWidth = 35.0;
-    // The padding applied to the transaction form.
     const padding = EdgeInsets.symmetric(horizontal: 12, vertical: 15);
-    // The background color of each item in the transaction form, based on the current theme.
     final backgroundItem = context.colorScheme.surface;
 
     return BlocBuilder<TransactionCubit, TransactionState>(
@@ -60,7 +55,7 @@ class _TransactionFormState extends State<TransactionForm> {
             const SizedBox(height: 20),
             Column(
               children: [
-                ItemButton(
+                CustomItemButton(
                   text: categorys!.name,
                   padding: padding,
                   iconSize: iconSize,
@@ -72,7 +67,7 @@ class _TransactionFormState extends State<TransactionForm> {
                   icon: categorys.icon,
                   onPressed: () => _showModalSheetCategory(context),
                 ),
-                ItemButton(
+                CustomItemButton(
                   text: transactionCategory!.name,
                   padding: padding,
                   iconSize: iconSize,
@@ -84,8 +79,8 @@ class _TransactionFormState extends State<TransactionForm> {
                   icon: transactionCategory.icon,
                   onPressed: () => _showModalSheetTransactionCategory(context),
                 ),
-                ItemButton(
-                  text: transactionDate!.formattedDate,
+                CustomItemButton(
+                  text: transactionDate!.formattedDateOnly,
                   padding: padding,
                   iconSize: iconSize,
                   iconColor: context.colorScheme.surface,
@@ -151,7 +146,7 @@ class _TransactionFormState extends State<TransactionForm> {
             final Categorys category = categorys[index];
             return Padding(
               padding: const EdgeInsets.symmetric(horizontal: 10),
-              child: ItemButton(
+              child: CustomItemButton(
                 text: category.name,
                 icon: category.icon,
                 iconColor: Colors.white,
@@ -179,10 +174,10 @@ class _TransactionFormState extends State<TransactionForm> {
       child: Padding(
         padding: const EdgeInsets.only(bottom: 25.0),
         child: Column(
-          children: TransactionCategory.values.map((transactionCategory) {
+          children: Category.values.map((transactionCategory) {
             return Padding(
               padding: const EdgeInsets.symmetric(horizontal: 10.0),
-              child: ItemButton(
+              child: CustomItemButton(
                 text: transactionCategory.name,
                 iconColor: Colors.white,
                 icon: transactionCategory.icon,

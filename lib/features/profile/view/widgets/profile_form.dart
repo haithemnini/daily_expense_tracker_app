@@ -6,7 +6,7 @@ import 'package:user_service/user_service.dart';
 import '../../../../core/extension/extension.dart';
 import '../../../../core/shared/shared.dart';
 import '../../../../core/styles/app_text_style.dart';
-import '../../logic/profile_bloc/profile_cubit.dart';
+import '../../../blocs/profile_bloc/profile_cubit.dart';
 import 'widgets.dart';
 
 class ProfileForm extends StatefulWidget {

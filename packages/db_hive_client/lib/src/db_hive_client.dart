@@ -28,7 +28,7 @@ class DbHiveClient implements DbHiveClientBase {
     try {
       final box = Hive.box<T>(boxName);
       final result = box.values.toList();
-      return result;
+      return Future.value(result);
     } catch (err) {
       throw Exception('Failed to get all: $err');
     }

@@ -6,7 +6,7 @@ import '../../../../core/extension/extension.dart';
 import '../../../../core/models/totals_transaction_model.dart';
 import '../../../../core/styles/app_colors.dart';
 import '../../../../core/styles/app_text_style.dart';
-import '../../logic/main_bloc/main_cubit.dart';
+import '../../../blocs/main_bloc/main_cubit.dart';
 
 class ExpenseCard extends StatelessWidget {
   const ExpenseCard({
@@ -31,9 +31,20 @@ class ExpenseCard extends StatelessWidget {
         gradient: AppColors.primaryGradient,
       ),
       child: BlocBuilder<MainCubit, MainState>(
-        buildWhen: (previous, current) => current is LoadedTotals,
+        buildWhen: (previous, current) {
+          return current.maybeWhen(
+            loadedTotals: (_) => true,
+            loading: () => true,
+            orElse: () => false,
+          );
+        },
         builder: (context, state) => state.maybeWhen(
           loadedTotals: (totals) => _buildLoadedTotals(totals),
+          loading: () => const Center(
+            child: CircularProgressIndicator(
+              valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+            ),
+          ),
           orElse: () => const Center(
             child: CircularProgressIndicator(
               valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
@@ -59,7 +70,7 @@ class ExpenseCard extends StatelessWidget {
           ),
           const SizedBox(height: 8),
           Text(
-            totals.totalBalance.toFormattedCurrencyStringWithSymbol(),
+            totals.totalBalance.toCurrencyWithSymbol(),
             style: AppTextStyle.title2.copyWith(
               color: Colors.white,
             ),
@@ -139,8 +150,8 @@ class ExpenseCard extends StatelessWidget {
   }
 
   String _getAmount(double amount) {
-    return amount.toFormattedCurrencyStringWithSymbol().length > 10
-        ? '${amount.toFormattedCurrencyStringWithSymbol().substring(0, 10).trim()}...'
-        : amount.toFormattedCurrencyStringWithSymbol();
+    return amount.toCurrencyWithSymbol().length > 9
+        ? '${amount.toCurrencyWithSymbol().substring(0, 9).trim()}..'
+        : amount.toCurrencyWithSymbol();
   }
 }

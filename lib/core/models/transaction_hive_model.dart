@@ -20,7 +20,7 @@ class TransactionHive extends HiveObject {
   int categorysIndex;
 
   @HiveField(5)
-  TransactionCategoryHive transactionCategory;
+  CategoryHive category;
 
   TransactionHive({
     required this.uuid,
@@ -28,29 +28,12 @@ class TransactionHive extends HiveObject {
     required this.date,
     required this.amount,
     required this.categorysIndex,
-    required this.transactionCategory,
+    required this.category,
   });
-
-  // factory TransactionHive.toHiveModel(
-  //   Transaction transaction, {
-  //   required String uuid,
-  // }) {
-  //   return TransactionHive(
-  //     uuid: uuid,
-  //     userId: transaction.userId,
-  //     amount: transaction.amount,
-  //     date: transaction.date,
-  //     categorysIndex: transaction.categorysIndex,
-  //     transactionCategory:
-  //         transaction.transactionCategory == TransactionCategory.expense
-  //             ? TransactionCategoryHive.expense
-  //             : TransactionCategoryHive.income,
-  //   );
-  // }
 }
 
 @HiveType(typeId: 1)
-enum TransactionCategoryHive {
+enum CategoryHive {
   @HiveField(0)
   expense,
 
@@ -58,18 +41,17 @@ enum TransactionCategoryHive {
   income,
 }
 
-class NewTransactionCategoryHiveAdapter
-    extends TypeAdapter<TransactionCategoryHive> {
+class NewCategoryHiveAdapter extends TypeAdapter<CategoryHive> {
   @override
   final int typeId = 2;
 
   @override
-  TransactionCategoryHive read(BinaryReader reader) {
-    return TransactionCategoryHive.values[reader.readByte()];
+  CategoryHive read(BinaryReader reader) {
+    return CategoryHive.values[reader.readByte()];
   }
 
   @override
-  void write(BinaryWriter writer, TransactionCategoryHive obj) {
+  void write(BinaryWriter writer, CategoryHive obj) {
     writer.writeByte(obj.index);
   }
 }

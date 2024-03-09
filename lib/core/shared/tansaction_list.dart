@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-import '../../features/transaction/logic/transaction_cubit/transaction_cubit.dart';
+import '../../features/blocs/transaction_bloc/transaction_cubit.dart';
 import '../enum/enum.dart';
 import '../extension/extension.dart';
 import '../models/transaction_model.dart';
@@ -10,12 +10,17 @@ import '../router/app_route.dart';
 import '../router/router.dart';
 import '../styles/app_text_style.dart';
 import '../utils/alerts/alerts.dart';
-import 'item_button.dart';
+import 'custom_item_button.dart';
 
 class TransactionList extends StatelessWidget {
-  const TransactionList({super.key, required this.allTransactions});
+  const TransactionList({
+    Key? key,
+    required this.allTransactions,
+    this.isViewOnly = false,
+  }) : super(key: key);
 
   final List<Transaction> allTransactions;
+  final bool isViewOnly;
 
   @override
   Widget build(BuildContext context) {
@@ -42,28 +47,28 @@ class TransactionList extends StatelessWidget {
     );
   }
 
-  ItemButton _buildTransactionItem(
+  CustomItemButton _buildTransactionItem(
     BuildContext context,
     Transaction transaction,
     Categorys category,
   ) {
-    return ItemButton(
+    return CustomItemButton(
       text: category.name,
       icon: category.icon,
       iconColor: Colors.white,
       backgroundItem: context.colorScheme.surface,
       backgroundIcon: category.backgroundIcon,
-      onLongPress: () => _showModalSheet(context, transaction),
+      onLongPress: () =>
+          isViewOnly ? null : _showModalSheet(context, transaction),
       trailing: Column(
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [
           Text(
-            transaction.amount.toFormattedCurrencyStringWithSymbol(),
+            transaction.amount.toCurrencyWithSymbol(),
             style: AppTextStyle.subtitle.copyWith(
-              color:
-                  transaction.transactionCategory == TransactionCategory.expense
-                      ? Colors.redAccent
-                      : Colors.greenAccent,
+              color: transaction.category == Category.expense
+                  ? Colors.redAccent
+                  : Colors.greenAccent,
             ),
           ),
           const SizedBox(height: 4),
@@ -88,7 +93,7 @@ class TransactionList extends StatelessWidget {
           children: [
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 10.0),
-              child: ItemButton(
+              child: CustomItemButton(
                 text: 'Edit',
                 icon: FontAwesomeIcons.penToSquare,
                 iconColor: Colors.white,
@@ -103,7 +108,7 @@ class TransactionList extends StatelessWidget {
             ),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 10.0),
-              child: ItemButton(
+              child: CustomItemButton(
                 text: 'Delete',
                 icon: FontAwesomeIcons.trashCan,
                 iconColor: Colors.white,

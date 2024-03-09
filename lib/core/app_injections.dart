@@ -9,18 +9,21 @@ import 'package:hive/hive.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:user_service/user_service.dart';
 
+import '../features/blocs/auth_profile_bloc/auth_profile_cubit.dart';
+import '../features/blocs/main_bloc/main_cubit.dart';
+import '../features/blocs/profile_bloc/profile_cubit.dart';
+import '../features/blocs/state_bloc/state_cubit.dart';
+import '../features/blocs/transaction_bloc/transaction_cubit.dart';
 import '../features/home/data/main_repository/main_base_repository.dart';
 import '../features/home/data/main_repository/main_repository.dart';
-import '../features/home/logic/main_bloc/main_cubit.dart';
+import '../features/home/data/state_repository/state_base_repository.dart';
+import '../features/home/data/state_repository/state_repository.dart';
 import '../features/profile/data/profile_repository/profile_base_repository.dart';
 import '../features/profile/data/profile_repository/profile_repository.dart';
-import '../features/profile/logic/profile_bloc/profile_cubit.dart';
 import '../features/settings/data/auth_profile_repository/auth_profile_base_repository.dart';
 import '../features/settings/data/auth_profile_repository/auth_profile_repository.dart';
-import '../features/settings/logic/cubit/auth_profile_cubit.dart';
 import '../features/transaction/data/repository/transaction_base_repository.dart';
 import '../features/transaction/data/repository/transaction_repository.dart';
-import '../features/transaction/logic/transaction_cubit/transaction_cubit.dart';
 import 'firebase_options.dart';
 import 'models/transaction_hive_model.dart';
 import 'service/network_info.dart';
@@ -61,16 +64,19 @@ Future<void> initAppConfig() async {
   final networkInfo = NetworkInfo(getIt());
   getIt.registerLazySingleton<NetworkBaseInfo>(() => networkInfo);
 
+  //=>
   // MainBaseRepository (MainRepository)
   final MainBaseRepository homeBaseRepository = MainRepository(
     dbFirestoreClient: getIt(),
     dbHiveClient: getIt(),
     authUser: getIt(),
   );
+
   //MainBloc && MainRepository
   getIt.registerLazySingleton(() => homeBaseRepository);
   getIt.registerFactory(() => MainCubit(mainRepository: getIt()));
 
+  //=>
   // TransactionBaseRepository (TransactionRepository)
   final TransactionBaseRepository transactionRepository = TransactionRepository(
     dbFirestoreClient: getIt(),
@@ -82,18 +88,29 @@ Future<void> initAppConfig() async {
   getIt.registerLazySingleton(() => transactionRepository);
   getIt.registerFactory(() => TransactionCubit(transactionRepository: getIt()));
 
+  //=>
   //AuthProfileBaseRepository (AuthProfileRepository)
   final AuthProfileBaseRepository authProfileRepository = AuthProfileRepository(
     userService: getIt(),
     authUser: getIt(),
   );
 
+  //AuthProfileCubit && AuthProfileRepository
   getIt.registerLazySingleton(() => authProfileRepository);
+  //AuthProfileCubit
+  getIt.registerFactory(
+    () => AuthProfileCubit(
+      authProfileRepository: getIt(),
+      userService: getIt(),
+    ),
+  );
 
+  //=>
   //ProfileBaseRepository (profileRepository)
   final ProfileBaseRepository profileBaseRepository = ProfileRepository(
     userService: getIt(),
   );
+
   //ProfileBloc && ProfileRepository
   getIt.registerLazySingleton(() => profileBaseRepository);
   getIt.registerFactory(
@@ -103,20 +120,25 @@ Future<void> initAppConfig() async {
     ),
   );
 
-  //AuthProfileCubit
-  getIt.registerFactory(
-    () => AuthProfileCubit(
-      authProfileRepository: getIt(),
-      userService: getIt(),
-    ),
+  //=>
+  //StatBaseRepository (StatRepository)
+  final StateBaseRepository stateBaseRepository = StateRepository(
+    dbFirestoreClient: getIt(),
+    dbHiveClient: getIt(),
+    authUser: getIt(),
   );
+
+  //StatBloc && StatRepository
+  getIt.registerLazySingleton(() => stateBaseRepository);
+  getIt.registerFactory(() => StateCubit(statBaseRepository: getIt()));
+  //=>
 
   //Hive
   await getIt<DbHiveClientBase>().initDb<TransactionHive>(
     boxName: 'transactions',
     onRegisterAdapter: () {
       Hive.registerAdapter(TransactionHiveAdapter());
-      Hive.registerAdapter(TransactionCategoryHiveAdapter());
+      Hive.registerAdapter(CategoryHiveAdapter());
     },
   );
 }

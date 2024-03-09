@@ -22,7 +22,7 @@ class TransactionHiveAdapter extends TypeAdapter<TransactionHive> {
       date: fields[3] as DateTime,
       amount: fields[2] as double,
       categorysIndex: fields[4] as int,
-      transactionCategory: fields[5] as TransactionCategoryHive,
+      category: fields[5] as CategoryHive,
     );
   }
 
@@ -41,7 +41,7 @@ class TransactionHiveAdapter extends TypeAdapter<TransactionHive> {
       ..writeByte(4)
       ..write(obj.categorysIndex)
       ..writeByte(5)
-      ..write(obj.transactionCategory);
+      ..write(obj.category);
   }
 
   @override
@@ -55,30 +55,29 @@ class TransactionHiveAdapter extends TypeAdapter<TransactionHive> {
           typeId == other.typeId;
 }
 
-class TransactionCategoryHiveAdapter
-    extends TypeAdapter<TransactionCategoryHive> {
+class CategoryHiveAdapter extends TypeAdapter<CategoryHive> {
   @override
   final int typeId = 1;
 
   @override
-  TransactionCategoryHive read(BinaryReader reader) {
+  CategoryHive read(BinaryReader reader) {
     switch (reader.readByte()) {
       case 0:
-        return TransactionCategoryHive.expense;
+        return CategoryHive.expense;
       case 1:
-        return TransactionCategoryHive.income;
+        return CategoryHive.income;
       default:
-        return TransactionCategoryHive.expense;
+        return CategoryHive.expense;
     }
   }
 
   @override
-  void write(BinaryWriter writer, TransactionCategoryHive obj) {
+  void write(BinaryWriter writer, CategoryHive obj) {
     switch (obj) {
-      case TransactionCategoryHive.expense:
+      case CategoryHive.expense:
         writer.writeByte(0);
         break;
-      case TransactionCategoryHive.income:
+      case CategoryHive.income:
         writer.writeByte(1);
         break;
     }
@@ -90,7 +89,7 @@ class TransactionCategoryHiveAdapter
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      other is TransactionCategoryHiveAdapter &&
+      other is CategoryHiveAdapter &&
           runtimeType == other.runtimeType &&
           typeId == other.typeId;
 }

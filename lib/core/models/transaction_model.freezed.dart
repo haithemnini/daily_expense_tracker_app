@@ -23,10 +23,10 @@ mixin _$Transaction {
   String? get uuid => throw _privateConstructorUsedError;
   String? get userId => throw _privateConstructorUsedError;
   double get amount => throw _privateConstructorUsedError;
+  @TimestampConverter()
   DateTime get date => throw _privateConstructorUsedError;
   int get categorysIndex => throw _privateConstructorUsedError;
-  TransactionCategory get transactionCategory =>
-      throw _privateConstructorUsedError;
+  Category get category => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -44,9 +44,9 @@ abstract class $TransactionCopyWith<$Res> {
       {String? uuid,
       String? userId,
       double amount,
-      DateTime date,
+      @TimestampConverter() DateTime date,
       int categorysIndex,
-      TransactionCategory transactionCategory});
+      Category category});
 }
 
 /// @nodoc
@@ -67,7 +67,7 @@ class _$TransactionCopyWithImpl<$Res, $Val extends Transaction>
     Object? amount = null,
     Object? date = null,
     Object? categorysIndex = null,
-    Object? transactionCategory = null,
+    Object? category = null,
   }) {
     return _then(_value.copyWith(
       uuid: freezed == uuid
@@ -90,10 +90,10 @@ class _$TransactionCopyWithImpl<$Res, $Val extends Transaction>
           ? _value.categorysIndex
           : categorysIndex // ignore: cast_nullable_to_non_nullable
               as int,
-      transactionCategory: null == transactionCategory
-          ? _value.transactionCategory
-          : transactionCategory // ignore: cast_nullable_to_non_nullable
-              as TransactionCategory,
+      category: null == category
+          ? _value.category
+          : category // ignore: cast_nullable_to_non_nullable
+              as Category,
     ) as $Val);
   }
 }
@@ -110,9 +110,9 @@ abstract class _$$TransactionImplCopyWith<$Res>
       {String? uuid,
       String? userId,
       double amount,
-      DateTime date,
+      @TimestampConverter() DateTime date,
       int categorysIndex,
-      TransactionCategory transactionCategory});
+      Category category});
 }
 
 /// @nodoc
@@ -131,7 +131,7 @@ class __$$TransactionImplCopyWithImpl<$Res>
     Object? amount = null,
     Object? date = null,
     Object? categorysIndex = null,
-    Object? transactionCategory = null,
+    Object? category = null,
   }) {
     return _then(_$TransactionImpl(
       uuid: freezed == uuid
@@ -154,10 +154,10 @@ class __$$TransactionImplCopyWithImpl<$Res>
           ? _value.categorysIndex
           : categorysIndex // ignore: cast_nullable_to_non_nullable
               as int,
-      transactionCategory: null == transactionCategory
-          ? _value.transactionCategory
-          : transactionCategory // ignore: cast_nullable_to_non_nullable
-              as TransactionCategory,
+      category: null == category
+          ? _value.category
+          : category // ignore: cast_nullable_to_non_nullable
+              as Category,
     ));
   }
 }
@@ -169,9 +169,9 @@ class _$TransactionImpl implements _Transaction {
       {required this.uuid,
       required this.userId,
       required this.amount,
-      required this.date,
+      @TimestampConverter() required this.date,
       required this.categorysIndex,
-      required this.transactionCategory});
+      required this.category});
 
   factory _$TransactionImpl.fromJson(Map<String, dynamic> json) =>
       _$$TransactionImplFromJson(json);
@@ -183,15 +183,16 @@ class _$TransactionImpl implements _Transaction {
   @override
   final double amount;
   @override
+  @TimestampConverter()
   final DateTime date;
   @override
   final int categorysIndex;
   @override
-  final TransactionCategory transactionCategory;
+  final Category category;
 
   @override
   String toString() {
-    return 'Transaction(uuid: $uuid, userId: $userId, amount: $amount, date: $date, categorysIndex: $categorysIndex, transactionCategory: $transactionCategory)';
+    return 'Transaction(uuid: $uuid, userId: $userId, amount: $amount, date: $date, categorysIndex: $categorysIndex, category: $category)';
   }
 
   @override
@@ -205,14 +206,14 @@ class _$TransactionImpl implements _Transaction {
             (identical(other.date, date) || other.date == date) &&
             (identical(other.categorysIndex, categorysIndex) ||
                 other.categorysIndex == categorysIndex) &&
-            (identical(other.transactionCategory, transactionCategory) ||
-                other.transactionCategory == transactionCategory));
+            (identical(other.category, category) ||
+                other.category == category));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, uuid, userId, amount, date,
-      categorysIndex, transactionCategory);
+  int get hashCode => Object.hash(
+      runtimeType, uuid, userId, amount, date, categorysIndex, category);
 
   @JsonKey(ignore: true)
   @override
@@ -230,13 +231,12 @@ class _$TransactionImpl implements _Transaction {
 
 abstract class _Transaction implements Transaction {
   const factory _Transaction(
-          {required final String? uuid,
-          required final String? userId,
-          required final double amount,
-          required final DateTime date,
-          required final int categorysIndex,
-          required final TransactionCategory transactionCategory}) =
-      _$TransactionImpl;
+      {required final String? uuid,
+      required final String? userId,
+      required final double amount,
+      @TimestampConverter() required final DateTime date,
+      required final int categorysIndex,
+      required final Category category}) = _$TransactionImpl;
 
   factory _Transaction.fromJson(Map<String, dynamic> json) =
       _$TransactionImpl.fromJson;
@@ -248,11 +248,12 @@ abstract class _Transaction implements Transaction {
   @override
   double get amount;
   @override
+  @TimestampConverter()
   DateTime get date;
   @override
   int get categorysIndex;
   @override
-  TransactionCategory get transactionCategory;
+  Category get category;
   @override
   @JsonKey(ignore: true)
   _$$TransactionImplCopyWith<_$TransactionImpl> get copyWith =>

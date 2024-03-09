@@ -1,12 +1,12 @@
 import 'package:cached_network_image/cached_network_image.dart';
 
-import '../../../settings/logic/cubit/auth_profile_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../core/extension/extension.dart';
 import '../../../../core/helper/helper.dart';
 import '../../../../core/styles/app_text_style.dart';
+import '../../../blocs/auth_profile_bloc/auth_profile_cubit.dart';
 
 class ProfileIcon extends StatelessWidget {
   const ProfileIcon({
@@ -27,7 +27,7 @@ class ProfileIcon extends StatelessWidget {
         );
 
         return Row(
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Column(
