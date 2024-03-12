@@ -3,7 +3,7 @@
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
-part of 'auth_profile_cubit.dart';
+part of 'auth_cubit.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -15,7 +15,7 @@ final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 /// @nodoc
-mixin _$AuthProfileState {
+mixin _$AuthState {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
@@ -75,16 +75,15 @@ mixin _$AuthProfileState {
 }
 
 /// @nodoc
-abstract class $AuthProfileStateCopyWith<$Res> {
-  factory $AuthProfileStateCopyWith(
-          AuthProfileState value, $Res Function(AuthProfileState) then) =
-      _$AuthProfileStateCopyWithImpl<$Res, AuthProfileState>;
+abstract class $AuthStateCopyWith<$Res> {
+  factory $AuthStateCopyWith(AuthState value, $Res Function(AuthState) then) =
+      _$AuthStateCopyWithImpl<$Res, AuthState>;
 }
 
 /// @nodoc
-class _$AuthProfileStateCopyWithImpl<$Res, $Val extends AuthProfileState>
-    implements $AuthProfileStateCopyWith<$Res> {
-  _$AuthProfileStateCopyWithImpl(this._value, this._then);
+class _$AuthStateCopyWithImpl<$Res, $Val extends AuthState>
+    implements $AuthStateCopyWith<$Res> {
+  _$AuthStateCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
@@ -101,7 +100,7 @@ abstract class _$$InitialImplCopyWith<$Res> {
 
 /// @nodoc
 class __$$InitialImplCopyWithImpl<$Res>
-    extends _$AuthProfileStateCopyWithImpl<$Res, _$InitialImpl>
+    extends _$AuthStateCopyWithImpl<$Res, _$InitialImpl>
     implements _$$InitialImplCopyWith<$Res> {
   __$$InitialImplCopyWithImpl(
       _$InitialImpl _value, $Res Function(_$InitialImpl) _then)
@@ -110,18 +109,12 @@ class __$$InitialImplCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$InitialImpl with DiagnosticableTreeMixin implements _Initial {
+class _$InitialImpl implements _Initial {
   const _$InitialImpl();
 
   @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'AuthProfileState.initial()';
-  }
-
-  @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
-    properties.add(DiagnosticsProperty('type', 'AuthProfileState.initial'));
+  String toString() {
+    return 'AuthState.initial()';
   }
 
   @override
@@ -214,7 +207,7 @@ class _$InitialImpl with DiagnosticableTreeMixin implements _Initial {
   }
 }
 
-abstract class _Initial implements AuthProfileState {
+abstract class _Initial implements AuthState {
   const factory _Initial() = _$InitialImpl;
 }
 
@@ -231,7 +224,7 @@ abstract class _$$AuthChangedImplCopyWith<$Res> {
 
 /// @nodoc
 class __$$AuthChangedImplCopyWithImpl<$Res>
-    extends _$AuthProfileStateCopyWithImpl<$Res, _$AuthChangedImpl>
+    extends _$AuthStateCopyWithImpl<$Res, _$AuthChangedImpl>
     implements _$$AuthChangedImplCopyWith<$Res> {
   __$$AuthChangedImplCopyWithImpl(
       _$AuthChangedImpl _value, $Res Function(_$AuthChangedImpl) _then)
@@ -270,7 +263,7 @@ class __$$AuthChangedImplCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$AuthChangedImpl with DiagnosticableTreeMixin implements AuthChanged {
+class _$AuthChangedImpl implements AuthChanged {
   const _$AuthChangedImpl({required this.authStatus, this.user});
 
   @override
@@ -279,17 +272,8 @@ class _$AuthChangedImpl with DiagnosticableTreeMixin implements AuthChanged {
   final User? user;
 
   @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'AuthProfileState.authChanged(authStatus: $authStatus, user: $user)';
-  }
-
-  @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
-    properties
-      ..add(DiagnosticsProperty('type', 'AuthProfileState.authChanged'))
-      ..add(DiagnosticsProperty('authStatus', authStatus))
-      ..add(DiagnosticsProperty('user', user));
+  String toString() {
+    return 'AuthState.authChanged(authStatus: $authStatus, user: $user)';
   }
 
   @override
@@ -392,7 +376,7 @@ class _$AuthChangedImpl with DiagnosticableTreeMixin implements AuthChanged {
   }
 }
 
-abstract class AuthChanged implements AuthProfileState {
+abstract class AuthChanged implements AuthState {
   const factory AuthChanged(
       {required final AuthStatus authStatus,
       final User? user}) = _$AuthChangedImpl;
@@ -413,7 +397,7 @@ abstract class _$$LoadingImplCopyWith<$Res> {
 
 /// @nodoc
 class __$$LoadingImplCopyWithImpl<$Res>
-    extends _$AuthProfileStateCopyWithImpl<$Res, _$LoadingImpl>
+    extends _$AuthStateCopyWithImpl<$Res, _$LoadingImpl>
     implements _$$LoadingImplCopyWith<$Res> {
   __$$LoadingImplCopyWithImpl(
       _$LoadingImpl _value, $Res Function(_$LoadingImpl) _then)
@@ -422,18 +406,12 @@ class __$$LoadingImplCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$LoadingImpl with DiagnosticableTreeMixin implements Loading {
+class _$LoadingImpl implements Loading {
   const _$LoadingImpl();
 
   @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'AuthProfileState.loading()';
-  }
-
-  @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
-    properties.add(DiagnosticsProperty('type', 'AuthProfileState.loading'));
+  String toString() {
+    return 'AuthState.loading()';
   }
 
   @override
@@ -526,7 +504,7 @@ class _$LoadingImpl with DiagnosticableTreeMixin implements Loading {
   }
 }
 
-abstract class Loading implements AuthProfileState {
+abstract class Loading implements AuthState {
   const factory Loading() = _$LoadingImpl;
 }
 
@@ -543,7 +521,7 @@ abstract class _$$LoadedImplCopyWith<$Res> {
 
 /// @nodoc
 class __$$LoadedImplCopyWithImpl<$Res>
-    extends _$AuthProfileStateCopyWithImpl<$Res, _$LoadedImpl>
+    extends _$AuthStateCopyWithImpl<$Res, _$LoadedImpl>
     implements _$$LoadedImplCopyWith<$Res> {
   __$$LoadedImplCopyWithImpl(
       _$LoadedImpl _value, $Res Function(_$LoadedImpl) _then)
@@ -573,23 +551,15 @@ class __$$LoadedImplCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$LoadedImpl with DiagnosticableTreeMixin implements Loaded {
+class _$LoadedImpl implements Loaded {
   const _$LoadedImpl(this.user);
 
   @override
   final User user;
 
   @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'AuthProfileState.loaded(user: $user)';
-  }
-
-  @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
-    properties
-      ..add(DiagnosticsProperty('type', 'AuthProfileState.loaded'))
-      ..add(DiagnosticsProperty('user', user));
+  String toString() {
+    return 'AuthState.loaded(user: $user)';
   }
 
   @override
@@ -690,7 +660,7 @@ class _$LoadedImpl with DiagnosticableTreeMixin implements Loaded {
   }
 }
 
-abstract class Loaded implements AuthProfileState {
+abstract class Loaded implements AuthState {
   const factory Loaded(final User user) = _$LoadedImpl;
 
   User get user;
@@ -710,7 +680,7 @@ abstract class _$$ErrorImplCopyWith<$Res> {
 
 /// @nodoc
 class __$$ErrorImplCopyWithImpl<$Res>
-    extends _$AuthProfileStateCopyWithImpl<$Res, _$ErrorImpl>
+    extends _$AuthStateCopyWithImpl<$Res, _$ErrorImpl>
     implements _$$ErrorImplCopyWith<$Res> {
   __$$ErrorImplCopyWithImpl(
       _$ErrorImpl _value, $Res Function(_$ErrorImpl) _then)
@@ -732,23 +702,15 @@ class __$$ErrorImplCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$ErrorImpl with DiagnosticableTreeMixin implements Error {
+class _$ErrorImpl implements Error {
   const _$ErrorImpl(this.message);
 
   @override
   final String message;
 
   @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'AuthProfileState.error(message: $message)';
-  }
-
-  @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
-    properties
-      ..add(DiagnosticsProperty('type', 'AuthProfileState.error'))
-      ..add(DiagnosticsProperty('message', message));
+  String toString() {
+    return 'AuthState.error(message: $message)';
   }
 
   @override
@@ -849,7 +811,7 @@ class _$ErrorImpl with DiagnosticableTreeMixin implements Error {
   }
 }
 
-abstract class Error implements AuthProfileState {
+abstract class Error implements AuthState {
   const factory Error(final String message) = _$ErrorImpl;
 
   String get message;

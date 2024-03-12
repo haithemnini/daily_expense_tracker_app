@@ -1,7 +1,7 @@
 part of 'state_cubit.dart';
 
 @freezed
-class StateState with _$StatState {
+class StateState with _$StateState {
   const factory StateState.initial() = _Initial;
   const factory StateState.loading() = Loading;
 

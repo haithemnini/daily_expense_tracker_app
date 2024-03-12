@@ -4,13 +4,13 @@ import 'package:flutter/foundation.dart';
 import 'package:user_service/user_service.dart';
 
 import '../../../../core/utils/models/app_result.dart';
-import 'auth_profile_base_repository.dart';
+import 'auth_base_repository.dart';
 
-class AuthProfileRepository implements AuthProfileBaseRepository {
+class AuthRepository implements AuthBaseRepository {
   final UserServiceBase _userService;
   final AuthUserBase _authUser;
 
-  AuthProfileRepository({
+  AuthRepository({
     required UserServiceBase userService,
     required AuthUserBase authUser,
   })  : _userService = userService,

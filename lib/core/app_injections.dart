@@ -7,12 +7,14 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:get_it/get_it.dart';
 import 'package:hive/hive.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:user_service/user_service.dart';
 
-import '../features/blocs/auth_profile_bloc/auth_profile_cubit.dart';
+import '../features/blocs/auth_bloc/auth_cubit.dart';
 import '../features/blocs/main_bloc/main_cubit.dart';
 import '../features/blocs/profile_bloc/profile_cubit.dart';
 import '../features/blocs/state_bloc/state_cubit.dart';
+import '../features/blocs/themes_bloc/themes_cubit.dart';
 import '../features/blocs/transaction_bloc/transaction_cubit.dart';
 import '../features/home/data/main_repository/main_base_repository.dart';
 import '../features/home/data/main_repository/main_repository.dart';
@@ -20,8 +22,10 @@ import '../features/home/data/state_repository/state_base_repository.dart';
 import '../features/home/data/state_repository/state_repository.dart';
 import '../features/profile/data/profile_repository/profile_base_repository.dart';
 import '../features/profile/data/profile_repository/profile_repository.dart';
-import '../features/settings/data/auth_profile_repository/auth_profile_base_repository.dart';
-import '../features/settings/data/auth_profile_repository/auth_profile_repository.dart';
+import '../features/settings/data/auth_repository/auth_base_repository.dart';
+import '../features/settings/data/auth_repository/auth_repository.dart';
+import '../features/settings/data/themes_repository/themes_base_repository.dart';
+import '../features/settings/data/themes_repository/themes_repository.dart';
 import '../features/transaction/data/repository/transaction_base_repository.dart';
 import '../features/transaction/data/repository/transaction_repository.dart';
 import 'firebase_options.dart';
@@ -43,6 +47,10 @@ Future<void> initAppConfig() async {
   //dbFirestoreClient
   final dbFirestoreClient = DbFirestoreClient();
   getIt.registerLazySingleton<DbFirestoreClientBase>(() => dbFirestoreClient);
+
+  //sharedPreferences
+  final sharedPreferences = await SharedPreferences.getInstance();
+  getIt.registerLazySingleton(() => sharedPreferences);
 
   //AuthUser
   final authUser = AuthUser();
@@ -90,7 +98,7 @@ Future<void> initAppConfig() async {
 
   //=>
   //AuthProfileBaseRepository (AuthProfileRepository)
-  final AuthProfileBaseRepository authProfileRepository = AuthProfileRepository(
+  final AuthBaseRepository authProfileRepository = AuthRepository(
     userService: getIt(),
     authUser: getIt(),
   );
@@ -99,8 +107,8 @@ Future<void> initAppConfig() async {
   getIt.registerLazySingleton(() => authProfileRepository);
   //AuthProfileCubit
   getIt.registerFactory(
-    () => AuthProfileCubit(
-      authProfileRepository: getIt(),
+    () => AuthCubit(
+      authRepository: getIt(),
       userService: getIt(),
     ),
   );
@@ -132,6 +140,15 @@ Future<void> initAppConfig() async {
   getIt.registerLazySingleton(() => stateBaseRepository);
   getIt.registerFactory(() => StateCubit(statBaseRepository: getIt()));
   //=>
+
+  //ThemesBaseRepository (ThemesRepository)
+  final ThemesBaseRepository themesBaseRepository = ThemesRepository(
+    sharedPreferences: getIt(),
+  );
+
+  //ThemesCubit && ThemesRepository
+  getIt.registerLazySingleton(() => themesBaseRepository);
+  getIt.registerFactory(() => ThemesCubit(themesRepository: getIt()));
 
   //Hive
   await getIt<DbHiveClientBase>().initDb<TransactionHive>(

@@ -6,7 +6,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../core/extension/extension.dart';
 import '../../../../core/helper/helper.dart';
 import '../../../../core/styles/app_text_style.dart';
-import '../../../blocs/auth_profile_bloc/auth_profile_cubit.dart';
+import '../../../blocs/auth_bloc/auth_cubit.dart';
 
 class ProfileIcon extends StatelessWidget {
   const ProfileIcon({
@@ -15,7 +15,7 @@ class ProfileIcon extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<AuthProfileCubit, AuthProfileState>(
+    return BlocBuilder<AuthCubit, AuthState>(
       buildWhen: (previous, current) => current.maybeMap(
         authChanged: (state) => true,
         orElse: () => false,

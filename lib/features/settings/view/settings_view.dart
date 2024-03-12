@@ -1,3 +1,6 @@
+import '../../../core/extension/extension.dart';
+import '../../../core/styles/app_text_style.dart';
+import '../../../core/utils/alerts/alerts.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
@@ -22,7 +25,7 @@ class SettingsView extends StatelessWidget {
     return SafeArea(
       child: Center(
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             const AuthProfile(),
@@ -30,26 +33,15 @@ class SettingsView extends StatelessWidget {
             const DarkModeSwitch(),
             const SizedBox(height: 10),
             ItemSettings(
-              title: 'Notification',
-              iconData: FontAwesomeIcons.bell,
-              backgroundIcon: Colors.orange,
-              trailing: const FaIcon(FontAwesomeIcons.chevronRight, size: 16),
-              onTap: () => {},
-            ),
-            const SizedBox(height: 10),
-            ItemSettings(
-              title: 'About',
+              title: 'Version',
               iconData: FontAwesomeIcons.circleInfo,
-              backgroundIcon: Colors.blue,
+              backgroundIcon: Colors.blueAccent,
               trailing: const FaIcon(FontAwesomeIcons.chevronRight, size: 16),
-              onTap: () => {},
+              onTap: () => Alerts.showSheet(
+                context: context,
+                child: const VersionSheet(),
+              ),
             ),
-
-            const SizedBox(height: 10),
-            const Spacer(),
-
-            //App Version
-            const Text('App Version: 1.0.0'),
           ],
         ),
       ),

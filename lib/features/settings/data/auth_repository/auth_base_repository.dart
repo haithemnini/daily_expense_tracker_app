@@ -3,7 +3,7 @@ import 'package:user_service/user_service.dart';
 
 import '../../../../core/utils/models/app_result.dart';
 
-abstract class AuthProfileBaseRepository {
+abstract class AuthBaseRepository {
   /// The [currentUser] method is used to get the current user.
   /// It returns the current user.
   auth.User? get currentUser;
