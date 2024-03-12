@@ -25,6 +25,7 @@ class _MainViewState extends State<MainView> {
         .read<MainCubit>()
         .getAll(TypeShow.limit)
         .then((_) => context.read<MainCubit>().getTotals());
+
     super.initState();
   }
 

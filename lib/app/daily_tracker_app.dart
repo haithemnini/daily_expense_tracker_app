@@ -6,10 +6,11 @@ import '../core/app_injections.dart';
 import '../core/helper/helper.dart';
 import '../core/router/app_route.dart';
 import '../core/styles/app_theme.dart';
-import '../features/blocs/auth_profile_bloc/auth_profile_cubit.dart';
+import '../features/blocs/auth_bloc/auth_cubit.dart';
 import '../features/blocs/main_bloc/main_cubit.dart';
 import '../features/blocs/profile_bloc/profile_cubit.dart';
 import '../features/blocs/state_bloc/state_cubit.dart';
+import '../features/blocs/themes_bloc/themes_cubit.dart';
 import '../features/blocs/transaction_bloc/transaction_cubit.dart';
 
 class DailyTrackerApp extends StatelessWidget {
@@ -29,22 +30,30 @@ class DailyTrackerApp extends StatelessWidget {
         BlocProvider(create: (_) => getIt<TransactionCubit>()),
         BlocProvider(create: (_) => getIt<ProfileCubit>()),
         BlocProvider(create: (_) => getIt<StateCubit>()),
-        BlocProvider(
-          create: (_) => getIt<AuthProfileCubit>()..initAuthProfile(),
-        )
+        BlocProvider(create: (_) => getIt<AuthCubit>()),
+        BlocProvider(create: (_) => getIt<ThemesCubit>())
       ],
       child: ScreenUtilInit(
         splitScreenMode: true,
         minTextAdapt: true,
         designSize: const Size(390, 844),
-        child: MaterialApp(
-          debugShowCheckedModeBanner: false,
-          title: 'Daily Tracker',
-          theme: appTheme,
-          darkTheme: appThemeDark,
-          themeMode: ThemeMode.dark,
-          initialRoute: RoutesName.home,
-          onGenerateRoute: _appRouter.generateRoute,
+        child: BlocBuilder<ThemesCubit, ThemesState>(
+          buildWhen: (previous, current) => current is LoadedThemeMode,
+          builder: (context, state) {
+            final themeMode = context.read<ThemesCubit>().state.maybeMap(
+                orElse: () => ThemeMode.system,
+                loadedThemeMode: (state) => state.themeMode);
+
+            return MaterialApp(
+              debugShowCheckedModeBanner: false,
+              title: 'Daily Tracker',
+              theme: appTheme,
+              darkTheme: appThemeDark,
+              themeMode: themeMode,
+              initialRoute: RoutesName.home,
+              onGenerateRoute: _appRouter.generateRoute,
+            );
+          },
         ),
       ),
     );

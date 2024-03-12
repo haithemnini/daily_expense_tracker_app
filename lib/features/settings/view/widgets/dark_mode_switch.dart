@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
+import '../../../blocs/themes_bloc/themes_cubit.dart';
 import 'widgets.dart';
 
 class DarkModeSwitch extends StatefulWidget {
@@ -11,7 +13,16 @@ class DarkModeSwitch extends StatefulWidget {
 }
 
 class _DarkModeSwitchState extends State<DarkModeSwitch> {
-  bool isSwitched = false;
+  late bool isSwitched;
+
+  @override
+  void initState() {
+    isSwitched = context.read<ThemesCubit>().state.maybeMap(
+          orElse: () => false,
+          loadedThemeMode: (state) => state.themeMode == ThemeMode.dark,
+        );
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -19,9 +30,18 @@ class _DarkModeSwitchState extends State<DarkModeSwitch> {
       title: isSwitched ? 'Dark Mode' : 'Light Mode',
       iconData: isSwitched ? FontAwesomeIcons.moon : FontAwesomeIcons.solidSun,
       backgroundIcon: Colors.grey.shade800,
-      trailing: Switch(
-        value: isSwitched,
-        onChanged: (value) => setState(() => isSwitched = value),
+      trailing: BlocBuilder<ThemesCubit, ThemesState>(
+        builder: (context, state) {
+          return Switch(
+            value: isSwitched,
+            onChanged: (themeMode) {
+              setState(() {
+                isSwitched = themeMode;
+                context.read<ThemesCubit>().toggleTheme();
+              });
+            },
+          );
+        },
       ),
     );
   }

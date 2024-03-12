@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../core/enum/enum.dart';
-import '../../../blocs/auth_profile_bloc/auth_profile_cubit.dart';
+import '../../../blocs/auth_bloc/auth_cubit.dart';
 import '../../../blocs/main_bloc/main_cubit.dart';
 
 class BlocListenerAuth extends StatelessWidget {
@@ -10,7 +10,7 @@ class BlocListenerAuth extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocListener<AuthProfileCubit, AuthProfileState>(
+    return BlocListener<AuthCubit, AuthState>(
       listener: (context, state) {
         state.maybeWhen(
           authChanged: (_, __) {

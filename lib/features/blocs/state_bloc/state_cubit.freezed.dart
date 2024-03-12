@@ -15,7 +15,7 @@ final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 /// @nodoc
-mixin _$StatState {
+mixin _$StateState {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
@@ -81,15 +81,16 @@ mixin _$StatState {
 }
 
 /// @nodoc
-abstract class $StatStateCopyWith<$Res> {
-  factory $StatStateCopyWith(StateState value, $Res Function(StateState) then) =
-      _$StatStateCopyWithImpl<$Res, StateState>;
+abstract class $StateStateCopyWith<$Res> {
+  factory $StateStateCopyWith(
+          StateState value, $Res Function(StateState) then) =
+      _$StateStateCopyWithImpl<$Res, StateState>;
 }
 
 /// @nodoc
-class _$StatStateCopyWithImpl<$Res, $Val extends StateState>
-    implements $StatStateCopyWith<$Res> {
-  _$StatStateCopyWithImpl(this._value, this._then);
+class _$StateStateCopyWithImpl<$Res, $Val extends StateState>
+    implements $StateStateCopyWith<$Res> {
+  _$StateStateCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
@@ -106,7 +107,7 @@ abstract class _$$InitialImplCopyWith<$Res> {
 
 /// @nodoc
 class __$$InitialImplCopyWithImpl<$Res>
-    extends _$StatStateCopyWithImpl<$Res, _$InitialImpl>
+    extends _$StateStateCopyWithImpl<$Res, _$InitialImpl>
     implements _$$InitialImplCopyWith<$Res> {
   __$$InitialImplCopyWithImpl(
       _$InitialImpl _value, $Res Function(_$InitialImpl) _then)
@@ -120,7 +121,7 @@ class _$InitialImpl implements _Initial {
 
   @override
   String toString() {
-    return 'StatState.initial()';
+    return 'StateState.initial()';
   }
 
   @override
@@ -232,7 +233,7 @@ abstract class _$$LoadingImplCopyWith<$Res> {
 
 /// @nodoc
 class __$$LoadingImplCopyWithImpl<$Res>
-    extends _$StatStateCopyWithImpl<$Res, _$LoadingImpl>
+    extends _$StateStateCopyWithImpl<$Res, _$LoadingImpl>
     implements _$$LoadingImplCopyWith<$Res> {
   __$$LoadingImplCopyWithImpl(
       _$LoadingImpl _value, $Res Function(_$LoadingImpl) _then)
@@ -246,7 +247,7 @@ class _$LoadingImpl implements Loading {
 
   @override
   String toString() {
-    return 'StatState.loading()';
+    return 'StateState.loading()';
   }
 
   @override
@@ -360,7 +361,7 @@ abstract class _$$LoadedImplCopyWith<$Res> {
 
 /// @nodoc
 class __$$LoadedImplCopyWithImpl<$Res>
-    extends _$StatStateCopyWithImpl<$Res, _$LoadedImpl>
+    extends _$StateStateCopyWithImpl<$Res, _$LoadedImpl>
     implements _$$LoadedImplCopyWith<$Res> {
   __$$LoadedImplCopyWithImpl(
       _$LoadedImpl _value, $Res Function(_$LoadedImpl) _then)
@@ -411,7 +412,7 @@ class _$LoadedImpl implements Loaded {
 
   @override
   String toString() {
-    return 'StatState.loaded(transactions: $transactions, chartData: $chartData)';
+    return 'StateState.loaded(transactions: $transactions, chartData: $chartData)';
   }
 
   @override
@@ -546,7 +547,7 @@ abstract class _$$DateChangedImplCopyWith<$Res> {
 
 /// @nodoc
 class __$$DateChangedImplCopyWithImpl<$Res>
-    extends _$StatStateCopyWithImpl<$Res, _$DateChangedImpl>
+    extends _$StateStateCopyWithImpl<$Res, _$DateChangedImpl>
     implements _$$DateChangedImplCopyWith<$Res> {
   __$$DateChangedImplCopyWithImpl(
       _$DateChangedImpl _value, $Res Function(_$DateChangedImpl) _then)
@@ -583,7 +584,7 @@ class _$DateChangedImpl implements DateChanged {
 
   @override
   String toString() {
-    return 'StatState.dateChanged(startDate: $startDate, endDate: $endDate)';
+    return 'StateState.dateChanged(startDate: $startDate, endDate: $endDate)';
   }
 
   @override
@@ -714,7 +715,7 @@ abstract class _$$ErrorImplCopyWith<$Res> {
 
 /// @nodoc
 class __$$ErrorImplCopyWithImpl<$Res>
-    extends _$StatStateCopyWithImpl<$Res, _$ErrorImpl>
+    extends _$StateStateCopyWithImpl<$Res, _$ErrorImpl>
     implements _$$ErrorImplCopyWith<$Res> {
   __$$ErrorImplCopyWithImpl(
       _$ErrorImpl _value, $Res Function(_$ErrorImpl) _then)
@@ -744,7 +745,7 @@ class _$ErrorImpl implements Error {
 
   @override
   String toString() {
-    return 'StatState.error(message: $message)';
+    return 'StateState.error(message: $message)';
   }
 
   @override

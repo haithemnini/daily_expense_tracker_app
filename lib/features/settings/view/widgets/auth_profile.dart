@@ -11,7 +11,7 @@ import '../../../../core/router/router.dart';
 import '../../../../core/styles/app_colors.dart';
 import '../../../../core/styles/app_text_style.dart';
 import '../../../../core/utils/alerts/alerts.dart';
-import '../../../blocs/auth_profile_bloc/auth_profile_cubit.dart';
+import '../../../blocs/auth_bloc/auth_cubit.dart';
 
 class AuthProfile extends StatefulWidget {
   const AuthProfile({
@@ -26,12 +26,12 @@ class _AuthProfileState extends State<AuthProfile> {
   @override
   void initState() {
     super.initState();
-    context.read<AuthProfileCubit>().initAuthProfile();
+    context.read<AuthCubit>().initAuth();
   }
 
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<AuthProfileCubit, AuthProfileState>(
+    return BlocConsumer<AuthCubit, AuthState>(
       listener: (context, state) => state.mapOrNull(
         error: (state) => Alerts.showToastMsg(context, state.message),
       ),
@@ -115,11 +115,11 @@ class _AuthProfileState extends State<AuthProfile> {
                 onPressed: authStatus == AuthStatus.authenticated
                     ? () {
                         // Perform Sign-out action
-                        context.read<AuthProfileCubit>().signOut();
+                        context.read<AuthCubit>().signOut();
                       }
                     : () {
                         // Perform Sign-in action
-                        context.read<AuthProfileCubit>().signInWithGoogle();
+                        context.read<AuthCubit>().signInWithGoogle();
                       },
                 style: OutlinedButton.styleFrom(
                   foregroundColor: context.colorScheme.onSurface,
