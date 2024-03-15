@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../core/app_injections.dart';
 import '../core/helper/helper.dart';
@@ -33,28 +32,23 @@ class DailyTrackerApp extends StatelessWidget {
         BlocProvider(create: (_) => getIt<AuthCubit>()),
         BlocProvider(create: (_) => getIt<ThemesCubit>())
       ],
-      child: ScreenUtilInit(
-        splitScreenMode: true,
-        minTextAdapt: true,
-        designSize: const Size(390, 844),
-        child: BlocBuilder<ThemesCubit, ThemesState>(
-          buildWhen: (previous, current) => current is LoadedThemeMode,
-          builder: (context, state) {
-            final themeMode = context.read<ThemesCubit>().state.maybeMap(
+      child: BlocBuilder<ThemesCubit, ThemesState>(
+        buildWhen: (previous, current) => current is LoadedThemeMode,
+        builder: (context, state) {
+          final themeMode = context.read<ThemesCubit>().state.maybeMap(
                 orElse: () => ThemeMode.system,
-                loadedThemeMode: (state) => state.themeMode);
-
-            return MaterialApp(
-              debugShowCheckedModeBanner: false,
-              title: 'Daily Tracker',
-              theme: appTheme,
-              darkTheme: appThemeDark,
-              themeMode: themeMode,
-              initialRoute: RoutesName.home,
-              onGenerateRoute: _appRouter.generateRoute,
-            );
-          },
-        ),
+                loadedThemeMode: (state) => state.themeMode,
+              );
+          return MaterialApp(
+            debugShowCheckedModeBanner: false,
+            title: 'Daily Tracker',
+            theme: appTheme,
+            darkTheme: appThemeDark,
+            themeMode: themeMode,
+            initialRoute: RoutesName.home,
+            onGenerateRoute: _appRouter.generateRoute,
+          );
+        },
       ),
     );
   }

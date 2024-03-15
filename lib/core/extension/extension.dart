@@ -1,20 +1,19 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
 
 import '../enum/enum.dart';
 import '../models/transaction_hive_model.dart';
 
 /// Extension on [BuildContext] build context to provide easy access Context Extension.
-extension DevicesContextExtension on BuildContext {
+extension DevicesOsContextExtension on BuildContext {
   // Returns the current [ThemeData] of the [BuildContext].
   ThemeData get _theme => Theme.of(this);
 
   // Calculates the screen height based on the current [BuildContext] and a given value.
-  double screenHeight(double value) => ScreenUtil().screenHeight * value;
+  double screenHeight(double value) => MediaQuery.of(this).size.height * value;
 
   // Calculates the screen width based on the current [BuildContext] and a given value.
-  double screenWidth(double value) => ScreenUtil().screenWidth * value;
+  double screenWidth(double value) => MediaQuery.of(this).size.width * value;
 
   // Returns the [TextTheme] of the current [BuildContext]'s theme.
   TextTheme get textTheme => _theme.textTheme;

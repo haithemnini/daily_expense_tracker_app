@@ -1,5 +1,3 @@
-import '../../../core/extension/extension.dart';
-import '../../../core/styles/app_text_style.dart';
 import '../../../core/utils/alerts/alerts.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';

@@ -39,6 +39,7 @@ class _MainViewState extends State<MainView> {
           child: Column(
             children: [
               const BlocListenerAuth(),
+              const SizedBox(height: 10.0),
               const HeaderAppBarProfile(),
               const SizedBox(height: 10.0),
               const ExpenseCard(),

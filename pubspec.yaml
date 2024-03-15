@@ -8,59 +8,87 @@ environment:
   sdk: '>=3.2.3 <4.0.0'
 
 dependencies:
+  # UI/UX
+  flutter:
+    sdk: flutter
+  cupertino_icons: ^1.0.2
+  flutter_styled_toast: ^2.2.1
+  font_awesome_flutter: ^10.6.0
+  image_picker: ^1.0.7
+  fl_chart: ^0.66.2
+
+  # State Management
+  bloc: ^8.1.2
+  flutter_bloc: ^8.1.3
+
+  # Data Handling
+  cloud_firestore: ^4.14.0
+  firebase_auth: ^4.16.0
+  firebase_core: ^2.24.2
+  hive: ^2.2.3
+  hive_flutter: ^1.1.0
+  shared_preferences: ^2.2.2
+
+  # Networking
+  cached_network_image: ^3.3.1
+  internet_connection_checker: ^1.0.0+1
+
+  #freezed
+  freezed: ^2.4.6
+  freezed_annotation: ^2.4.1
+
+  # Utility
+  get_it: ^7.6.4
+  uuid: ^4.3.3
+
+  # User Authentication
   auth_user:
     path: packages/auth_user
-  bloc: ^8.1.2
-  build_runner: ^2.4.7
-  cached_network_image: ^3.3.1
-  cloud_firestore: ^4.14.0
-  connectivity_plus: ^5.0.2
-  cupertino_icons: ^1.0.2
+  user_service:
+    path: packages/user_service
+
+  # Database
   db_firestore_client:
     path: packages/db_firestore_client
   db_hive_client:
     path: packages/db_hive_client
-  firebase_auth: ^4.16.0
-  firebase_core: ^2.24.2
-  firebase_database: ^10.4.7
-  fl_chart: ^0.66.2
-  flutter:
-    sdk: flutter
-  flutter_bloc: ^8.1.3
-  flutter_screenutil: ^5.9.0
-  flutter_speed_dial: ^7.0.0
-  flutter_styled_toast: ^2.2.1
-  font_awesome_flutter: ^10.6.0
-  freezed: ^2.4.6
-  freezed_annotation: ^2.4.1
-  get_it: ^7.6.4
-  hive: ^2.2.3
-  hive_flutter: ^1.1.0
-  image_picker: ^1.0.7
-  internet_connection_checker: ^1.0.0+1
+
+  # Parsing and Serialization
   intl: ^0.18.0
   json_annotation: ^4.8.1
   json_serializable: ^6.7.1
-  path_provider: ^2.1.2
+
+  # Others
   pattern_formatter: ^3.0.0
-  shared_preferences: ^2.2.2
-  user_service:
-    path: packages/user_service
-  uuid: ^4.3.3
 
 dev_dependencies:
+  # Linting
   flutter_lints: ^2.0.0
+
+  # Testing
   flutter_test:
     sdk: flutter
+
+  # Code Generation
+  build_runner: ^2.4.7
   hive_generator: ^2.0.1
 
-flutter:
+  # Asset Generation
+  flutter_launcher_icons: ^0.13.1
 
+flutter_launcher_icons:
+  android: "app_icon"
+  ios: true
+  image_path: "assets/icons/app_icon.png"
+
+flutter:
   uses-material-design: true
 
   assets:
     - assets/svgs/
     - assets/images/
+    - assets/icons/
+    - assets/fonts/
 
   fonts:
     - family: Inter

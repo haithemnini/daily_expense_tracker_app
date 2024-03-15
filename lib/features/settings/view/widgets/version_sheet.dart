@@ -18,8 +18,6 @@ class VersionSheet extends StatelessWidget {
           children: [
             const SizedBox(height: 10),
             const Text('Version 1.0.0', style: AppTextStyle.title),
-            const SizedBox(height: 8.0),
-            const Text('Build number: 01', style: AppTextStyle.subtitle),
             const SizedBox(height: 25),
             Text(
               'CopyRight © 2024 Daily Expense Tracker App. All rights reserved.',
