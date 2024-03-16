@@ -1,0 +1,26 @@
+name: user_service
+description: "A new Flutter package project."
+version: 0.0.1
+homepage:
+
+environment:
+  sdk: '>=3.2.3 <4.0.0'
+  flutter: ">=1.17.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  build_runner: ^2.4.7
+  freezed: ^2.4.6
+  freezed_annotation: ^2.4.1
+  cloud_firestore: ^4.9.2  
+  firebase_auth: ^4.17.4
+  firebase_storage: ^11.6.6
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^2.0.0
+
+flutter:
+
